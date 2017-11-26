@@ -1,5 +1,5 @@
 /**
- * @providesModule CircularDetailPage
+ * @providesModule ForgetPasswordPage
  */
 
 import React, { Component } from 'react';
@@ -12,11 +12,11 @@ import {
 import { NavigationActions } from 'react-navigation'
 import { Button } from 'antd-mobile';
 
-export default class CircularDetailPage extends Component {
+export default class ForgetPasswordPage extends Component {
 	static navigationOptions = ({ navigation }) => {
 		const { state, setParams } = navigation;
 		return {
-			title: '通告详情'
+			title: '忘记密码'
 		};
 	};
 
@@ -25,14 +25,18 @@ export default class CircularDetailPage extends Component {
 	}
 
 	navigateTo = (routeName) => {
-		this.props.navigation.navigate(routeName, { CircularDetailPageKey: this.props.navigation.state.key })
+		this.props.navigation.navigate(routeName)
+	}
+
+	backTo = () => {
+		this.props.navigation.goBack();
 	}
 
 	render() {
 		const { state } = this.props.navigation;
 		return (
 			<View style={styles.container}>
-				<Button type="primary" onClick={this.navigateTo.bind(this, 'CircularAccusation')}>举报</Button>
+				<Button type="primary" onClick={this.backTo}>提交</Button>
 			</View>
 		);
 	}

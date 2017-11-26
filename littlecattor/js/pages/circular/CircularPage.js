@@ -6,39 +6,57 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View,
-  Button
+  View
 } from 'react-native';
+import {
+  Button
+} from 'antd-mobile';
+
+import { NavigationActions } from 'react-navigation';
+
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { getHello } from 'Selectors';
 import Actions from 'Actions';
 
-class CircularPage extends Component<{}> {
+class CircularPage extends Component {
+  static navigationOptions = ({ navigation }) => {
+		const { state, setParams } = navigation;
+		return {
+			title: '通告'
+		};
+  };
+  
   componentDidMount() {
 
   }
 
-  gotoCircularDetailPage = () => {
-    this.props.navigation.navigate('CircularDetailPage')
+  navigateTo = (routeName) => {
+    this.props.navigation.navigate(routeName)
   }
 
   render() {
     const { state } = this.props.navigation;
     return (
-      <View>
-        <Text>{state.routeName}</Text>
-        <Button onPress={this.gotoCircularDetailPage}
-          title="goto CircularDetailPage"></Button>
+      <View style={styles.container}>
+        <Text>通告页</Text>
+        <Button type="primary" onClick={this.navigateTo.bind(this, 'CircularDetail')}>通告详情</Button>
+        <Button type="primary" onClick={this.navigateTo.bind(this, 'CircularPublish')}>发布通告</Button>
+
         <Text>{this.props.hello}</Text>
-        <Button onPress={() => {
+        <Button onClick={() => {
           this.props.dispatch(Actions.helloAction());
-        }}
-          title="set hello"></Button>
+        }}>set hello</Button>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+	container: {
+		padding: 20,
+	},
+});
 
 const CircularPageSelector = createSelector([getHello], (hello) => {
   return {

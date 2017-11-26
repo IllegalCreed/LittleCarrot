@@ -1,5 +1,5 @@
 /**
- * @providesModule CircularDetailPage
+ * @providesModule ExposurePublishResultPage
  */
 
 import React, { Component } from 'react';
@@ -12,11 +12,11 @@ import {
 import { NavigationActions } from 'react-navigation'
 import { Button } from 'antd-mobile';
 
-export default class CircularDetailPage extends Component {
+export default class ExposurePublishResultPage extends Component {
 	static navigationOptions = ({ navigation }) => {
 		const { state, setParams } = navigation;
 		return {
-			title: '通告详情'
+			title: '曝光成功'
 		};
 	};
 
@@ -24,15 +24,16 @@ export default class CircularDetailPage extends Component {
 
 	}
 
-	navigateTo = (routeName) => {
-		this.props.navigation.navigate(routeName, { CircularDetailPageKey: this.props.navigation.state.key })
+	backTo = () => {
+		let { ExposurePublishPageKey } = this.props.navigation.state.params;
+		this.props.navigation.goBack(ExposurePublishPageKey);
 	}
 
 	render() {
 		const { state } = this.props.navigation;
 		return (
 			<View style={styles.container}>
-				<Button type="primary" onClick={this.navigateTo.bind(this, 'CircularAccusation')}>举报</Button>
+				<Button type="primary" onClick={this.backTo}>返回首页</Button>
 			</View>
 		);
 	}
