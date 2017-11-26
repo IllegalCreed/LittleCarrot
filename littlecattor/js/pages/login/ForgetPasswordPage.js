@@ -8,9 +8,14 @@ import {
 	Text,
 	View
 } from 'react-native';
+import {
+	List,
+	Button,
+	InputItem
+} from 'antd-mobile';
 
-import { NavigationActions } from 'react-navigation'
-import { Button } from 'antd-mobile';
+import { NavigationActions } from 'react-navigation';
+import { Spacing } from 'AntDesignConfig';
 
 export default class ForgetPasswordPage extends Component {
 	static navigationOptions = ({ navigation }) => {
@@ -32,11 +37,22 @@ export default class ForgetPasswordPage extends Component {
 		this.props.navigation.goBack();
 	}
 
+	getCode = () => {
+
+	}
+
 	render() {
 		const { state } = this.props.navigation;
 		return (
 			<View style={styles.container}>
-				<Button type="primary" onClick={this.backTo}>提交</Button>
+				<List style={{ alignSelf: 'stretch', marginTop: 64 }}>
+					<InputItem placeholder='请输入手机号' clear>手机号</InputItem>
+					<InputItem type='number' placeholder='请输入验证码' clear extra='获取验证码' onExtraClick={this.getCode}>验证码</InputItem>
+					<InputItem placeholder='请输入新密码' clear>新密码</InputItem>
+				</List>
+				<View style={styles.buttonContainer}>
+					<Button type="primary" onClick={this.backTo}>提交</Button>
+				</View>
 			</View>
 		);
 	}
@@ -44,6 +60,16 @@ export default class ForgetPasswordPage extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		padding: 20,
+		flex: 1,
+		flexDirection: "column",
+		paddingTop: 64,
+		backgroundColor: '#f4f3fd',
+	},
+	buttonContainer: {
+		flex: 1,
+		flexDirection: "column",
+		alignSelf: 'stretch',
+		paddingHorizontal: Spacing.middle,
+		marginTop: 128,
 	},
 });
