@@ -67,6 +67,5 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		alignSelf: 'stretch',
 		paddingHorizontal: Spacing.middle,
-		marginTop: 64,
 	},
 });

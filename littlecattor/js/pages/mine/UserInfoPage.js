@@ -177,11 +177,14 @@ const styles = StyleSheet.create({
 		backgroundColor: '#f4f3fd',
 	},
 	buttonContainer: {
+		position: 'absolute',
+		bottom: 64,
+		left: 0,
+		right: 0,
 		flex: 1,
 		flexDirection: "column",
 		alignSelf: 'stretch',
 		paddingHorizontal: Spacing.middle,
-		marginTop: 64,
 	},
 	userHeader: {
 		overflow:'hidden',
