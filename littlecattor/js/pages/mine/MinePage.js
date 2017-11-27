@@ -47,7 +47,17 @@ export default class MinePage extends Component {
   }
 
   navigateTo = (routeName, params) => {
-    this.props.navigation.navigate(routeName, params)
+    if (routeName == 'Login') {
+      const resetAction = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName })
+        ]
+      })
+      this.props.navigation.dispatch(resetAction);
+    } else {
+      this.props.navigation.navigate(routeName, params)
+    }
   }
 
   render() {
@@ -68,6 +78,10 @@ export default class MinePage extends Component {
           <Item extra={'2333'}>我的萝卜</Item>
           <Item arrow='horizontal'>关于平台</Item>
         </List>
+
+        <View style={styles.buttonContainer}>
+          <Button type="ghost" onClick={this.navigateTo.bind(this, 'Login')}>退出登录</Button>
+        </View>
       </View>
     );
   }
@@ -78,6 +92,16 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     backgroundColor: '#f4f3fd',
+  },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 64,
+    left: 0,
+    right: 0,
+    flex: 1,
+    flexDirection: "column",
+    alignSelf: 'stretch',
+    paddingHorizontal: Spacing.middle,
   },
   headerContainer: {
     backgroundColor: '#f5317f',
