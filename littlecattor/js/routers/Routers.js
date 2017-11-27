@@ -44,7 +44,7 @@ export const ExposureNavigator = TabNavigator({
 		swipeEnabled: false,
 		animationEnabled: true,
 		tabBarOptions: {
-
+			style:{paddingTop:20}
 		}
 	})
 
