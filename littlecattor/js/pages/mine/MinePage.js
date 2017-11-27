@@ -6,7 +6,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  Image
 } from 'react-native';
 
 import { NavigationActions } from 'react-navigation'
@@ -16,7 +17,13 @@ export default class MinePage extends Component {
   static navigationOptions = ({ navigation }) => {
 		const { state, setParams } = navigation;
 		return {
-			title: '我的'
+      title: '我的',
+      tabBarIcon: ({ tintColor }) => (
+				<Image
+					source={require('../../routers/img/account.png')}
+					style={{ tintColor: tintColor, width: 26, height: 26 }}
+				/>
+			),
 		};
   };
 

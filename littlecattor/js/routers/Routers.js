@@ -1,7 +1,10 @@
 /**
  * @providesModule Router
  */
-
+import React, { Component } from 'react';
+import {
+	Image
+} from 'react-native';
 import { StackNavigator, TabNavigator, TabBarBottom, TabBarTop } from 'react-navigation';
 
 import LoginPage from 'LoginPage';
@@ -40,8 +43,8 @@ export const ExposureNavigator = TabNavigator({
 		tabBarPosition: 'top',
 		swipeEnabled: false,
 		animationEnabled: true,
-		tabBarOptions:{
-			
+		tabBarOptions: {
+
 		}
 	})
 
@@ -51,8 +54,14 @@ export const HomeNavigator = TabNavigator({
 	},
 	Exposure: {
 		screen: ExposureNavigator,
-		navigationOptions:({navigation})=>({
+		navigationOptions: ({ navigation }) => ({
 			title: '曝光',
+			tabBarIcon: ({ tintColor }) => (
+				<Image
+					source={require('./img/browse.png')}
+					style={{ tintColor: tintColor, width: 30, height: 30 }}
+				/>
+			),
 		})
 	},
 	Mine: {
@@ -64,8 +73,9 @@ export const HomeNavigator = TabNavigator({
 		tabBarPosition: 'bottom',
 		swipeEnabled: false,
 		animationEnabled: true,
-		tabBarOptions:{
-
+		tabBarOptions: {
+			activeTintColor: '#f5317f',
+			labelStyle:{fontSize:12}
 		}
 	})
 
@@ -81,7 +91,7 @@ export const RootNavigator = StackNavigator({
 	},
 	Home: {
 		screen: HomeNavigator,
-		navigationOptions:({navigation})=>({
+		navigationOptions: ({ navigation }) => ({
 			header: null,
 		})
 	},

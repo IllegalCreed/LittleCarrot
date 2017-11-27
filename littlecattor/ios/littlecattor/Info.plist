@@ -4,6 +4,7 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>webfont.ttf</string>
 		<string>anticon.ttf</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>

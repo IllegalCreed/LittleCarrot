@@ -29,7 +29,13 @@ class CircularPage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
     return {
-      title: '通告'
+      title: '通告',
+      tabBarIcon: ({ tintColor }) => (
+        <Image
+          source={require('../../routers/img/form.png')}
+          style={{ tintColor: tintColor, width: 26, height: 26 }}
+        />
+      ),
     };
   };
 
@@ -127,7 +133,7 @@ class CircularPage extends Component {
             </TouchableOpacity>
           }
         />
-        <Button style={styles.publishCircular} size='small' type="primary" onClick={this.navigateTo.bind(this, 'CircularPublish')}>发布通告</Button>
+        <Button style={styles.publishCircular} type="primary" onClick={this.navigateTo.bind(this, 'CircularPublish')}>发布通告</Button>
 
         {/* <Text>{this.props.hello}</Text>
         <Button onClick={() => {
@@ -150,6 +156,7 @@ const styles = StyleSheet.create({
     right: 0,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
+    opacity: 0.8,
   },
   circularItem: {
     borderColor: '#e9e9e9',
