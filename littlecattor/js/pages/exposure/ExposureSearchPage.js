@@ -8,9 +8,13 @@ import {
 	Text,
 	View
 } from 'react-native';
+import {
+	Button,
+	SearchBar,
+} from 'antd-mobile';
 
-import { NavigationActions } from 'react-navigation'
-import { Button } from 'antd-mobile';
+import { NavigationActions } from 'react-navigation';
+
 
 export default class ExposureSearchPage extends Component {
 	static navigationOptions = ({ navigation }) => {
@@ -32,7 +36,7 @@ export default class ExposureSearchPage extends Component {
 		const { state } = this.props.navigation;
 		return (
 			<View style={styles.container}>
-				<Button type="primary">搜索</Button>
+				<SearchBar placeholder="输入微信号" maxLength={20} />
 			</View>
 		);
 	}
@@ -40,6 +44,8 @@ export default class ExposureSearchPage extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		padding: 20,
+		flex: 1,
+		flexDirection: "column",
+		backgroundColor: '#f4f3fd',
 	},
 });
