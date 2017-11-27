@@ -6,7 +6,8 @@ import React, { Component } from 'react';
 import {
 	StyleSheet,
 	Text,
-	View
+	View,
+	Image
 } from 'react-native';
 import {
 	List,
@@ -19,6 +20,15 @@ import {
 
 import { NavigationActions } from 'react-navigation';
 import { Spacing } from 'AntDesignConfig';
+import ImagePicker from 'react-native-image-picker';
+
+const options = {
+	title: '选择头像',
+	takePhotoButtonTitle: '拍照',
+	chooseFromLibraryButtonTitle: '从相册选择',
+	mediaType: 'photo',
+	allowsEditing: true,
+};
 
 export default class UserInfoPage extends Component {
 	static navigationOptions = ({ navigation }) => {
@@ -62,7 +72,8 @@ export default class UserInfoPage extends Component {
 					}
 				]
 			],
-			BWH: ['80', '60', '90']
+			BWH: ['80', '60', '90'],
+			avatarSource: null,
 		}
 	}
 
@@ -89,13 +100,36 @@ export default class UserInfoPage extends Component {
 		}
 	}
 
+	selectHeader = () => {
+		ImagePicker.showImagePicker(options, (response) => {
+			console.log('Response = ', response);
+
+			if (response.didCancel) {
+				console.log('User cancelled image picker');
+			}
+			else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			}
+			else {
+				// let source = { uri: response.uri };
+
+				// You can also display the image using data:
+				let source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+				this.setState({
+					avatarSource: source
+				});
+			}
+		});
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
 				<List>
-					<List.Item extra={
-						<View>
-							
+					<List.Item arrow='horizontal' onClick={this.selectHeader} extra={
+						<View style={styles.userHeader}>
+							<Image source={this.state.avatarSource} style={styles.avatar}/>
 						</View>
 					}>头像</List.Item>
 					<InputItem placeholder='请输入昵称'>昵称</InputItem>
@@ -149,4 +183,16 @@ const styles = StyleSheet.create({
 		paddingHorizontal: Spacing.middle,
 		marginTop: 64,
 	},
+	userHeader: {
+		overflow:'hidden',
+		borderWidth: 1,
+		borderColor: '#7265e6',
+		borderRadius: 15,
+		width: 30,
+		height: 30,
+	},
+	avatar:{
+		width:30,
+		height:30
+	}
 });
