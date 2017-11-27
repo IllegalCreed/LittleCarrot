@@ -9,23 +9,38 @@ import {
   View,
   Image
 } from 'react-native';
+import {
+  List,
+  Button,
+} from 'antd-mobile';
+const Item = List.Item;
+const Brief = Item.Brief;
 
-import { NavigationActions } from 'react-navigation'
-import { Button } from 'antd-mobile';
+import { NavigationActions } from 'react-navigation';
+import { Spacing } from 'AntDesignConfig';
 
 export default class MinePage extends Component {
   static navigationOptions = ({ navigation }) => {
-		const { state, setParams } = navigation;
-		return {
+    const { state, setParams } = navigation;
+    return {
       title: '我的',
       tabBarIcon: ({ tintColor }) => (
-				<Image
-					source={require('../../routers/img/account.png')}
-					style={{ tintColor: tintColor, width: 26, height: 26 }}
-				/>
-			),
-		};
+        <Image
+          source={require('../../routers/img/account.png')}
+          style={{ tintColor: tintColor, width: 26, height: 26 }}
+        />
+      ),
+    };
   };
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      avatarSource: {
+        url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg'
+      },
+    }
+  }
 
   componentDidMount() {
 
@@ -38,8 +53,21 @@ export default class MinePage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>我的页面</Text>
-        <Button type="primary" onClick={this.navigateTo.bind(this, 'UserInfo', { saveAction: 'Back' })}>修改信息</Button>
+        <View style={styles.headerContainer}>
+          <View style={styles.userHeader}>
+            <Image source={this.state.avatarSource} style={styles.avatar} />
+          </View>
+          <Text style={{ marginTop: Spacing.small, color: 'white', fontSize: 18, fontWeight: 'bold' }}>小萝卜</Text>
+        </View>
+
+        <List>
+					<Item onClick={this.navigateTo.bind(this, 'UserInfo', { saveAction: 'Back' })} arrow='horizontal'>个人信息</Item>
+					<Item arrow='horizontal'>我的通告</Item>
+					<Item arrow='horizontal'>我的举报</Item>
+					<Item arrow='horizontal'>我的曝光</Item>
+					<Item extra={'2333'}>我的萝卜</Item>
+          <Item arrow='horizontal'>关于平台</Item>
+				</List>
       </View>
     );
   }
@@ -47,6 +75,27 @@ export default class MinePage extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: '#f4f3fd',
   },
+  headerContainer: {
+    backgroundColor: '#f5317f',
+    height: 200,
+    flexDirection: "column",
+    alignItems: 'center',
+    paddingTop: 60,
+  },
+  userHeader: {
+    overflow: 'hidden',
+    borderWidth: 2,
+    borderColor: '#7265e6',
+    borderRadius: 40,
+    width: 80,
+    height: 80,
+  },
+  avatar: {
+    width: 80,
+    height: 80
+  }
 });
