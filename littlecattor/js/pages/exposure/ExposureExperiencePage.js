@@ -38,6 +38,7 @@ export default class ExposureExperiencePage extends Component {
       this.state.exposureList.push({
         title: '这是一个标题',
         tag: '标签',
+        detail: '详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息'
       })
     }
   }
@@ -68,6 +69,14 @@ export default class ExposureExperiencePage extends Component {
                 <Text style={styles.circularTitle}>标题：{item.title}</Text>
                 <Tag small>{item.tag}</Tag>
               </View>
+              <View style={{
+                marginLeft: 15,
+                marginVertical: 10,
+                height: 1,
+                alignItems: 'stretch',
+                backgroundColor: '#e9e9e9',
+              }} />
+              <Text numberOfLines={3} style={{ paddingHorizontal: 15 }}>{item.detail}</Text>
             </TouchableOpacity>
           }
         />
