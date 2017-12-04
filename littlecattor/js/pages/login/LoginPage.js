@@ -71,7 +71,7 @@ class LoginPage extends Component {
           break;
         case requestState.SUCCESS:
           // 登录成功
-          this.navigateTo.bind(this, 'Home');
+          this.navigateTo('Home');
           nextProps.dispatch(Actions.resetLoginState());
           break;
         case requestState.IDLE:
@@ -103,7 +103,8 @@ class LoginPage extends Component {
     this.setState({
       loginButtonDisabled: true
     })
-    this.props.dispatch(Actions.login(this.state.phone, this.state.pwd));
+    let phone = this.state.phone.replace(/\s+/g,"");
+    this.props.dispatch(Actions.login(phone, this.state.pwd));
   }
 
   render() {
@@ -177,7 +178,7 @@ const LoginPageSelector = createSelector(
     return {
       isLogin,
       loginState,
-      loginErrorMsg:loginError?loginError.msg:'',
+      loginErrorMsg: loginError ? loginError.msg : '',
     };
   });
 

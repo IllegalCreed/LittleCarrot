@@ -22,6 +22,7 @@ global.axiosClient = axios.create({
         token: global.reduxStore.getState().user.token
       }
     }
+    // console.log(data);
     return JSON.stringify(data);
   }],
   transformResponse: [function (data) {
