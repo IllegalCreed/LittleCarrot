@@ -1,4 +1,4 @@
-export function helloAction() {
+export function hello() {
 	return {
 			type: 'helloAction',
 	}
