@@ -17,8 +17,12 @@ export const InitialCircularState = {
     publishCircularState: requestState.IDLE,
     publishCircularErrorObj: null,
 
+    getCircularDetailState: requestState.IDLE,
+    getCircularDetailErrorObj: null,
+
     circularList: [],
     tagList: [],
+    circularDetail: {},
 };
 
 export function circular(state = InitialCircularState, action) {
@@ -31,12 +35,12 @@ export function circular(state = InitialCircularState, action) {
             })
         case 'getCircularListAction_SUCCESS':
             if (response && response.res_code == 1) {
-                if(action.meta.previousAction.payload.request.data.page_index == 0){
+                if (action.meta.previousAction.payload.request.data.page_index == 0) {
                     return Object.assign({}, state, {
                         getCircularListState: requestState.SUCCESS,
                         circularList: response.msg
                     });
-                }else{
+                } else {
                     return Object.assign({}, state, {
                         getCircularListState: requestState.SUCCESS,
                         circularList: state.circularList.concat(response.msg)
@@ -111,6 +115,35 @@ export function circular(state = InitialCircularState, action) {
             return Object.assign({}, state, {
                 publishCircularState: requestState.IDLE,
             });
+
+        /* getCircularDetail */
+        case 'getCircularDetailAction':
+            return Object.assign({}, state, {
+                getCircularDetailState: requestState.LOADING,
+            })
+        case 'getCircularDetailAction_SUCCESS':
+            if (response && response.res_code == 1) {
+                return Object.assign({}, state, {
+                    getCircularDetailState: requestState.SUCCESS,
+                    circularDetail: response.msg[0]
+                });
+            } else {
+                console.log(response)
+                return handleReducerError(action.type, state, response, {
+                    getCircularDetailState: requestState.FAIL,
+                    getCircularDetailErrorObj: response,
+                });
+            }
+        case 'getCircularDetailAction_FAIL':
+            return handleReducerError(action.type, state, response, {
+                getCircularDetailState: requestState.FAIL,
+                getCircularDetailErrorObj: action.error,
+            });
+        case 'resetGetCircularDetailState':
+            return Object.assign({}, state, {
+                getCircularDetailState: requestState.IDLE,
+            })
+
         default:
             return state;
     }

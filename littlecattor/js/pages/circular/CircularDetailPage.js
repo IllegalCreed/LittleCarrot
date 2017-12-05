@@ -4,78 +4,148 @@
 
 import React, { Component } from 'react';
 import {
-	StyleSheet,
-	Text,
-	View,
-	ScrollView
+  StyleSheet,
+  Text,
+  View,
+  ScrollView
 } from 'react-native';
 import {
-	List,
-	Button,
-	InputItem,
-	TextareaItem,
+  List,
+  Button,
+  InputItem,
+  TextareaItem,
 } from 'antd-mobile';
 const Item = List.Item;
 const Brief = Item.Brief;
 
+import Toast, { DURATION } from 'react-native-easy-toast';
+import { dateFormat } from 'dateHelper';
+
 import { NavigationActions } from 'react-navigation';
 import { Spacing } from 'AntDesignConfig';
+import ScreenConfig from 'ScreenConfig';
 
-export default class CircularDetailPage extends Component {
-	static navigationOptions = ({ navigation }) => {
-		const { state, setParams } = navigation;
-		return {
-			title: '通告详情'
-		};
-	};
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import {
+  getCircularDetailState,
+  getCircularDetailErrorObj,
+  getCircularDetail,
+  getTagList,
+} from 'Selectors';
 
-	componentDidMount() {
+import Actions from 'Actions';
+import {
+  requestState
+} from 'ReducerCommon';
 
-	}
+class CircularDetailPage extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { state, setParams } = navigation;
+    return {
+      title: '通告详情'
+    };
+  };
 
-	navigateTo = (routeName) => {
-		this.props.navigation.navigate(routeName, { CircularDetailPageKey: this.props.navigation.state.key })
-	}
+  constructor(props) {
+    super(props)
+    var { circular_id } = this.props.navigation.state.params;
 
-	render() {
-		const { state } = this.props.navigation;
-		return (
-			<View style={styles.container}>
-				<List>
-					<Item multipleLine onClick={() => { }}>
-						标题 <Brief>这是一个标题</Brief>
-					</Item>
-					<Item extra={'标签'}>标签</Item>
-					<Item extra={'1000元'}>价格</Item>
-					<Item extra={'苏妈妈'}>发布人</Item>
-					<Item extra={'2000-01-01'}>发布时间</Item>
-					<Item extra={'wx123123123'}>微信</Item>
-					<Item wrap>详细信息<Brief>详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息</Brief></Item>
-				</List>
-				<View style={styles.buttonContainer}>
-					<Button type="primary" onClick={this.navigateTo.bind(this, 'CircularAccusation')}>举报</Button>
-					<Button style={{ marginTop: Spacing.small }} type="ghost">分享</Button>
-				</View>
-			</View>
-		);
-	}
+    this.state = {
+    }
+
+    this.data = {
+      circularId: circular_id
+    }
+    this.props.dispatch(Actions.getCircularDetail(this.data.circularId));
+  }
+
+
+  componentDidMount() {
+
+  }
+
+  navigateTo = (routeName) => {
+    this.props.navigation.navigate(routeName, { CircularDetailPageKey: this.props.navigation.state.key })
+  }
+
+  getTagNameById = (id) => {
+    if (id) {
+      return this.props.tagList.find((tag) => {
+        return id == tag.id
+      }).name
+    }else{
+      '未知'
+    }
+  }
+
+  render() {
+    const { state } = this.props.navigation;
+    return (
+      <View style={styles.container}>
+        <List>
+          <Item multipleLine>
+            标题 <Brief>{this.props.circularDetail.title}</Brief>
+          </Item>
+          <Item extra={this.getTagNameById(this.props.circularDetail.tag_id)}>标签</Item>
+          <Item extra={this.props.circularDetail.price + '元'}>价格</Item>
+          <Item extra={this.props.circularDetail.create_user_nickname}>发布人</Item>
+          <Item extra={dateFormat(new Date(this.props.circularDetail.create_time), 'yyyy-MM-dd')}>发布时间</Item>
+          <Item extra={this.props.circularDetail.wx}>微信</Item>
+          <Item wrap>详细信息<Brief>{this.props.circularDetail.content}</Brief></Item>
+        </List>
+        <View style={styles.buttonContainer}>
+          <Button type="primary" onClick={this.navigateTo.bind(this, 'CircularAccusation')}>举报</Button>
+          <Button style={{ marginTop: Spacing.small }} type="ghost">分享</Button>
+        </View>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		flexDirection: "column",
-		paddingTop: 12,
-		backgroundColor: '#f4f3fd',
-	},
-	buttonContainer: {
-		position: 'absolute',
-		bottom: 64,
-		left: 0,
-		right: 0,
-		flex: 1,
-		flexDirection: "column",
-		alignSelf: 'stretch',
-		paddingHorizontal: Spacing.middle,
-	},
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    paddingTop: 12,
+    backgroundColor: '#f4f3fd',
+  },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 64,
+    left: 0,
+    right: 0,
+    flex: 1,
+    flexDirection: "column",
+    alignSelf: 'stretch',
+    paddingHorizontal: Spacing.middle,
+  },
 });
+
+
+const CircularDetailPageSelector = createSelector(
+  [
+    getCircularDetailState,
+    getCircularDetailErrorObj,
+    getCircularDetail,
+    getTagList
+  ], (
+    circularDetailState,
+    circularDetailError,
+    circularDetail,
+    tagList,
+  ) => {
+    return {
+      circularDetailState,
+      circularDetailErrorMsg: circularDetailError ? circularDetailError.msg : '',
+      circularDetail,
+      tagList: tagList.map((tag) => {
+        return {
+          name: tag.name,
+          id: tag.tag_id,
+        }
+      }),
+    };
+  });
+
+export default connect(CircularDetailPageSelector)(CircularDetailPage);

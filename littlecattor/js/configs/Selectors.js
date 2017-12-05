@@ -20,3 +20,7 @@ export const getTagList = state => state.circular.tagList;
 
 export const getPublishCircularState = state => state.circular.publishCircularState;
 export const getPublishCircularErrorObj = state => state.circular.publishCircularErrorObj;
+
+export const getCircularDetailState = state => state.circular.getCircularDetailState;
+export const getCircularDetailErrorObj = state => state.circular.getCircularDetailErrorObj;
+export const getCircularDetail = state => state.circular.circularDetail;

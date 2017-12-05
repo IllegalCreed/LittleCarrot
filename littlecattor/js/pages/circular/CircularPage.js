@@ -111,8 +111,8 @@ class CircularPage extends Component {
   componentDidMount() {
   }
 
-  navigateTo = (routeName) => {
-    this.props.navigation.navigate(routeName)
+  navigateTo = (routeName, params) => {
+    this.props.navigation.navigate(routeName, params)
   }
 
   getTagNameById = (id) => {
@@ -161,7 +161,7 @@ class CircularPage extends Component {
           renderItem={({ item, index }) =>
             <TouchableOpacity
               style={styles.circularItem}
-              onPress={this.navigateTo.bind(this, 'CircularDetail')}>
+              onPress={this.navigateTo.bind(this, 'CircularDetail', { circular_id: item.notice_id })}>
               <View style={{
                 paddingHorizontal: 15,
                 flexDirection: 'row',
