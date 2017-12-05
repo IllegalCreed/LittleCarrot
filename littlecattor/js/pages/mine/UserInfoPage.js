@@ -7,7 +7,11 @@ import {
 	StyleSheet,
 	Text,
 	View,
-	Image
+	Image,
+	KeyboardAvoidingView,
+	Platform,
+	ScrollView,
+	Keyboard
 } from 'react-native';
 import {
 	List,
@@ -74,7 +78,36 @@ export default class UserInfoPage extends Component {
 			],
 			BWH: ['80', '60', '90'],
 			avatarSource: null,
+			keyboardAvoidingHeight: 0,
 		}
+	}
+
+	componentWillMount() {
+		this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+		this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+	}
+
+	componentWillUnmount() {
+		this.keyboardDidShowListener.remove();
+		this.keyboardDidHideListener.remove();
+	}
+
+	_keyboardDidShow = () => {
+		if (Platform.OS === 'ios') {
+			this.setState({
+				keyboardAvoidingHeight: 300,
+			})
+		}else{
+			this.setState({
+				keyboardAvoidingHeight: 30,
+			})
+		}
+	}
+
+	_keyboardDidHide = () => {
+		this.setState({
+			keyboardAvoidingHeight: 0,
+		})
 	}
 
 	componentDidMount() {
@@ -124,46 +157,56 @@ export default class UserInfoPage extends Component {
 	}
 
 	render() {
+		const { state } = this.props.navigation;
 		return (
 			<View style={styles.container}>
-				<List>
-					<List.Item arrow='horizontal' onClick={this.selectHeader} extra={
-						<View style={styles.userHeader}>
-							<Image source={this.state.avatarSource} style={styles.avatar}/>
-						</View>
-					}>头像</List.Item>
-					<InputItem placeholder='请输入昵称'>昵称</InputItem>
-					<Picker
-						data={this.state.sexSource}
-						cols={1}
-						value={this.state.sex}
-						onOk={(value) => {
-							this.setState({ sex: value })
-						}}>
-						<List.Item arrow='horizontal'>性别</List.Item>
-					</Picker>
-					<InputItem type='number' placeholder='请输入身高'>身高</InputItem>
-					<InputItem type='number' placeholder='请输入体重'>体重</InputItem>
-					<Picker
-						data={this.state.BWHSource}
-						cascade={false}
-						value={this.state.BWH}
-						onOk={(values) => {
-							this.setState({ BWH: values })
-						}}>
-						<List.Item arrow='horizontal'>三围</List.Item>
-					</Picker>
-					<InputItem type='number' placeholder='请输入鞋码'>鞋码</InputItem>
-					<TextareaItem
-						title='简介'
-						rows={5}
-						placeholder='请输入简介'
-						count={80}
-					/>
-				</List>
-				<View style={styles.buttonContainer}>
-					<Button type="primary" onClick={this.save}>保存</Button>
-				</View>
+				<ScrollView ref={scrollView => this.scrollView = scrollView}>
+					<List>
+						<List.Item arrow='horizontal' onClick={this.selectHeader} extra={
+							<View style={styles.userHeader}>
+								<Image source={this.state.avatarSource} style={styles.avatar} />
+							</View>
+						}>头像</List.Item>
+						<InputItem placeholder='请输入昵称'>昵称</InputItem>
+						<Picker
+							data={this.state.sexSource}
+							cols={1}
+							value={this.state.sex}
+							onOk={(value) => {
+								this.setState({ sex: value })
+							}}>
+							<List.Item arrow='horizontal'>性别</List.Item>
+						</Picker>
+						<InputItem type='number' placeholder='请输入身高'>身高</InputItem>
+						<InputItem type='number' placeholder='请输入体重'>体重</InputItem>
+						<Picker
+							data={this.state.BWHSource}
+							cascade={false}
+							value={this.state.BWH}
+							onOk={(values) => {
+								this.setState({ BWH: values })
+							}}>
+							<List.Item arrow='horizontal'>三围</List.Item>
+						</Picker>
+						<InputItem type='number' placeholder='请输入鞋码'>鞋码</InputItem>
+						<TextareaItem
+							title='简介'
+							rows={5}
+							placeholder='请输入简介'
+							count={80}
+							onFocus={() => {
+								if (Platform.OS === 'ios') {
+									setTimeout(() => { this.scrollView.scrollToEnd({ animated: true }) }, 800)
+								}
+							}}
+						/>
+					</List>
+					<View style={styles.buttonContainer}>
+						<Button type="primary" onClick={this.save}>保存</Button>
+					</View>
+					<View style={{ height: this.state.keyboardAvoidingHeight }}>
+					</View>
+				</ScrollView>
 			</View>
 		);
 	}
@@ -177,25 +220,22 @@ const styles = StyleSheet.create({
 		backgroundColor: '#f4f3fd',
 	},
 	buttonContainer: {
-		position: 'absolute',
-		bottom: 64,
-		left: 0,
-		right: 0,
+		marginTop: 50,
 		flex: 1,
 		flexDirection: "column",
 		alignSelf: 'stretch',
 		paddingHorizontal: Spacing.middle,
 	},
 	userHeader: {
-		overflow:'hidden',
+		overflow: 'hidden',
 		borderWidth: 1,
 		borderColor: '#7265e6',
 		borderRadius: 15,
 		width: 30,
 		height: 30,
 	},
-	avatar:{
-		width:30,
-		height:30
+	avatar: {
+		width: 30,
+		height: 30
 	}
 });

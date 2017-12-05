@@ -17,13 +17,28 @@ import {
   Tag,
 } from 'antd-mobile';
 
+import Toast, { DURATION } from 'react-native-easy-toast';
+import { dateFormat } from 'dateHelper';
+
 import { NavigationActions } from 'react-navigation';
+import { Spacing } from 'AntDesignConfig';
 import ScreenConfig from 'ScreenConfig';
 
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { getHello } from 'Selectors';
+import {
+  getCircularListState,
+  getCircularListErrorObj,
+  getCircularList,
+  getCircularTagListState,
+  getCircularTagListErrorObj,
+  getTagList,
+} from 'Selectors';
+
 import Actions from 'Actions';
+import {
+  requestState
+} from 'ReducerCommon';
 
 class CircularPage extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -43,24 +58,81 @@ class CircularPage extends Component {
     super(props)
     this.state = {
       carouselData: ['AiyWuByWklrrUDlFignR', 'TekJlZRVCjLFexlOCuWn', 'IJOtIlfsYdTyaDTRVrLI'],
-      circularList: []
+      refreshing: false,
+    }
+
+    this.data = {
+      lockMore: false,
+      page_index: 0,
+      page_size: 3,
+    }
+
+    this.props.dispatch(Actions.getCircularTagList());
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.circularTagListState !== nextProps.circularTagListState) {
+      switch (nextProps.circularTagListState) {
+        case requestState.FAIL:
+          nextProps.dispatch(Actions.resetGetCircularTagListState());
+          break;
+        case requestState.LOADING:
+          break;
+        case requestState.SUCCESS:
+          nextProps.dispatch(Actions.resetGetCircularTagListState());
+          this.refreshDatas();
+          break;
+        case requestState.IDLE:
+          break;
+        default:
+          break;
+      }
+    }
+
+    if (this.props.circularListState !== nextProps.circularListState) {
+      switch (nextProps.circularListState) {
+        case requestState.FAIL:
+          nextProps.dispatch(Actions.resetGetCircularListState());
+          break;
+        case requestState.LOADING:
+          break;
+        case requestState.SUCCESS:
+          nextProps.dispatch(Actions.resetGetCircularListState());
+          this.data.lockMore = false;
+          break;
+        case requestState.IDLE:
+          break;
+        default:
+          break;
+      }
     }
   }
 
   componentDidMount() {
-    for (let i = 0; i <= 10; i++) {
-      this.state.circularList.push({
-        title: '这是一个标题',
-        tag: '标签',
-        price: '1000',
-        publisher: '发布人',
-        createTime: '2000-01-01'
-      })
-    }
   }
 
   navigateTo = (routeName) => {
     this.props.navigation.navigate(routeName)
+  }
+
+  getTagNameById = (id) => {
+    return this.props.tagList.find((tag) => {
+      return id == tag.id
+    }).name
+  }
+
+  loadMoreDatas = () => {
+    if (!this.data.lockMore) {
+      this.data.lockMore = true;
+      this.data.page_index++;
+      this.props.dispatch(Actions.getCircularList(this.data.page_index, this.data.page_size));
+    }
+  }
+
+  refreshDatas = () => {
+    this.data.lockMore = false;
+    this.data.page_index = 0;
+    this.props.dispatch(Actions.getCircularList(this.data.page_index, this.data.page_size));
   }
 
   render() {
@@ -82,7 +154,7 @@ class CircularPage extends Component {
               ))}
             </Carousel>
           }
-          data={this.state.circularList}
+          data={this.props.circularList}
           keyExtractor={(item, index) => {
             return index;
           }}
@@ -97,7 +169,9 @@ class CircularPage extends Component {
                 justifyContent: 'space-between'
               }}>
                 <Text style={styles.circularTitle}>标题：{item.title}</Text>
-                <Tag small>{item.tag}</Tag>
+                <View style={styles.tag}>
+                  <Text style={styles.tagText}>{this.getTagNameById(item.tag_id)}</Text>
+                </View>
               </View>
               <View style={{
                 marginLeft: 15,
@@ -112,8 +186,8 @@ class CircularPage extends Component {
                 flex: 1,
                 justifyContent: 'space-between'
               }}>
-                <Text>发布人：{item.publisher}</Text>
-                <Text>发布时间：{item.createTime}</Text>
+                <Text>发布人：{item.create_user_nickname}</Text>
+                <Text>发布时间：{dateFormat(new Date(item.create_time), 'yyyy-MM-dd')}</Text>
               </View>
               <View style={{
                 marginLeft: 15,
@@ -132,13 +206,12 @@ class CircularPage extends Component {
               </View>
             </TouchableOpacity>
           }
+          onEndReached={this.loadMoreDatas}
+          onEndReachedThreshold={0}
+          onRefresh={this.refreshDatas}
+          refreshing={this.state.refreshing}
         />
         <Button style={styles.publishCircular} type="primary" onClick={this.navigateTo.bind(this, 'CircularPublish')}>发布通告</Button>
-
-        {/* <Text>{this.props.hello}</Text>
-        <Button onClick={() => {
-          this.props.dispatch(Actions.helloAction());
-        }}>set hello</Button> */}
       </View>
     );
   }
@@ -169,12 +242,49 @@ const styles = StyleSheet.create({
   circularTitle: {
     fontSize: 18,
   },
+  tag: {
+    paddingHorizontal: 5,
+    borderWidth: 1,
+    borderColor: '#F5317F',
+    borderRadius: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tagText: {
+    fontSize: 12,
+    color: '#F5317F',
+  }
 });
 
-const CircularPageSelector = createSelector([getHello], (hello) => {
-  return {
-    hello
-  };
-});
+const CircularPageSelector = createSelector(
+  [
+    getCircularListState,
+    getCircularListErrorObj,
+    getCircularList,
+    getCircularTagListState,
+    getCircularTagListErrorObj,
+    getTagList,
+  ], (
+    circularListState,
+    circularListError,
+    circularList,
+    circularTagListState,
+    circularTagListError,
+    tagList,
+  ) => {
+    return {
+      circularListState,
+      circularListErrorMsg: circularListError ? circularListError.msg : '',
+      circularList,
+      circularTagListState,
+      circularTagListErrorMsg: circularTagListError ? circularTagListError.msg : '',
+      tagList: tagList.map((tag) => {
+        return {
+          name: tag.name,
+          id: tag.tag_id,
+        }
+      }),
+    };
+  });
 
 export default connect(CircularPageSelector)(CircularPage);

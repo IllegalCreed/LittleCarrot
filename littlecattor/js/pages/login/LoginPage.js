@@ -44,8 +44,8 @@ class LoginPage extends Component {
     super(props)
     this.state = {
       loginButtonDisabled: false,
-      phone: '',
-      pwd: '',
+      phone: '15810018878',
+      pwd: '000000',
     }
   }
 
