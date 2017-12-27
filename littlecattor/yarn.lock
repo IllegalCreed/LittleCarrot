@@ -3560,6 +3560,10 @@ react-devtools-core@^2.5.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+"react-native-aliyun-oss@https://github.com/IllegalCreed/react-native-aliyun-oss.git":
+  version "1.0.1"
+  resolved "https://github.com/IllegalCreed/react-native-aliyun-oss.git#007d5e12a3eb080dd32c62daf2e8edc94a10d02f"
+
 react-native-camera-roll-picker@^1.2.1:
   version "1.2.3"
   resolved "http://registry.npm.taobao.org/react-native-camera-roll-picker/download/react-native-camera-roll-picker-1.2.3.tgz#b117fd3a2b9012dcccee1261a9bc427226b8d6d2"
@@ -3585,6 +3589,12 @@ react-native-drawer-layout@1.3.2, react-native-drawer-layout@~1.3.0:
   resolved "http://registry.npm.taobao.org/react-native-drawer-layout/download/react-native-drawer-layout-1.3.2.tgz#b9740d7663a1dc4f88a61b9c6d93d2d948ea426e"
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
+
+react-native-easy-toast@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/react-native-easy-toast/-/react-native-easy-toast-1.0.9.tgz#85b28ccd8f6dfb67495320a47c275d3fe163e660"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-image-picker@^0.26.7:
   version "0.26.7"

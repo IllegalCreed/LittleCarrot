@@ -23,11 +23,13 @@ import {
 import axiosConfig from 'AxiosConfig';
 import reduxConfig from 'ReduxConfig';
 
-import { PersistGate } from 'redux-persist/lib/integration/react'
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import AliyunOSS from 'react-native-aliyun-oss';
 
 export default class App extends Component<{}> {
   componentDidMount() {
     console.log('rendered')
+    AliyunOSS.initWithPlainTextAccessKey("LTAIaEPbGDOUJ4dr", "0EfCU4cafQJQTQPWj6vdZQIxCiEqpF", "https://oss-cn-beijing.aliyuncs.com");
   }
 
   render() {

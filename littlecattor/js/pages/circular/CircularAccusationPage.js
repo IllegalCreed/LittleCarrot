@@ -18,6 +18,23 @@ import {
 
 import { NavigationActions } from 'react-navigation';
 import { Spacing } from 'AntDesignConfig';
+import AliyunOSS from 'react-native-aliyun-oss';
+import ImagePicker2 from 'react-native-image-picker';
+
+var options = {
+	title: '选择照片',
+	storageOptions: {
+		skipBackup: true,
+		path: 'images'
+	}
+};
+
+function guid() {
+	function S4() {
+		return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+	}
+	return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+}
 
 export default class CircularAccusationPage extends Component {
 	static navigationOptions = ({ navigation }) => {
@@ -49,13 +66,7 @@ export default class CircularAccusationPage extends Component {
 				}
 			],
 			type: ['0'],
-			imageData: [{
-				url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
-				id: '2121',
-			}, {
-				url: 'https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg',
-				id: '2122',
-			}],
+			imageData: [],
 		};
 	}
 
@@ -64,9 +75,34 @@ export default class CircularAccusationPage extends Component {
 	}
 
 	onChange = (files, type, index) => {
-		console.log(files, type, index);
 		this.setState({
 			imageData: files,
+		});
+	}
+
+	onAddImageClick = () => {
+		ImagePicker2.showImagePicker(options, (response) => {
+			if (response.didCancel) {
+				console.log('User cancelled image picker');
+			}
+			else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			}
+			else if (response.customButton) {
+				console.log('User tapped custom button: ', response.customButton);
+			}
+			else {
+				let path = response.uri.replace('file://', '');
+				let fileName = guid() + ".png";
+				AliyunOSS.asyncUpload('radish', fileName, path).then(() => {
+					this.setState({
+						imageData: this.state.imageData.concat([{
+							url: 'https://radish.oss-cn-beijing.aliyuncs.com/' + fileName,
+							id: Math.floor(Math.random() * (10001)),
+						}]),
+					});
+				});
+			}
 		});
 	}
 
@@ -90,11 +126,12 @@ export default class CircularAccusationPage extends Component {
 						<List.Item arrow='horizontal'>举报类型</List.Item>
 					</Picker>
 				</List>
-				<Text style={{marginLeft:15,fontSize:17,marginVertical:15}}>证据截图</Text>
-				<View style={{marginLeft:15}}>
+				<Text style={{ marginLeft: 15, fontSize: 17, marginVertical: 15 }}>证据截图</Text>
+				<View style={{ marginLeft: 15 }}>
 					<ImagePicker
-						files={this.state.imageData}
 						onChange={this.onChange}
+						files={this.state.imageData}
+						onAddImageClick={this.onAddImageClick}
 						onImageClick={(index, fs) => console.log(index, fs)}
 						selectable={this.state.imageData.length < 12}
 					/>
@@ -115,7 +152,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#f4f3fd',
 	},
 	buttonContainer: {
-		position:'absolute',
+		position: 'absolute',
 		bottom: 64,
 		left: 0,
 		right: 0,
