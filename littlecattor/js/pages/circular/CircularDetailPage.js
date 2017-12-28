@@ -66,7 +66,7 @@ class CircularDetailPage extends Component {
   }
 
   navigateTo = (routeName) => {
-    this.props.navigation.navigate(routeName, { CircularDetailPageKey: this.props.navigation.state.key })
+    this.props.navigation.navigate(routeName, { CircularDetailPageKey: this.props.navigation.state.key, circular_id: this.data.circularId })
   }
 
   getTagNameById = (id) => {
@@ -74,7 +74,7 @@ class CircularDetailPage extends Component {
       return this.props.tagList.find((tag) => {
         return id == tag.id
       }).name
-    }else{
+    } else {
       '未知'
     }
   }

@@ -24,3 +24,7 @@ export const getPublishCircularErrorObj = state => state.circular.publishCircula
 export const getCircularDetailState = state => state.circular.getCircularDetailState;
 export const getCircularDetailErrorObj = state => state.circular.getCircularDetailErrorObj;
 export const getCircularDetail = state => state.circular.circularDetail;
+
+export const getAddAccusationState = state => state.accusation.addAccusationState;
+export const getAddAccusationErrorObj = state => state.accusation.addAccusationErrorObj;
+export const getAccusationTypes = state => state.accusation.accusationTypes;

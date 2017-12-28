@@ -15,4 +15,7 @@ export default API = {
   getCircularTags: 'notice/getTagList',
   getCircularDetail: 'notice/getDetail',
   publishCircular: 'notice/addNotice',
+
+  getAccusationTypeList: 'report/getReportCategory',
+  addAccusation:'report/addReport',
 }
