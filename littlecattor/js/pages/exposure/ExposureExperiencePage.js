@@ -16,9 +16,27 @@ import {
   Tag,
 } from 'antd-mobile';
 
-import { NavigationActions } from 'react-navigation';
+import Toast, { DURATION } from 'react-native-easy-toast';
+import { dateFormat } from 'dateHelper';
 
-export default class ExposureExperiencePage extends Component {
+import { NavigationActions } from 'react-navigation';
+import { Spacing } from 'AntDesignConfig';
+import ScreenConfig from 'ScreenConfig';
+
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import {
+  getExposureListState,
+  getExposureListErrorObj,
+  getExposureList,
+} from 'Selectors';
+
+import Actions from 'Actions';
+import {
+  requestState
+} from 'ReducerCommon';
+
+export class ExposureExperiencePage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
     return {
@@ -29,18 +47,53 @@ export default class ExposureExperiencePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      exposureList: []
+      refreshing: false,
+    }
+
+    this.data = {
+      lockMore: false,
+      page_index: 0,
+      page_size: 3,
+    }
+
+    this.refreshDatas();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.exposureListState !== nextProps.exposureListState) {
+      switch (nextProps.exposureListState) {
+        case requestState.FAIL:
+          nextProps.dispatch(Actions.resetGetExposureListState());
+          break;
+        case requestState.LOADING:
+          break;
+        case requestState.SUCCESS:
+          nextProps.dispatch(Actions.resetGetExposureListState());
+          this.data.lockMore = false;
+          break;
+        case requestState.IDLE:
+          break;
+        default:
+          break;
+      }
     }
   }
 
   componentDidMount() {
-    for (let i = 0; i <= 10; i++) {
-      this.state.exposureList.push({
-        title: '这是一个标题',
-        tag: '标签',
-        detail: '详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息'
-      })
+  }
+
+  loadMoreDatas = () => {
+    if (!this.data.lockMore) {
+      this.data.lockMore = true;
+      this.data.page_index++;
+      this.props.dispatch(Actions.getExposureList(this.data.page_index, this.data.page_size));
     }
+  }
+
+  refreshDatas = () => {
+    this.data.lockMore = false;
+    this.data.page_index = 0;
+    this.props.dispatch(Actions.getExposureList(this.data.page_index, this.data.page_size));
   }
 
   navigateTo = (routeName) => {
@@ -52,7 +105,7 @@ export default class ExposureExperiencePage extends Component {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.state.exposureList}
+          data={this.props.exposureList}
           keyExtractor={(item, index) => {
             return index;
           }}
@@ -67,7 +120,9 @@ export default class ExposureExperiencePage extends Component {
                 justifyContent: 'space-between'
               }}>
                 <Text style={styles.circularTitle}>标题：{item.title}</Text>
-                <Tag small>{item.tag}</Tag>
+                <View style={styles.tag}>
+                  <Text style={styles.tagText}>{item.tag}</Text>
+                </View>
               </View>
               <View style={{
                 marginLeft: 15,
@@ -76,9 +131,13 @@ export default class ExposureExperiencePage extends Component {
                 alignItems: 'stretch',
                 backgroundColor: '#e9e9e9',
               }} />
-              <Text numberOfLines={3} style={{ paddingHorizontal: 15 }}>{item.detail}</Text>
+              <Text numberOfLines={3} style={{ paddingHorizontal: 15 }}>{item.content}</Text>
             </TouchableOpacity>
           }
+          onEndReached={this.loadMoreDatas}
+          onEndReachedThreshold={0}
+          onRefresh={this.refreshDatas}
+          refreshing={this.state.refreshing}
         />
         <Button style={styles.publishCircular} type="primary" onClick={this.navigateTo.bind(this, 'ExposurePublish')}>我要曝光</Button>
       </View>
@@ -111,4 +170,36 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0,
     opacity: 0.8,
   },
+  tag: {
+    paddingHorizontal: 5,
+    borderWidth: 1,
+    borderColor: '#F5317F',
+    borderRadius: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tagText: {
+    fontSize: 12,
+    color: '#F5317F',
+  }
 });
+
+
+const ExposureExperiencePageSelector = createSelector(
+  [
+    getExposureListState,
+    getExposureListErrorObj,
+    getExposureList,
+  ], (
+    exposureListState,
+    exposureListError,
+    exposureList,
+  ) => {
+    return {
+      exposureListState,
+      exposureListErrorMsg: exposureListError ? exposureListError.msg : '',
+      exposureList,
+    };
+  });
+
+export default connect(ExposureExperiencePageSelector)(ExposureExperiencePage);
