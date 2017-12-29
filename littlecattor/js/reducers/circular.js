@@ -125,7 +125,7 @@ export function circular(state = InitialCircularState, action) {
             if (response && response.res_code == 1) {
                 return Object.assign({}, state, {
                     getCircularDetailState: requestState.SUCCESS,
-                    circularDetail: response.msg[0]
+                    circularDetail: response.msg
                 });
             } else {
                 console.log(response)

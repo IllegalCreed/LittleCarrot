@@ -96,8 +96,8 @@ export class ExposureExperiencePage extends Component {
     this.props.dispatch(Actions.getExposureList(this.data.page_index, this.data.page_size));
   }
 
-  navigateTo = (routeName) => {
-    this.props.navigation.navigate(routeName)
+  navigateTo = (routeName, params) => {
+    this.props.navigation.navigate(routeName, params)
   }
 
   render() {
@@ -112,7 +112,7 @@ export class ExposureExperiencePage extends Component {
           renderItem={({ item, index }) =>
             <TouchableOpacity
               style={styles.circularItem}
-              onPress={this.navigateTo.bind(this, 'ExposureDetail')}>
+              onPress={this.navigateTo.bind(this, 'ExposureDetail', { exposure_id: item.exposure_id })}>
               <View style={{
                 paddingHorizontal: 15,
                 flexDirection: 'row',

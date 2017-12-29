@@ -17,6 +17,9 @@ export const InitialExposureState = {
     getExposureDetailState: requestState.IDLE,
     getExposureDetailErrorObj: null,
 
+    supportExposureState: requestState.IDLE,
+    supportExposureErrorObj: null,
+
     exposureList: [],
     exposureDetail: {},
 };
@@ -93,10 +96,9 @@ export function exposure(state = InitialExposureState, action) {
             if (response && response.res_code == 1) {
                 return Object.assign({}, state, {
                     getExposureDetailState: requestState.SUCCESS,
-                    exposureDetail: response.msg[0]
+                    exposureDetail: response.msg
                 });
             } else {
-                console.log(response)
                 return handleReducerError(action.type, state, response, {
                     getExposureDetailState: requestState.FAIL,
                     getExposureDetailErrorObj: response,
@@ -110,6 +112,33 @@ export function exposure(state = InitialExposureState, action) {
         case 'resetGetExposureDetailState':
             return Object.assign({}, state, {
                 getExposureDetailState: requestState.IDLE,
+            })
+
+        /* supportExposure */
+        case 'supportExposureAction':
+            return Object.assign({}, state, {
+                supportExposureState: requestState.LOADING,
+            })
+        case 'supportExposureAction_SUCCESS':
+            if (response && response.res_code == 1) {
+                console.log(response)
+                return Object.assign({}, state, {
+                    supportExposureState: requestState.SUCCESS,
+                });
+            } else {
+                return handleReducerError(action.type, state, response, {
+                    supportExposureState: requestState.FAIL,
+                    supportExposureErrorObj: response,
+                });
+            }
+        case 'supportExposureAction_FAIL':
+            return handleReducerError(action.type, state, response, {
+                supportExposureState: requestState.FAIL,
+                supportExposureErrorObj: action.error,
+            });
+        case 'resetSupportExposureState':
+            return Object.assign({}, state, {
+                supportExposureState: requestState.IDLE,
             })
 
         default:

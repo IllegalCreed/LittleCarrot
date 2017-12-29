@@ -22,4 +22,5 @@ export default API = {
   getExposureList:'exposure/getList',
   getExposureDetail:'exposure/getDetail',
   publishExposure:'exposure/addExposure',
+  supportExposure:'exposure/setMyAttitude',
 }

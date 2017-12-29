@@ -168,7 +168,7 @@ export class ExposurePublishPage extends Component {
       }
       else {
         let path = response.uri.replace('file://', '');
-        let fileName = "report/" + guid() + ".png";
+        let fileName = "exposure/" + guid() + ".png";
         AliyunOSS.asyncUpload('radish', fileName, path).then(() => {
           this.setState({
             imageData: this.state.imageData.concat([{

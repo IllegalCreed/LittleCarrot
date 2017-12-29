@@ -43,3 +43,6 @@ export const getPublishExposureErrorObj = state => state.exposure.publishExposur
 export const getExposureDetailState = state => state.exposure.getExposureDetailState;
 export const getExposureDetailErrorObj = state => state.exposure.getExposureDetailErrorObj;
 export const getExposureDetail = state => state.exposure.exposureDetail;
+
+export const getSupportExposureState = state => state.exposure.supportExposureState;
+export const getSupportExposureErrorObj = state => state.exposure.supportExposureErrorObj;

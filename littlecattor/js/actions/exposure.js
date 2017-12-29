@@ -73,3 +73,27 @@ export function resetGetExposureDetailState() {
         type: 'resetGetExposureDetailState',
     }
 }
+
+// 支持曝光
+export function supportExposure(exposure_id, type) {
+    return {
+        type: 'supportExposureAction',
+        payload: {
+            request: {
+                url: API.supportExposure,
+                method: 'post',
+                data: {
+                    exposure_id,
+                    type
+                }
+            }
+        }
+    }
+}
+
+// 重制支持曝光状态
+export function resetSupportExposureState() {
+    return {
+        type: 'resetSupportExposureState',
+    }
+}
