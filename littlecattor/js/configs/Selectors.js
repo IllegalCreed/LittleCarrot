@@ -11,6 +11,13 @@ export const getIsLogin = state => state.user.isLogin;
 export const getLoginState = state => state.user.loginState;
 export const getLoginErrorMsg = state => state.user.loginErrorObj;
 
+export const getUpdateUserInfoState = state => state.user.updateUserInfoState;
+export const getUpdateUserInfoErrorObj = state => state.user.updateUserInfoErrorObj;
+
+export const getUserInfoState = state => state.user.getUserInfoState;
+export const getUserInfoErrorObj = state => state.user.getUserInfoErrorObj;
+export const getUserInfo = state => state.user.userInfo;
+
 /** 通告相关 */
 export const getCircularListState = state => state.circular.getCircularListState;
 export const getCircularListErrorObj = state => state.circular.getCircularListErrorObj;

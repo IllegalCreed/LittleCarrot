@@ -16,10 +16,27 @@ import {
 const Item = List.Item;
 const Brief = Item.Brief;
 
+import Toast, { DURATION } from 'react-native-easy-toast';
+import { dateFormat } from 'dateHelper';
+
 import { NavigationActions } from 'react-navigation';
 import { Spacing } from 'AntDesignConfig';
+import ScreenConfig from 'ScreenConfig';
 
-export default class MinePage extends Component {
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import {
+  getUserInfoState,
+  getUserInfoErrorObj,
+  getUserInfo,
+} from 'Selectors';
+
+import Actions from 'Actions';
+import {
+  requestState
+} from 'ReducerCommon';
+
+export class MinePage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
     return {
@@ -36,10 +53,8 @@ export default class MinePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      avatarSource: {
-        url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg'
-      },
     }
+    this.props.dispatch(Actions.getUserInfo());
   }
 
   componentDidMount() {
@@ -65,9 +80,9 @@ export default class MinePage extends Component {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <View style={styles.userHeader}>
-            <Image source={this.state.avatarSource} style={styles.avatar} />
+            <Image source={{ url: this.props.userInfo.avatar_url + '?x-oss-process=style/400' }} style={styles.avatar} />
           </View>
-          <Text style={{ marginTop: Spacing.small, color: 'white', fontSize: 18, fontWeight: 'bold' }}>小萝卜</Text>
+          <Text style={{ marginTop: Spacing.small, color: 'white', fontSize: 18, fontWeight: 'bold' }}>{this.props.userInfo.nickname}</Text>
         </View>
 
         <List>
@@ -123,3 +138,23 @@ const styles = StyleSheet.create({
     height: 80
   }
 });
+
+
+const MinePageSelector = createSelector(
+  [
+    getUserInfoState,
+    getUserInfoErrorObj,
+    getUserInfo,
+  ], (
+    getUserInfoState,
+    getUserInfoError,
+    userInfo,
+  ) => {
+    return {
+      getUserInfoState,
+      getUserInfoError: getUserInfoError ? getUserInfoError.msg : '',
+      userInfo,
+    };
+  });
+
+export default connect(MinePageSelector)(MinePage);
