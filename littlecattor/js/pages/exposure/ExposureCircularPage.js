@@ -16,9 +16,30 @@ import {
   Tag,
 } from 'antd-mobile';
 
-import { NavigationActions } from 'react-navigation';
+import Toast, { DURATION } from 'react-native-easy-toast';
+import { dateFormat } from 'dateHelper';
 
-export default class ExposureCircularPage extends Component {
+import { NavigationActions } from 'react-navigation';
+import { Spacing } from 'AntDesignConfig';
+import ScreenConfig from 'ScreenConfig';
+
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import {
+  getFakeCircularListState,
+  getFakeCircularListErrorObj,
+  getFakeCircularList,
+  getCircularTagListState,
+  getCircularTagListErrorObj,
+  getTagList,
+} from 'Selectors';
+
+import Actions from 'Actions';
+import {
+  requestState
+} from 'ReducerCommon';
+
+export class ExposureCircularPage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
     return {
@@ -29,25 +50,63 @@ export default class ExposureCircularPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      circularList: []
+      refreshing: false,
     }
+
+    this.data = {
+      lockMore: false,
+      page_index: 0,
+      page_size: 3,
+    }
+
+    this.refreshDatas();
   }
 
   componentDidMount() {
-    for (let i = 0; i <= 10; i++) {
-      this.state.circularList.push({
-        title: '这是一个标题',
-        tag: '标签',
-        price: '1000',
-        publisher: '发布人',
-        createTime: '2000-01-01',
-        type:'色情'
-      })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.circularListState !== nextProps.circularListState) {
+      switch (nextProps.circularListState) {
+        case requestState.FAIL:
+          nextProps.dispatch(Actions.resetGetFakeCircularListState());
+          break;
+        case requestState.LOADING:
+          break;
+        case requestState.SUCCESS:
+          nextProps.dispatch(Actions.resetGetFakeCircularListState());
+          this.data.lockMore = false;
+          break;
+        case requestState.IDLE:
+          break;
+        default:
+          break;
+      }
     }
   }
 
-  navigateTo = (routeName) => {
-    this.props.navigation.navigate(routeName)
+  getTagNameById = (id) => {
+    return this.props.tagList.find((tag) => {
+      return id == tag.id
+    }).name
+  }
+
+  loadMoreDatas = () => {
+    if (!this.data.lockMore) {
+      this.data.lockMore = true;
+      this.data.page_index++;
+      this.props.dispatch(Actions.getFakeCircularList(this.data.page_index, this.data.page_size));
+    }
+  }
+
+  refreshDatas = () => {
+    this.data.lockMore = false;
+    this.data.page_index = 0;
+    this.props.dispatch(Actions.getFakeCircularList(this.data.page_index, this.data.page_size));
+  }
+
+  navigateTo = (routeName, params) => {
+    this.props.navigation.navigate(routeName, params)
   }
 
   render() {
@@ -55,14 +114,14 @@ export default class ExposureCircularPage extends Component {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.state.circularList}
+          data={this.props.circularList}
           keyExtractor={(item, index) => {
             return index;
           }}
           renderItem={({ item, index }) =>
             <TouchableOpacity
               style={styles.circularItem}
-              onPress={this.navigateTo.bind(this, 'CircularDetail')}>
+              onPress={this.navigateTo.bind(this, 'CircularDetail', { circular_id: item.notice_id })}>
               <View style={{
                 paddingHorizontal: 15,
                 flexDirection: 'row',
@@ -70,7 +129,9 @@ export default class ExposureCircularPage extends Component {
                 justifyContent: 'space-between'
               }}>
                 <Text style={styles.circularTitle}>标题：{item.title}</Text>
-                <Tag small>{item.tag}</Tag>
+                <View style={styles.tag}>
+                  <Text style={styles.tagText}>{this.getTagNameById(item.tag_id)}</Text>
+                </View>
               </View>
               <View style={{
                 marginLeft: 15,
@@ -85,8 +146,10 @@ export default class ExposureCircularPage extends Component {
                 flex: 1,
                 justifyContent: 'space-between'
               }}>
-                <Tag selected>{item.type}</Tag>
-                <Text>发布时间：{item.createTime}</Text>
+                <View style={styles.tag}>
+                  <Text style={styles.tagTextBig}>{item.category_name_arr[0]}</Text>
+                </View>
+                <Text>发布时间：{dateFormat(new Date(item.create_time), 'yyyy-MM-dd')}</Text>
               </View>
               <View style={{
                 marginLeft: 15,
@@ -105,6 +168,10 @@ export default class ExposureCircularPage extends Component {
               </View>
             </TouchableOpacity>
           }
+          onEndReached={this.loadMoreDatas}
+          onEndReachedThreshold={0}
+          onRefresh={this.refreshDatas}
+          refreshing={this.state.refreshing}
         />
       </View>
     );
@@ -136,4 +203,54 @@ const styles = StyleSheet.create({
   circularTitle: {
     fontSize: 18,
   },
+  tag: {
+    paddingHorizontal: 5,
+    borderWidth: 1,
+    borderColor: '#F5317F',
+    borderRadius: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tagText: {
+    fontSize: 12,
+    color: '#F5317F',
+  },
+  tagTextBig: {
+    fontSize: 18,
+    color: '#F5317F',
+  }
 });
+
+
+const ExposureCircularPageSelector = createSelector(
+  [
+    getFakeCircularListState,
+    getFakeCircularListErrorObj,
+    getFakeCircularList,
+    getCircularTagListState,
+    getCircularTagListErrorObj,
+    getTagList,
+  ], (
+    circularListState,
+    circularListError,
+    circularList,
+    circularTagListState,
+    circularTagListError,
+    tagList,
+  ) => {
+    return {
+      circularListState,
+      circularListErrorMsg: circularListError ? circularListError.msg : '',
+      circularList,
+      circularTagListState,
+      circularTagListErrorMsg: circularTagListError ? circularTagListError.msg : '',
+      tagList: tagList.map((tag) => {
+        return {
+          name: tag.name,
+          id: tag.tag_id,
+        }
+      }),
+    };
+  });
+
+export default connect(ExposureCircularPageSelector)(ExposureCircularPage);

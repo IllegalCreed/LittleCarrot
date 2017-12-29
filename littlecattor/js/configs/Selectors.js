@@ -46,3 +46,7 @@ export const getExposureDetail = state => state.exposure.exposureDetail;
 
 export const getSupportExposureState = state => state.exposure.supportExposureState;
 export const getSupportExposureErrorObj = state => state.exposure.supportExposureErrorObj;
+
+export const getFakeCircularListState = state => state.circular.getFakeCircularListState;
+export const getFakeCircularListErrorObj = state => state.circular.getFakeCircularListErrorObj;
+export const getFakeCircularList = state => state.circular.fakeCircularList;

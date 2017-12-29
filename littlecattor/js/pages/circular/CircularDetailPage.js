@@ -95,7 +95,15 @@ class CircularDetailPage extends Component {
           <Item wrap>详细信息<Brief>{this.props.circularDetail.content}</Brief></Item>
         </List>
         <View style={styles.buttonContainer}>
-          <Button type="primary" onClick={this.navigateTo.bind(this, 'CircularAccusation')}>举报</Button>
+          {
+            this.props.circularDetail.is_report || this.props.circularDetail.state == -1 ?
+              null :
+              <Button
+                type="primary"
+                onClick={this.navigateTo.bind(this, 'CircularAccusation')}>
+                举报
+              </Button>
+          }
           <Button style={{ marginTop: Spacing.small }} type="ghost">分享</Button>
         </View>
       </View>

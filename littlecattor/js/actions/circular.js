@@ -95,3 +95,28 @@ export function resetGetCircularDetailState() {
     }
 }
 
+// 获取假通告列表
+export function getFakeCircularList(page_index, page_size) {
+    return {
+        type: 'getFakeCircularListAction',
+        payload: {
+            request: {
+                url: API.getCircularList,
+                method: 'post',
+                data: {
+                    page_index,
+                    page_size,
+                    state: -1
+                }
+            }
+        }
+    }
+}
+
+// 重置获取假通告列表状态
+export function resetGetFakeCircularListState() {
+    return {
+        type: 'resetGetFakeCircularListState',
+    }
+}
+

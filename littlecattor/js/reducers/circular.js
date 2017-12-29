@@ -11,6 +11,9 @@ export const InitialCircularState = {
     getCircularListState: requestState.IDLE,
     getCircularListErrorObj: null,
 
+    getFakeCircularListState: requestState.IDLE,
+    getFakeCircularListErrorObj: null,
+
     getCircularTagListState: requestState.IDLE,
     getCircularTagListErrorObj: null,
 
@@ -21,6 +24,7 @@ export const InitialCircularState = {
     getCircularDetailErrorObj: null,
 
     circularList: [],
+    fakeCircularList: [],
     tagList: [],
     circularDetail: {},
 };
@@ -62,12 +66,47 @@ export function circular(state = InitialCircularState, action) {
                 getCircularListState: requestState.IDLE,
             });
 
+        /* getFakeCircularList */
+        case 'getFakeCircularListAction':
+            return Object.assign({}, state, {
+                getFakeCircularListState: requestState.LOADING,
+            })
+        case 'getFakeCircularListAction_SUCCESS':
+            if (response && response.res_code == 1) {
+                if (action.meta.previousAction.payload.request.data.page_index == 0) {
+                    return Object.assign({}, state, {
+                        getFakeCircularListState: requestState.SUCCESS,
+                        fakeCircularList: response.msg
+                    });
+                } else {
+                    return Object.assign({}, state, {
+                        getFakeCircularListState: requestState.SUCCESS,
+                        fakeCircularList: state.fakeCircularList.concat(response.msg)
+                    });
+                }
+            } else {
+                return handleReducerError(action.type, state, response, {
+                    getFakeCircularListState: requestState.FAIL,
+                    getFakeCircularListErrorObj: response,
+                });
+            }
+        case 'getFakeCircularListAction_FAIL':
+            return handleReducerError(action.type, state, response, {
+                getFakeCircularListState: requestState.FAIL,
+                getFakeCircularListErrorObj: action.error,
+            });
+        case 'resetGetFakeCircularListState':
+            return Object.assign({}, state, {
+                getFakeCircularListState: requestState.IDLE,
+            });
+
         /* getCircularTagList */
         case 'getCircularTagListAction':
             return Object.assign({}, state, {
                 getCircularTagListState: requestState.LOADING,
             })
         case 'getCircularTagListAction_SUCCESS':
+            console.log('getCircularTagListAction_SUCCESS')
             if (response && response.res_code == 1) {
                 return Object.assign({}, state, {
                     getCircularTagListState: requestState.SUCCESS,
