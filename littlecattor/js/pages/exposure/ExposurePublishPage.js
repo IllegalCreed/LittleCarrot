@@ -118,7 +118,6 @@ export class ExposurePublishPage extends Component {
           if (!nextProps.publishExposureErrorMsg) {
             this.publishToast.show('发布失败');
           } else {
-            console.log(nextProps.publishExposureErrorMsg)
             this.publishToast.show('发布失败，错误：' + nextProps.publishExposureErrorMsg);
           }
           nextProps.dispatch(Actions.resetPublishExposureState());
@@ -172,7 +171,7 @@ export class ExposurePublishPage extends Component {
         AliyunOSS.asyncUpload('radish', fileName, path).then(() => {
           this.setState({
             imageData: this.state.imageData.concat([{
-              url: 'https://radish.oss-cn-beijing.aliyuncs.com/' + fileName,
+              url: 'https://radish.oss-cn-beijing.aliyuncs.com/' + fileName + '?x-oss-process=style/400',
               id: Math.floor(Math.random() * (10001)),
             }]),
           });

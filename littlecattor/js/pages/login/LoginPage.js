@@ -61,7 +61,6 @@ class LoginPage extends Component {
           if (!nextProps.loginErrorMsg) {
             this.loginToast.show('登录失败');
           } else {
-            console.log(nextProps.loginErrorMsg)
             this.loginToast.show('登录失败，错误：' + nextProps.loginErrorMsg);
           }
           nextProps.dispatch(Actions.resetLoginState());

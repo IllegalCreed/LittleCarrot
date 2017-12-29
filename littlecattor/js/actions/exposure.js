@@ -97,3 +97,26 @@ export function resetSupportExposureState() {
         type: 'resetSupportExposureState',
     }
 }
+
+// 搜索微信号
+export function searchWechat(wx) {
+    return {
+        type: 'searchWechatAction',
+        payload: {
+            request: {
+                url: API.searchWechat,
+                method: 'post',
+                data: {
+                    wx
+                }
+            }
+        }
+    }
+}
+
+// 重制搜索微信号状态
+export function resetSearchWechatState() {
+    return {
+        type: 'resetSearchWechatState',
+    }
+}

@@ -135,8 +135,6 @@ export default class UserInfoPage extends Component {
 
 	selectHeader = () => {
 		ImagePicker.showImagePicker(options, (response) => {
-			console.log('Response = ', response);
-
 			if (response.didCancel) {
 				console.log('User cancelled image picker');
 			}

@@ -71,7 +71,6 @@ class CircularPublishPage extends Component {
           if (!nextProps.publishCircularErrorMsg) {
             this.publishToast.show('发布失败');
           } else {
-            console.log(nextProps.publishCircularErrorMsg)
             this.publishToast.show('发布失败，错误：' + nextProps.publishCircularErrorMsg);
           }
           nextProps.dispatch(Actions.resetPublishCircularState());

@@ -92,7 +92,6 @@ export class CircularAccusationPage extends Component {
           if (!nextProps.addAccusationErrorMsg) {
             this.publishToast.show('发布失败');
           } else {
-            console.log(nextProps.addAccusationErrorMsg)
             this.publishToast.show('发布失败，错误：' + nextProps.addAccusationErrorMsg);
           }
           nextProps.dispatch(Actions.resetAddAccusationState());
@@ -146,7 +145,7 @@ export class CircularAccusationPage extends Component {
         AliyunOSS.asyncUpload('radish', fileName, path).then(() => {
           this.setState({
             imageData: this.state.imageData.concat([{
-              url: 'https://radish.oss-cn-beijing.aliyuncs.com/' + fileName,
+              url: 'https://radish.oss-cn-beijing.aliyuncs.com/' + fileName + '?x-oss-process=style/400',
               id: Math.floor(Math.random() * (10001)),
             }]),
           });

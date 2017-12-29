@@ -23,4 +23,5 @@ export default API = {
   getExposureDetail:'exposure/getDetail',
   publishExposure:'exposure/addExposure',
   supportExposure:'exposure/setMyAttitude',
+  searchWechat:'exposure/dishonestySearch',
 }

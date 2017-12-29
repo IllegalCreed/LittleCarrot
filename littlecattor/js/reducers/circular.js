@@ -106,7 +106,6 @@ export function circular(state = InitialCircularState, action) {
                 getCircularTagListState: requestState.LOADING,
             })
         case 'getCircularTagListAction_SUCCESS':
-            console.log('getCircularTagListAction_SUCCESS')
             if (response && response.res_code == 1) {
                 return Object.assign({}, state, {
                     getCircularTagListState: requestState.SUCCESS,
@@ -167,7 +166,6 @@ export function circular(state = InitialCircularState, action) {
                     circularDetail: response.msg
                 });
             } else {
-                console.log(response)
                 return handleReducerError(action.type, state, response, {
                     getCircularDetailState: requestState.FAIL,
                     getCircularDetailErrorObj: response,

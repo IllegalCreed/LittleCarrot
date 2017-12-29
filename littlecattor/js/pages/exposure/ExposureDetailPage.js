@@ -168,13 +168,12 @@ const ExposureDetailPageSelector = createSelector(
     supportExposureState,
     supportExposureError
   ) => {
-    console.log(exposureDetail)
     if (exposureDetail.img_url_arr && typeof (exposureDetail.img_url_arr) == 'string') {
       exposureDetail.img_url_arr = JSON.parse(exposureDetail.img_url_arr)
       if (exposureDetail.img_url_arr.length > 0) {
         exposureDetail.img_url_arr = exposureDetail.img_url_arr.map(item => {
           return {
-            url: item,
+            url: item + '?x-oss-process=style/400',
             id: Math.floor(Math.random() * (10001)),
           }
         })

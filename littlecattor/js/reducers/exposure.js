@@ -20,8 +20,12 @@ export const InitialExposureState = {
     supportExposureState: requestState.IDLE,
     supportExposureErrorObj: null,
 
+    searchWechatState: requestState.IDLE,
+    searchWechatErrorObj: null,
+
     exposureList: [],
     exposureDetail: {},
+    wechatList: [],
 };
 
 export function exposure(state = InitialExposureState, action) {
@@ -121,7 +125,6 @@ export function exposure(state = InitialExposureState, action) {
             })
         case 'supportExposureAction_SUCCESS':
             if (response && response.res_code == 1) {
-                console.log(response)
                 return Object.assign({}, state, {
                     supportExposureState: requestState.SUCCESS,
                 });
@@ -139,6 +142,33 @@ export function exposure(state = InitialExposureState, action) {
         case 'resetSupportExposureState':
             return Object.assign({}, state, {
                 supportExposureState: requestState.IDLE,
+            })
+
+        /* searchWechat */
+        case 'searchWechatAction':
+            return Object.assign({}, state, {
+                searchWechatState: requestState.LOADING,
+            })
+        case 'searchWechatAction_SUCCESS':
+            if (response && response.res_code == 1) {
+                return Object.assign({}, state, {
+                    searchWechatState: requestState.SUCCESS,
+                    wechatList: response.msg
+                });
+            } else {
+                return handleReducerError(action.type, state, response, {
+                    searchWechatState: requestState.FAIL,
+                    searchWechatErrorObj: response,
+                });
+            }
+        case 'searchWechatAction_FAIL':
+            return handleReducerError(action.type, state, response, {
+                searchWechatState: requestState.FAIL,
+                searchWechatErrorObj: action.error,
+            });
+        case 'resetSearchWechatState':
+            return Object.assign({}, state, {
+                searchWechatState: requestState.IDLE,
             })
 
         default:
