@@ -20,6 +20,8 @@ export default API = {
 
   getAccusationTypeList: 'report/getReportCategory',
   addAccusation:'report/addReport',
+  getMyAccusationList:'report/getMyReportList',
+  getAccusationDetail:'report/getReportDetail',
 
   getExposureList:'exposure/getList',
   getExposureDetail:'exposure/getDetail',

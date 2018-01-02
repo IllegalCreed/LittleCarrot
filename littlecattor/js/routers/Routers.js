@@ -15,6 +15,9 @@ import MinePage from 'MinePage';
 import UserInfoPage from 'UserInfoPage';
 import MyCircularPage from 'MyCircularPage';
 import MyExposurePage from 'MyExposurePage';
+import MyAccusationPage from 'MyAccusationPage';
+import AccusationDetailPage from 'AccusationDetailPage';
+import AboutPage from 'AboutPage';
 
 import ExposurePublishPage from 'ExposurePublishPage';
 import ExposurePublishResultPage from 'ExposurePublishResultPage';
@@ -46,7 +49,7 @@ export const ExposureNavigator = TabNavigator({
 		swipeEnabled: false,
 		animationEnabled: true,
 		tabBarOptions: {
-			style:{paddingTop:20}
+			style: { paddingTop: 20 }
 		}
 	})
 
@@ -77,7 +80,7 @@ export const HomeNavigator = TabNavigator({
 		animationEnabled: true,
 		tabBarOptions: {
 			activeTintColor: '#f5317f',
-			labelStyle:{fontSize:12}
+			labelStyle: { fontSize: 12 }
 		}
 	})
 
@@ -105,6 +108,15 @@ export const RootNavigator = StackNavigator({
 	},
 	MyExposure: {
 		screen: MyExposurePage,
+	},
+	About:{
+		screen: AboutPage,
+	},
+	MyAccusation: {
+		screen: MyAccusationPage,
+	},
+	AccusationDetail: {
+		screen: AccusationDetailPage,
 	},
 	ExposurePublish: {
 		screen: ExposurePublishPage,

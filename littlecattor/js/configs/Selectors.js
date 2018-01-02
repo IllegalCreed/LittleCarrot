@@ -47,6 +47,14 @@ export const getAddAccusationState = state => state.accusation.addAccusationStat
 export const getAddAccusationErrorObj = state => state.accusation.addAccusationErrorObj;
 export const getAccusationTypes = state => state.accusation.accusationTypes;
 
+export const getMyAccusationListState = state => state.accusation.getMyAccusationListState;
+export const getMyAccusationListErrorObj = state => state.accusation.getMyAccusationListErrorObj;
+export const getMyAccusationList = state => state.accusation.myAccusationList;
+
+export const getAccusationDetailState = state => state.accusation.getAccusationDetailState;
+export const getAccusationDetailErrorObj = state => state.accusation.getAccusationDetailErrorObj;
+export const getAccusationDetail = state => state.accusation.accusationDetail;
+
 /** 曝光相关 */
 export const getExposureListState = state => state.exposure.getExposureListState;
 export const getExposureListErrorObj = state => state.exposure.getExposureListErrorObj;

@@ -14,7 +14,15 @@ export const InitialAccusationState = {
     addAccusationState: requestState.IDLE,
     addAccusationErrorObj: null,
 
-    accusationTypes: []
+    getMyAccusationListState: requestState.IDLE,
+    getMyAccusationListErrorObj: null,
+
+    getAccusationDetailState: requestState.IDLE,
+    getAccusationDetailErrorObj: null,
+
+    accusationTypes: [],
+    myAccusationList: [],
+    accusationDetail: {},
 };
 
 
@@ -73,6 +81,68 @@ export function accusation(state = InitialAccusationState, action) {
             return Object.assign({}, state, {
                 addAccusationState: requestState.IDLE,
             });
+
+        /* getMyAccusationList */
+        case 'getMyAccusationListAction':
+            return Object.assign({}, state, {
+                getMyAccusationListState: requestState.LOADING,
+            })
+        case 'getMyAccusationListAction_SUCCESS':
+            if (response && response.res_code == 1) {
+                if (action.meta.previousAction.payload.request.data.page_index == 0) {
+                    return Object.assign({}, state, {
+                        getMyAccusationListState: requestState.SUCCESS,
+                        myAccusationList: response.msg
+                    });
+                } else {
+                    return Object.assign({}, state, {
+                        getMyAccusationListState: requestState.SUCCESS,
+                        myAccusationList: state.myAccusationList.concat(response.msg)
+                    });
+                }
+            } else {
+                return handleReducerError(action.type, state, response, {
+                    getMyAccusationListState: requestState.FAIL,
+                    getMyAccusationListErrorObj: response,
+                });
+            }
+        case 'getMyAccusationListAction_FAIL':
+            return handleReducerError(action.type, state, response, {
+                getMyAccusationListState: requestState.FAIL,
+                getMyAccusationListErrorObj: action.error,
+            });
+        case 'resetGetMyAccusationListState':
+            return Object.assign({}, state, {
+                getMyAccusationListState: requestState.IDLE,
+            });
+
+        /* getAccusationDetail */
+        case 'getAccusationDetailAction':
+            return Object.assign({}, state, {
+                getAccusationDetailState: requestState.LOADING,
+            })
+        case 'getAccusationDetailAction_SUCCESS':
+            if (response && response.res_code == 1) {
+                return Object.assign({}, state, {
+                    getAccusationDetailState: requestState.SUCCESS,
+                    accusationDetail: response.msg
+                });
+            } else {
+                return handleReducerError(action.type, state, response, {
+                    getAccusationDetailState: requestState.FAIL,
+                    getAccusationDetailErrorObj: response,
+                });
+            }
+        case 'getAccusationDetailAction_FAIL':
+            return handleReducerError(action.type, state, response, {
+                getAccusationDetailState: requestState.FAIL,
+                getAccusationDetailErrorObj: action.error,
+            });
+        case 'resetGetAccusationDetailState':
+            return Object.assign({}, state, {
+                getAccusationDetailState: requestState.IDLE,
+            })
+
         default:
             return state;
     }

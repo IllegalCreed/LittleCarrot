@@ -235,7 +235,6 @@ const MyCircularPageSelector = createSelector(
     circularTagListError,
     tagList,
   ) => {
-    console.log(myCircularList);
     return {
       myCircularListState,
       myCircularListErrorMsg: myCircularListError ? myCircularListError.msg : '',

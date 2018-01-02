@@ -88,10 +88,10 @@ export class MinePage extends Component {
         <List>
           <Item onClick={this.navigateTo.bind(this, 'UserInfo', { saveAction: 'Back' })} arrow='horizontal'>个人信息</Item>
           <Item onClick={this.navigateTo.bind(this, 'MyCircular')}  arrow='horizontal'>我发布的通告</Item>
-          <Item arrow='horizontal'>我的举报</Item>
+          <Item onClick={this.navigateTo.bind(this, 'MyAccusation')} arrow='horizontal'>我的举报</Item>
           <Item onClick={this.navigateTo.bind(this, 'MyExposure')} arrow='horizontal'>我的曝光</Item>
           <Item extra={'2333'}>我的萝卜</Item>
-          <Item arrow='horizontal'>关于平台</Item>
+          <Item onClick={this.navigateTo.bind(this, 'About')} arrow='horizontal'>关于平台</Item>
         </List>
 
         <View style={styles.buttonContainer}>
