@@ -44,10 +44,8 @@ var options = {
   cancelButtonTitle: "取消",
   takePhotoButtonTitle: "拍照上传",
   chooseFromLibraryButtonTitle: "从相册选择",
-  storageOptions: {
-    skipBackup: true,
-    path: 'images'
-  },
+  mediaType: 'photo',
+  allowsEditing: true,
 };
 
 function guid() {

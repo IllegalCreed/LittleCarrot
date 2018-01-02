@@ -50,11 +50,19 @@ import {
 
 const options = {
   title: '选择头像',
+  cancelButtonTitle: "取消",
   takePhotoButtonTitle: '拍照',
   chooseFromLibraryButtonTitle: '从相册选择',
   mediaType: 'photo',
   allowsEditing: true,
 };
+
+function guid() {
+  function S4() {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+  }
+  return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+}
 
 export class UserInfoPage extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -105,6 +113,7 @@ export class UserInfoPage extends Component {
         ]
       ],
       BWH: ['80', '60', '90'],
+      avatar_url: null,
       avatarSource: null,
       keyboardAvoidingHeight: 0,
     }
@@ -124,14 +133,39 @@ export class UserInfoPage extends Component {
           nextProps.dispatch(Actions.resetGetUserInfoState());
           this.setState({
             nickName: nextProps.userInfo.nickname,
-            height: nextProps.userInfo.height,
-            weight: nextProps.userInfo.weight,
-            shoeSize: nextProps.userInfo.shoe_size,
+            height: nextProps.userInfo.height.toString(),
+            weight: nextProps.userInfo.weight.toString(),
+            shoeSize: nextProps.userInfo.shoe_size.toString(),
             description: nextProps.userInfo.description,
             sex: [nextProps.userInfo.sex.toString()],
             BWH: [nextProps.userInfo.bust.toString(), nextProps.userInfo.waist.toString(), nextProps.userInfo.hips.toString()],
+            avatar_url: nextProps.userInfo.avatar_url,
             avatarSource: { url: nextProps.userInfo.avatar_url + '?x-oss-process=style/400' },
           })
+          break;
+        case requestState.IDLE:
+          break;
+        default:
+          break;
+      }
+    }
+
+    if (this.props.updateUserInfoState !== nextProps.updateUserInfoState) {
+      switch (nextProps.updateUserInfoState) {
+        case requestState.FAIL:
+          if (!nextProps.getUserInfoErrorMsg) {
+            this.saveToast.show('保存失败');
+          } else {
+            this.saveToast.show('保存失败，错误：' + nextProps.getUserInfoErrorMsg);
+          }
+          nextProps.dispatch(Actions.resetUpdateUserInfoState());
+          break;
+        case requestState.LOADING:
+          break;
+        case requestState.SUCCESS:
+          this.saveToast.show('保存成功');
+          nextProps.dispatch(Actions.resetUpdateUserInfoState());
+          this.navigateTo();
           break;
         case requestState.IDLE:
           break;
@@ -171,7 +205,7 @@ export class UserInfoPage extends Component {
 
   componentDidMount() {
     let BWH = []
-    for (let i = 50; i <= 100; i++) {
+    for (let i = 0; i <= 100; i++) {
       BWH.push({
         label: i.toString(),
         value: i.toString()
@@ -184,6 +218,21 @@ export class UserInfoPage extends Component {
   }
 
   save = () => {
+    console.log(this.state)
+    this.props.dispatch(Actions.updateUserInfo(
+      this.state.avatar_url,
+      this.state.nickName,
+      this.state.sex[0],
+      this.state.height,
+      this.state.weight,
+      this.state.BWH[0],
+      this.state.BWH[1],
+      this.state.BWH[2],
+      this.state.shoeSize,
+      this.state.description));
+  }
+
+  navigateTo = () => {
     var { saveAction } = this.props.navigation.state.params;
     if (saveAction == 'Home') {
       this.props.navigation.navigate(saveAction)
@@ -217,6 +266,7 @@ export class UserInfoPage extends Component {
         let fileName = "avatar/" + guid() + ".png";
         AliyunOSS.asyncUpload('radish', fileName, path).then(() => {
           this.setState({
+            avatar_url: 'https://radish.oss-cn-beijing.aliyuncs.com/' + fileName,
             avatarSource: { url: 'https://radish.oss-cn-beijing.aliyuncs.com/' + fileName + '?x-oss-process=style/400' }
           })
           Toast.hide();
@@ -310,6 +360,7 @@ export class UserInfoPage extends Component {
               }}
             />
           </List>
+          <EToast ref={saveToast => this.saveToast = saveToast} />
           <View style={styles.buttonContainer}>
             <Button type="primary" disabled={this.state.saveButtonDisabled} onClick={this.save}>保存</Button>
           </View>
@@ -365,10 +416,10 @@ const UserInfoPageSelector = createSelector(
   ) => {
     return {
       getUserInfoState,
-      getUserInfoError: getUserInfoError ? getUserInfoError.msg : '',
+      getUserInfoErrorMsg: getUserInfoError ? getUserInfoError.msg : '',
       userInfo,
       updateUserInfoState,
-      updateUserInfoError: updateUserInfoError ? updateUserInfoError.msg : '',
+      updateUserInfoErrorMsg: updateUserInfoError ? updateUserInfoError.msg : '',
     };
   });
 
