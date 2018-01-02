@@ -13,6 +13,8 @@ import ForgetPasswordPage from 'ForgetPasswordPage';
 
 import MinePage from 'MinePage';
 import UserInfoPage from 'UserInfoPage';
+import MyCircularPage from 'MyCircularPage';
+import MyExposurePage from 'MyExposurePage';
 
 import ExposurePublishPage from 'ExposurePublishPage';
 import ExposurePublishResultPage from 'ExposurePublishResultPage';
@@ -97,6 +99,12 @@ export const RootNavigator = StackNavigator({
 	},
 	UserInfo: {
 		screen: UserInfoPage,
+	},
+	MyCircular: {
+		screen: MyCircularPage,
+	},
+	MyExposure: {
+		screen: MyExposurePage,
 	},
 	ExposurePublish: {
 		screen: ExposurePublishPage,

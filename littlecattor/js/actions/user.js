@@ -103,3 +103,51 @@ export function resetGetUserInfoState() {
         type: 'resetGetUserInfoState',
     }
 }
+
+// 获取我的通告列表
+export function getMyCircularList(page_index, page_size) {
+    return {
+        type: 'getMyCircularListAction',
+        payload: {
+            request: {
+                url: API.getMyCircularList,
+                method: 'post',
+                data: {
+                    page_index,
+                    page_size
+                }
+            }
+        }
+    }
+}
+
+// 重置获取我的通告列表状态
+export function resetGetMyCircularListState() {
+    return {
+        type: 'resetGetMyCircularListState',
+    }
+}
+
+// 获取我的曝光列表
+export function getMyExposureList(page_index, page_size) {
+    return {
+        type: 'getMyExposureListAction',
+        payload: {
+            request: {
+                url: API.getMyExposureList,
+                method: 'post',
+                data: {
+                    page_index,
+                    page_size
+                }
+            }
+        }
+    }
+}
+
+// 重置获取我的曝光列表状态
+export function resetGetMyExposureListState() {
+    return {
+        type: 'resetGetMyExposureListState',
+    }
+}

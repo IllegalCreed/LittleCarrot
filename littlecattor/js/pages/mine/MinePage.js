@@ -84,12 +84,12 @@ export class MinePage extends Component {
           </View>
           <Text style={{ marginTop: Spacing.small, color: 'white', fontSize: 18, fontWeight: 'bold' }}>{this.props.userInfo.nickname}</Text>
         </View>
-
+        
         <List>
           <Item onClick={this.navigateTo.bind(this, 'UserInfo', { saveAction: 'Back' })} arrow='horizontal'>个人信息</Item>
-          <Item arrow='horizontal'>我的通告</Item>
+          <Item onClick={this.navigateTo.bind(this, 'MyCircular')}  arrow='horizontal'>我发布的通告</Item>
           <Item arrow='horizontal'>我的举报</Item>
-          <Item arrow='horizontal'>我的曝光</Item>
+          <Item onClick={this.navigateTo.bind(this, 'MyExposure')} arrow='horizontal'>我的曝光</Item>
           <Item extra={'2333'}>我的萝卜</Item>
           <Item arrow='horizontal'>关于平台</Item>
         </List>

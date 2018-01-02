@@ -10,6 +10,8 @@ export default API = {
   login: 'user/login',
   updateUserInfo: 'user/updateUserInfo',
   getUserInfo: 'user/getUserInfo',
+  getMyCircularList: 'user/getMyNoticeList',
+  getMyExposureList: 'user/getMyExposureList',
 
   getCircularList: 'notice/getList',
   getCircularTags: 'notice/getTagList',

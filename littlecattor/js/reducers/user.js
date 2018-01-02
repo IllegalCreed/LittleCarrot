@@ -17,10 +17,18 @@ export const InitialUserState = {
     getUserInfoState: requestState.IDLE,
     getUserInfoErrorObj: null,
 
+    getMyCircularListState: requestState.IDLE,
+    getMyCircularListErrorObj: null,
+
+    getMyExposureListState: requestState.IDLE,
+    getMyExposureListErrorObj: null,
+
     isLogin: false,
     phone: null,
     token: null,
     userInfo: {},
+    myCircularList:[],
+    myExposureList:[],
 };
 
 export function user(state = InitialUserState, action) {
@@ -112,6 +120,74 @@ export function user(state = InitialUserState, action) {
         case 'resetGetUserInfoState':
             return Object.assign({}, state, {
                 getUserInfoState: requestState.IDLE,
+            });
+
+        /* getMyCircularList */
+        case 'getMyCircularListAction':
+            return Object.assign({}, state, {
+                getMyCircularListState: requestState.LOADING,
+            })
+        case 'getMyCircularListAction_SUCCESS':
+            if (response && response.res_code == 1) {
+                if (action.meta.previousAction.payload.request.data.page_index == 0) {
+                    return Object.assign({}, state, {
+                        getMyCircularListState: requestState.SUCCESS,
+                        myCircularList: response.msg
+                    });
+                } else {
+                    return Object.assign({}, state, {
+                        getMyCircularListState: requestState.SUCCESS,
+                        myCircularList: state.myCircularList.concat(response.msg)
+                    });
+                }
+            } else {
+                return handleReducerError(action.type, state, response, {
+                    getMyCircularListState: requestState.FAIL,
+                    getMyCircularListErrorObj: response,
+                });
+            }
+        case 'getMyCircularListAction_FAIL':
+            return handleReducerError(action.type, state, response, {
+                getMyCircularListState: requestState.FAIL,
+                getMyCircularListErrorObj: action.error,
+            });
+        case 'resetGetMyCircularListState':
+            return Object.assign({}, state, {
+                getMyCircularListState: requestState.IDLE,
+            });
+
+        /* getMyExposureList */
+        case 'getMyExposureListAction':
+            return Object.assign({}, state, {
+                getMyExposureListState: requestState.LOADING,
+            })
+        case 'getMyExposureListAction_SUCCESS':
+            if (response && response.res_code == 1) {
+                if (action.meta.previousAction.payload.request.data.page_index == 0) {
+                    return Object.assign({}, state, {
+                        getMyExposureListState: requestState.SUCCESS,
+                        myExposureList: response.msg
+                    });
+                } else {
+                    return Object.assign({}, state, {
+                        getMyExposureListState: requestState.SUCCESS,
+                        myExposureList: state.myExposureList.concat(response.msg)
+                    });
+                }
+            } else {
+                return handleReducerError(action.type, state, response, {
+                    getMyExposureListState: requestState.FAIL,
+                    getMyExposureListErrorObj: response,
+                });
+            }
+        case 'getMyExposureListAction_FAIL':
+            return handleReducerError(action.type, state, response, {
+                getMyExposureListState: requestState.FAIL,
+                getMyExposureListErrorObj: action.error,
+            });
+        case 'resetGetMyExposureListState':
+            return Object.assign({}, state, {
+                getMyExposureListState: requestState.IDLE,
             });
 
         default:

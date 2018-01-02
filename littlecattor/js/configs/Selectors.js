@@ -18,6 +18,14 @@ export const getUserInfoState = state => state.user.getUserInfoState;
 export const getUserInfoErrorObj = state => state.user.getUserInfoErrorObj;
 export const getUserInfo = state => state.user.userInfo;
 
+export const getMyCircularListState = state => state.user.getMyCircularListState;
+export const getMyCircularListErrorObj = state => state.user.getMyCircularListErrorObj;
+export const getMyCircularList = state => state.user.myCircularList;
+
+export const getMyExposureListState = state => state.user.getMyExposureListState;
+export const getMyExposureListErrorObj = state => state.user.getMyExposureListErrorObj;
+export const getMyExposureList = state => state.user.myExposureList;
+
 /** 通告相关 */
 export const getCircularListState = state => state.circular.getCircularListState;
 export const getCircularListErrorObj = state => state.circular.getCircularListErrorObj;
