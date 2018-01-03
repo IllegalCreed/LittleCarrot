@@ -11,6 +11,9 @@ export const InitialUserState = {
     loginState: requestState.IDLE,
     loginErrorObj: null,
 
+    registerState: requestState.IDLE,
+    registerErrorObj: null,
+
     updateUserInfoState: requestState.IDLE,
     updateUserInfoErrorObj: null,
 
@@ -27,13 +30,21 @@ export const InitialUserState = {
     phone: null,
     token: null,
     userInfo: {},
-    myCircularList:[],
-    myExposureList:[],
+    myCircularList: [],
+    myExposureList: [],
 };
 
 export function user(state = InitialUserState, action) {
     const response = action.payload ? action.payload.data : null;
     switch (action.type) {
+        /* logout */
+        case 'logoutAction':
+            return Object.assign({}, state, {
+                isLogin: false,
+                phone: null,
+                token: null,
+                userInfo: {}
+            })
         /* login */
         case 'loginAction':
             return Object.assign({}, state, {
@@ -67,6 +78,67 @@ export function user(state = InitialUserState, action) {
         case 'resetLoginState':
             return Object.assign({}, state, {
                 loginState: requestState.IDLE,
+            });
+
+        /* register */
+        case 'registerAction':
+            return Object.assign({}, state, {
+                registerState: requestState.LOADING,
+            })
+        case 'registerAction_SUCCESS':
+            if (response && response.res_code == 1) {
+                return Object.assign({}, state, {
+                    registerState: requestState.SUCCESS,
+                    isLogin: true,
+                    token: response.msg,
+                    phone: action.meta.previousAction.phone
+                });
+            } else {
+                return handleReducerError(action.type, state, response, {
+                    registerState: requestState.FAIL,
+                    registerErrorObj: response,
+                    isLogin: false,
+                    token: null,
+                    phone: null,
+                });
+            }
+        case 'registerAction_FAIL':
+            return handleReducerError(action.type, state, response, {
+                registerState: requestState.FAIL,
+                registerErrorObj: action.error,
+                isLogin: false,
+                token: null,
+                phone: null,
+            });
+        case 'resetRegisterState':
+            return Object.assign({}, state, {
+                registerState: requestState.IDLE,
+            });
+
+        /* sendSMS */
+        case 'sendSMSAction':
+            return Object.assign({}, state, {
+                sendSMSState: requestState.LOADING,
+            })
+        case 'sendSMSAction_SUCCESS':
+            if (response && response.res_code == 1) {
+                return Object.assign({}, state, {
+                    sendSMSState: requestState.SUCCESS,
+                });
+            } else {
+                return handleReducerError(action.type, state, response, {
+                    sendSMSState: requestState.FAIL,
+                    sendSMSSErrorObj: response,
+                });
+            }
+        case 'sendSMSAction_FAIL':
+            return handleReducerError(action.type, state, response, {
+                sendSMSState: requestState.FAIL,
+                sendSMSSErrorObj: action.error,
+            });
+        case 'resetSendSMSState':
+            return Object.assign({}, state, {
+                sendSMSState: requestState.IDLE,
             });
 
         /* updateUserInfo */

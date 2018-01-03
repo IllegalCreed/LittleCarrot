@@ -15,6 +15,12 @@ export function sendSMS(phone) {
     }
 }
 
+export function resetSendSMSState() {
+    return {
+        type: 'resetSendSMSState',
+    }
+}
+
 export function register(phone, sms_code, pwd) {
     return {
         type: 'registerAction',
@@ -29,6 +35,12 @@ export function register(phone, sms_code, pwd) {
                 }
             }
         }
+    }
+}
+
+export function resetRegisterState() {
+    return {
+        type: 'resetRegisterState',
     }
 }
 
@@ -51,6 +63,12 @@ export function login(phone, pwd) {
 export function resetLoginState() {
     return {
         type: 'resetLoginState',
+    }
+}
+
+export function logout(){
+    return {
+        type: 'logoutAction',
     }
 }
 

@@ -11,6 +11,9 @@ export const getIsLogin = state => state.user.isLogin;
 export const getLoginState = state => state.user.loginState;
 export const getLoginErrorMsg = state => state.user.loginErrorObj;
 
+export const getRegisterState = state => state.user.registerState;
+export const getRegisterErrorObj = state => state.user.registerErrorObj;
+
 export const getUpdateUserInfoState = state => state.user.updateUserInfoState;
 export const getUpdateUserInfoErrorObj = state => state.user.updateUserInfoErrorObj;
 

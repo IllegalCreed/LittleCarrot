@@ -17,7 +17,7 @@ import {
 import Toast, { DURATION } from 'react-native-easy-toast'
 
 import { NavigationActions } from 'react-navigation';
-import { Spacing } from 'AntDesignConfig';
+import { Spacing, Colors } from 'AntDesignConfig';
 
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -70,8 +70,8 @@ class LoginPage extends Component {
           break;
         case requestState.SUCCESS:
           // 登录成功
-          this.navigateTo('Home');
           nextProps.dispatch(Actions.resetLoginState());
+          this.navigateTo('Home');
           break;
         case requestState.IDLE:
           this.setState({
@@ -102,7 +102,7 @@ class LoginPage extends Component {
     this.setState({
       loginButtonDisabled: true
     })
-    let phone = this.state.phone.replace(/\s+/g,"");
+    let phone = this.state.phone.replace(/\s+/g, "");
     this.props.dispatch(Actions.login(phone, this.state.pwd));
   }
 
@@ -110,35 +110,40 @@ class LoginPage extends Component {
     const { state } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Text style={styles.logo}>LOGO</Text>
-        <List style={{ alignSelf: 'stretch', marginTop: 64 }}>
-          <InputItem
-            type="phone"
-            placeholder='请输入手机号'
-            value={this.state.phone}
-            onChange={(val) => {
-              this.setState({
-                phone: val
-              })
-            }}
-            clear>手机号</InputItem>
-          <InputItem
-            type='password'
-            placeholder='请输入密码'
-            value={this.state.pwd}
-            onChange={(val) => {
-              this.setState({
-                pwd: val
-              })
-            }}
-            clear>密码</InputItem>
-        </List>
-        <Text onPress={this.navigateTo.bind(this, 'ForgetPassword')} style={styles.link}>忘记密码</Text>
-        <View style={styles.buttonContainer}>
-          <Button type="primary" disabled={this.state.loginButtonDisabled} onClick={this.login}>登录</Button>
-          <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.navigateTo.bind(this, 'Register')}>注册</Button>
+        <View style={styles.logoContainer}>
+          <Text style={styles.logo}>LOGO</Text>
         </View>
-        <Toast ref={loginToast => this.loginToast = loginToast} />
+        <View style={styles.bottomContainer}>
+          <List>
+            <InputItem
+              type="phone"
+              placeholder='请输入手机号'
+              value={this.state.phone}
+              onChange={(val) => {
+                this.setState({
+                  phone: val
+                })
+              }}
+              clear>手机号</InputItem>
+            <InputItem
+              type='password'
+              placeholder='请输入密码'
+              value={this.state.pwd}
+              onChange={(val) => {
+                this.setState({
+                  pwd: val
+                })
+              }}
+              clear>密码</InputItem>
+          </List>
+          <Text onPress={this.navigateTo.bind(this, 'ForgetPassword')} style={styles.link}>忘记密码</Text>
+
+          <View style={styles.buttonContainer}>
+            <Button type="primary" disabled={this.state.loginButtonDisabled} onClick={this.login}>登录</Button>
+            <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.navigateTo.bind(this, 'Register')}>注册</Button>
+          </View>
+          <Toast ref={loginToast => this.loginToast = loginToast} />
+        </View>
       </View>
     );
   }
@@ -148,32 +153,51 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
+    backgroundColor: Colors.Grey.t3,
+  },
+  logoContainer: {
+    flex: 2,
+    flexDirection: "column",
     alignItems: "center",
-    paddingTop: 128,
-    backgroundColor: '#f4f3fd',
+    justifyContent: "center",
   },
   logo: {
     fontSize: 48,
     fontWeight: 'bold',
   },
+
+  bottomContainer: {
+    flex: 3,
+    flexDirection: "column",
+  },
+
   link: {
-    color: '#108ee9',
+    color: Colors.Magenta.t6,
     marginTop: Spacing.middle,
     marginRight: Spacing.middle,
     alignSelf: 'flex-end',
   },
+
   buttonContainer: {
     flex: 1,
     flexDirection: "column",
-    alignSelf: 'stretch',
+    justifyContent: 'flex-end',
     paddingHorizontal: Spacing.middle,
-    marginTop: 64,
+    marginBottom: Spacing.large,
   },
 });
 
 const LoginPageSelector = createSelector(
-  [getIsLogin, getLoginState, getLoginErrorMsg],
-  (isLogin, loginState, loginError) => {
+  [
+    getIsLogin,
+    getLoginState,
+    getLoginErrorMsg
+  ],
+  (
+    isLogin,
+    loginState,
+    loginError
+  ) => {
     return {
       isLogin,
       loginState,

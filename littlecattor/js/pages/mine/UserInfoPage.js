@@ -140,7 +140,7 @@ export class UserInfoPage extends Component {
             sex: [nextProps.userInfo.sex.toString()],
             BWH: [nextProps.userInfo.bust.toString(), nextProps.userInfo.waist.toString(), nextProps.userInfo.hips.toString()],
             avatar_url: nextProps.userInfo.avatar_url,
-            avatarSource: { url: nextProps.userInfo.avatar_url + '?x-oss-process=style/400' },
+            avatarSource: { url: nextProps.userInfo.avatar_url ? nextProps.userInfo.avatar_url + '?x-oss-process=style/400' : '' },
           })
           break;
         case requestState.IDLE:
