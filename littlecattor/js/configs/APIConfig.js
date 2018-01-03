@@ -8,6 +8,7 @@ export default API = {
   sendSMS: 'sms/sendSMS',
   register: 'user/register',
   login: 'user/login',
+  resetPwd: 'user/resetPwd',
   updateUserInfo: 'user/updateUserInfo',
   getUserInfo: 'user/getUserInfo',
   getMyCircularList: 'user/getMyNoticeList',

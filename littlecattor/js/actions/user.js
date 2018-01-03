@@ -44,6 +44,29 @@ export function resetRegisterState() {
     }
 }
 
+export function resetPwd(phone, sms_code, pwd) {
+    return {
+        type: 'resetPwdAction',
+        payload: {
+            request: {
+                url: API.resetPwd,
+                method: 'post',
+                data: {
+                    phone,
+                    sms_code,
+                    pwd
+                }
+            }
+        }
+    }
+}
+
+export function resetResetPwdState() {
+    return {
+        type: 'resetResetPwdState',
+    }
+}
+
 export function login(phone, pwd) {
     return {
         type: 'loginAction',

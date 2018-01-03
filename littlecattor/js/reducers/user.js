@@ -14,6 +14,9 @@ export const InitialUserState = {
     registerState: requestState.IDLE,
     registerErrorObj: null,
 
+    resetPwdState: requestState.IDLE,
+    resetPwdErrorObj: null,
+
     updateUserInfoState: requestState.IDLE,
     updateUserInfoErrorObj: null,
 
@@ -113,6 +116,32 @@ export function user(state = InitialUserState, action) {
         case 'resetRegisterState':
             return Object.assign({}, state, {
                 registerState: requestState.IDLE,
+            });
+
+        /* resetPwd */
+        case 'resetPwdAction':
+            return Object.assign({}, state, {
+                resetPwdState: requestState.LOADING,
+            })
+        case 'resetPwdAction_SUCCESS':
+            if (response && response.res_code == 1) {
+                return Object.assign({}, state, {
+                    resetPwdState: requestState.SUCCESS,
+                });
+            } else {
+                return handleReducerError(action.type, state, response, {
+                    resetPwdState: requestState.FAIL,
+                    resetPwdErrorObj: response,
+                });
+            }
+        case 'resetPwdAction_FAIL':
+            return handleReducerError(action.type, state, response, {
+                resetPwdState: requestState.FAIL,
+                resetPwdErrorObj: action.error,
+            });
+        case 'resetResetPwdState':
+            return Object.assign({}, state, {
+                resetPwdState: requestState.IDLE,
             });
 
         /* sendSMS */

@@ -14,6 +14,9 @@ export const getLoginErrorMsg = state => state.user.loginErrorObj;
 export const getRegisterState = state => state.user.registerState;
 export const getRegisterErrorObj = state => state.user.registerErrorObj;
 
+export const getResetPwdState = state => state.user.resetPwdState;
+export const getResetPwdErrorObj = state => state.user.resetPwdErrorObj;
+
 export const getUpdateUserInfoState = state => state.user.updateUserInfoState;
 export const getUpdateUserInfoErrorObj = state => state.user.updateUserInfoErrorObj;
 
