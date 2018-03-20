@@ -24,11 +24,23 @@ import Reducers from 'Reducers';
 import {
 	InitialHelloState
 } from 'HelloReducer';
+import {
+	InitialUserState
+} from 'UserReducer';
 
 const helloFilter = createFilter(
 	'hello', 
 	[
 		'hello'
+	]
+);
+
+const userFilter = createFilter(
+	'user', 
+	[
+		'isLogin',
+		'phone',
+		'token',
 	]
 );
 

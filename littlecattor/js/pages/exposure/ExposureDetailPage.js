@@ -4,9 +4,13 @@
 
 import React, { Component } from 'react';
 import {
+  Alert,
   StyleSheet,
   Text,
-  View
+  View,
+  Modal,
+  Image,
+  TouchableWithoutFeedback
 } from 'react-native';
 import {
   List,
@@ -18,6 +22,7 @@ import {
 const Item = List.Item;
 const Brief = Item.Brief;
 
+import ImageViewer from 'react-native-image-zoom-viewer';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import { dateFormat } from 'dateHelper';
 
@@ -53,6 +58,8 @@ export class ExposureDetailPage extends Component {
     var { exposure_id } = this.props.navigation.state.params;
 
     this.state = {
+      modalVisible: false,
+      currentImageIndex: 0,
     };
 
     this.data = {
@@ -93,6 +100,13 @@ export class ExposureDetailPage extends Component {
     this.props.dispatch(Actions.supportExposure(this.data.exposureId, isSupport));
   }
 
+  showImage = (index, fs) => {
+    this.setState({
+      modalVisible: true,
+      currentImageIndex: index
+    })
+  }
+
   render() {
     const { state } = this.props.navigation;
     return (
@@ -107,7 +121,7 @@ export class ExposureDetailPage extends Component {
         <View style={{ marginLeft: 15 }}>
           <ImagePicker
             files={this.props.exposureDetail.img_url_arr}
-            onImageClick={(index, fs) => console.log(index, fs)}
+            onImageClick={this.showImage}
             selectable={false}
           />
         </View>
@@ -130,7 +144,22 @@ export class ExposureDetailPage extends Component {
         <View style={styles.buttonContainer}>
           <Button type="primary">告诉朋友</Button>
         </View>
-      </View>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+          }}>
+          <ImageViewer index={this.state.currentImageIndex} imageUrls={this.props.exposureDetail.img_url_arr}
+            onClick={() => {
+              this.setState({
+                modalVisible: false
+              })
+            }}
+          />
+        </Modal>
+      </View >
     );
   }
 }
@@ -151,6 +180,13 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignSelf: 'stretch',
     paddingHorizontal: Spacing.middle,
+  },
+  modalContainer: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: '#000000',
   },
 });
 

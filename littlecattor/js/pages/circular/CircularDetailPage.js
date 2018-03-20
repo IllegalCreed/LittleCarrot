@@ -39,6 +39,8 @@ import {
   requestState
 } from 'ReducerCommon';
 
+import * as wechat from 'react-native-wechat';
+
 class CircularDetailPage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
@@ -79,6 +81,20 @@ class CircularDetailPage extends Component {
     }
   }
 
+  share = () => {
+    wechat.isWXAppInstalled()
+      .then((isInstalled) => {
+        if (isInstalled) {
+          wechat.shareToSession({
+            type: 'text',
+            description: '我再小萝卜APP上找到了一个不错的通告，大家一起来看看吧！'
+          });
+        } else {
+          toastShort('没有安装微信软件，请您安装微信之后再试');
+        }
+      });
+  }
+
   render() {
     const { state } = this.props.navigation;
     return (
@@ -104,7 +120,7 @@ class CircularDetailPage extends Component {
                 举报
               </Button>
           }
-          <Button style={{ marginTop: Spacing.small }} type="ghost">分享</Button>
+          <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.share}>分享</Button>
         </View>
       </View>
     );

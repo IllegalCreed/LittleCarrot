@@ -146,6 +146,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-wechat')
     compile project(':react-native-aliyun-oss')
     compile project(':react-native-image-picker')
     compile fileTree(dir: "libs", include: ["*.jar"])

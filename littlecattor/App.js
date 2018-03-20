@@ -25,10 +25,11 @@ import reduxConfig from 'ReduxConfig';
 
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import AliyunOSS from 'react-native-aliyun-oss';
+import * as wechat from 'react-native-wechat';
 
 export default class App extends Component<{}> {
   componentDidMount() {
-    console.log('rendered')
+    wechat.registerApp('1106786282')
     AliyunOSS.initWithPlainTextAccessKey("LTAIaEPbGDOUJ4dr", "0EfCU4cafQJQTQPWj6vdZQIxCiEqpF", "https://oss-cn-beijing.aliyuncs.com");
   }
 

@@ -50,7 +50,7 @@ class LoginPage extends Component {
   }
 
   componentDidMount() {
-
+    this.loginToast.show("fuck");
   }
 
   componentWillReceiveProps(nextProps) {
@@ -164,20 +164,18 @@ const styles = StyleSheet.create({
   logo: {
     fontSize: 48,
     fontWeight: 'bold',
+    color: Colors.Magenta.t6,
   },
-
   bottomContainer: {
     flex: 3,
     flexDirection: "column",
   },
-
   link: {
     color: Colors.Magenta.t6,
     marginTop: Spacing.middle,
     marginRight: Spacing.middle,
     alignSelf: 'flex-end',
   },
-
   buttonContainer: {
     flex: 1,
     flexDirection: "column",
