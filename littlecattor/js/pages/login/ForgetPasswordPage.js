@@ -149,6 +149,7 @@ export class ForgetPasswordPage extends Component {
           >提交
 					 </Button>
         </View>
+        <Toast ref={registerToast => this.registerToast = registerToast} />
       </View>
     );
   }

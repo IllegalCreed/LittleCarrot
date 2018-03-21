@@ -50,7 +50,9 @@ class LoginPage extends Component {
   }
 
   componentDidMount() {
-    this.loginToast.show("fuck");
+    if(this.props.isLogin){
+      this.navigateTo('Home');
+    }
   }
 
   componentWillReceiveProps(nextProps) {

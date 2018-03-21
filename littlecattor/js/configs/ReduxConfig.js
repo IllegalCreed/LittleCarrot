@@ -51,15 +51,20 @@ const expireTransform = createExpirationTransform({
 	'hello': {
 		expireSpan,
 		default: InitialHelloState
+	},
+	'user': {
+		expireSpan,
+		default: InitialUserState
 	}
 });
 
 const persistConfig = {
 	key: 'root',
-	whitelist: ['hello'],
+	whitelist: ['hello','user'],
 	storage: AsyncStorage,
 	transforms: [
 		helloFilter,
+		userFilter,
 		expireTransform
 	]
 };
