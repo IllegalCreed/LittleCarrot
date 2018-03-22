@@ -14,9 +14,8 @@ import {
   Button,
   InputItem,
   Checkbox,
+  Toast,
 } from 'antd-mobile';
-
-import Toast, { DURATION } from 'react-native-easy-toast'
 
 import { NavigationActions } from 'react-navigation';
 import { Spacing } from 'AntDesignConfig';
@@ -60,9 +59,9 @@ export class RegisterPage extends Component {
         case requestState.FAIL:
           // 注册失败
           if (!nextProps.registerErrorMsg) {
-            this.registerToast.show('注册失败');
+            Toast.show('注册失败',2);
           } else {
-            this.registerToast.show('注册失败，错误：' + nextProps.registerErrorMsg);
+            Toast.show('注册失败，错误：' + nextProps.registerErrorMsg,2);
           }
           nextProps.dispatch(Actions.resetRegisterState());
           break;
@@ -159,7 +158,6 @@ export class RegisterPage extends Component {
             注册
 					</Button>
         </View>
-        <Toast ref={registerToast => this.registerToast = registerToast} />
       </View>
     );
   }

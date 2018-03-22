@@ -25,7 +25,6 @@ import {
   DatePicker
 } from 'antd-mobile';
 
-import EToast, { DURATION } from 'react-native-easy-toast';
 import { dateFormat } from 'dateHelper';
 
 import { NavigationActions } from 'react-navigation';
@@ -141,7 +140,7 @@ export class UserInfoPage extends Component {
             shoeSize: nextProps.userInfo.shoe_size.toString(),
             description: nextProps.userInfo.description,
             sex: [nextProps.userInfo.sex.toString()],
-            birthday: nextProps.userInfo.birthday,
+            birthday: new Date(nextProps.userInfo.birthday),
             BWH: [nextProps.userInfo.bust.toString(), nextProps.userInfo.waist.toString(), nextProps.userInfo.hips.toString()],
             avatar_url: nextProps.userInfo.avatar_url,
             avatarSource: { uri: nextProps.userInfo.avatar_url ? nextProps.userInfo.avatar_url + '?x-oss-process=style/400' : '' },
@@ -158,16 +157,16 @@ export class UserInfoPage extends Component {
       switch (nextProps.updateUserInfoState) {
         case requestState.FAIL:
           if (!nextProps.getUserInfoErrorMsg) {
-            this.saveToast.show('保存失败');
+            Toast.info('保存失败',2);
           } else {
-            this.saveToast.show('保存失败，错误：' + nextProps.getUserInfoErrorMsg);
+            Toast.info('保存失败，错误：' + nextProps.getUserInfoErrorMsg,2);
           }
           nextProps.dispatch(Actions.resetUpdateUserInfoState());
           break;
         case requestState.LOADING:
           break;
         case requestState.SUCCESS:
-          this.saveToast.show('保存成功');
+          Toast.show('保存成功',2);
           nextProps.dispatch(Actions.resetUpdateUserInfoState());
           this.navigateTo();
           break;
@@ -376,7 +375,6 @@ export class UserInfoPage extends Component {
               }}
             />
           </List>
-          <EToast ref={saveToast => this.saveToast = saveToast} />
           <View style={styles.buttonContainer}>
             <Button type="primary" disabled={this.state.saveButtonDisabled} onClick={this.save}>保存</Button>
           </View>

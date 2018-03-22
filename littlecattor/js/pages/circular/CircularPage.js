@@ -18,7 +18,6 @@ import {
   Tag,
 } from 'antd-mobile';
 
-import Toast, { DURATION } from 'react-native-easy-toast';
 import { dateFormat } from 'dateHelper';
 
 import { NavigationActions } from 'react-navigation';

@@ -22,8 +22,6 @@ import {
   Toast,
 } from 'antd-mobile';
 
-import EToast, { DURATION } from 'react-native-easy-toast'
-
 import { NavigationActions } from 'react-navigation';
 import { Spacing } from 'AntDesignConfig';
 import ScreenConfig from 'ScreenConfig';
@@ -117,9 +115,9 @@ export class ExposurePublishPage extends Component {
       switch (nextProps.publishExposureState) {
         case requestState.FAIL:
           if (!nextProps.publishExposureErrorMsg) {
-            this.publishToast.show('发布失败');
+            Toast.info('发布失败',2);
           } else {
-            this.publishToast.show('发布失败，错误：' + nextProps.publishExposureErrorMsg);
+            Toast.info('发布失败，错误：' + nextProps.publishExposureErrorMsg,2);
           }
           nextProps.dispatch(Actions.resetPublishExposureState());
           break;
@@ -265,7 +263,6 @@ export class ExposurePublishPage extends Component {
               selectable={this.state.imageData.length < 8}
             />
           </View>
-          <EToast ref={publishToast => this.publishToast = publishToast} />
           <View style={styles.buttonContainer}>
             <Button type="primary" disabled={this.state.publishButtonDisabled} onClick={this.submit}>曝光</Button>
           </View>

@@ -16,8 +16,6 @@ import {
   Toast,
 } from 'antd-mobile';
 
-// import Toast, { DURATION } from 'react-native-easy-toast'
-
 import { NavigationActions } from 'react-navigation';
 import { Spacing, Colors } from 'AntDesignConfig';
 
@@ -149,7 +147,6 @@ class LoginPage extends Component {
             <Button type="primary" disabled={this.state.loginButtonDisabled} onClick={this.login}>登录</Button>
             <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.navigateTo.bind(this, 'Register')}>注册</Button>
           </View>
-          {/* <Toast ref={loginToast => this.loginToast = loginToast} /> */}
         </View>
       </View>
     );

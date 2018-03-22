@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import {
   Alert,
   StyleSheet,
+  ScrollView,
   Text,
   View,
   Modal,
@@ -24,7 +25,6 @@ const Item = List.Item;
 const Brief = Item.Brief;
 
 import ImageViewer from 'react-native-image-zoom-viewer';
-import Toast, { DURATION } from 'react-native-easy-toast';
 import { dateFormat } from 'dateHelper';
 
 import { NavigationActions } from 'react-navigation';
@@ -112,54 +112,56 @@ export class ExposureDetailPage extends Component {
     const { state } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <List>
-          <Item extra={this.props.exposureDetail.title}>标题</Item>
-          <Item extra={this.props.exposureDetail.tag}>标签</Item>
-          <Item extra={this.props.exposureDetail.wx}>微信</Item>
-          <Item wrap>详细信息<Brief>{this.props.exposureDetail.content}</Brief></Item>
-        </List>
-        <Text style={{ marginLeft: 15, fontSize: 17, marginVertical: 15 }}>证据截图</Text>
-        <View style={{ marginLeft: 15 }}>
-          <ImagePicker
-            files={this.props.exposureDetail.img_url_arr}
-            onImageClick={this.showImage}
-            selectable={false}
-          />
-        </View>
-        <View style={{ flexDirection: "row", marginTop: Spacing.middle, paddingHorizontal: Spacing.middle, }}>
-          <Button
-            size='small'
-            style={{ flex: 1, marginHorizontal: 40 }}
-            type={this.props.exposureDetail.my_attitude != 1 ? 'primary' : 'warning'}
-            disabled={this.props.exposureDetail.my_attitude != -1}
-            onClick={this.support.bind(this, 1)}
-          >支持</Button>
-          <Button
-            size='small'
-            style={{ flex: 1, marginHorizontal: 40 }}
-            type={this.props.exposureDetail.my_attitude != 0 ? 'ghost' : 'warning'}
-            disabled={this.props.exposureDetail.my_attitude != -1}
-            onClick={this.support.bind(this, 0)}
-          >反对</Button>
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button type="primary">告诉朋友</Button>
-        </View>
+        <ScrollView ref={scrollView => this.scrollView = scrollView}>
+          <List>
+            <Item extra={this.props.exposureDetail.title}>标题</Item>
+            <Item extra={this.props.exposureDetail.tag}>标签</Item>
+            <Item extra={this.props.exposureDetail.wx}>微信</Item>
+            <Item wrap>详细信息<Brief>{this.props.exposureDetail.content}</Brief></Item>
+          </List>
+          <Text style={{ marginLeft: 15, fontSize: 17, marginVertical: 15 }}>证据截图</Text>
+          <View style={{ marginLeft: 15 }}>
+            <ImagePicker
+              files={this.props.exposureDetail.img_url_arr}
+              onImageClick={this.showImage}
+              selectable={false}
+            />
+          </View>
+          <View style={{ flexDirection: "row", marginTop: Spacing.middle, paddingHorizontal: Spacing.middle, }}>
+            <Button
+              size='small'
+              style={{ flex: 1, marginHorizontal: 40 }}
+              type={this.props.exposureDetail.my_attitude != 1 ? 'primary' : 'warning'}
+              disabled={this.props.exposureDetail.my_attitude != -1}
+              onClick={this.support.bind(this, 1)}
+            >支持</Button>
+            <Button
+              size='small'
+              style={{ flex: 1, marginHorizontal: 40 }}
+              type={this.props.exposureDetail.my_attitude != 0 ? 'ghost' : 'warning'}
+              disabled={this.props.exposureDetail.my_attitude != -1}
+              onClick={this.support.bind(this, 0)}
+            >反对</Button>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button type="primary">告诉朋友</Button>
+          </View>
 
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-          }}>
-          <ImageViewer index={this.state.currentImageIndex} imageUrls={this.props.exposureDetail.img_url_arr}
-            onClick={() => {
-              this.setState({
-                modalVisible: false
-              })
-            }}
-          />
-        </Modal>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+            }}>
+            <ImageViewer index={this.state.currentImageIndex} imageUrls={this.props.exposureDetail.img_url_arr}
+              onClick={() => {
+                this.setState({
+                  modalVisible: false
+                })
+              }}
+            />
+          </Modal>
+        </ScrollView>
       </View >
     );
   }
@@ -173,10 +175,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4f3fd',
   },
   buttonContainer: {
-    position: 'absolute',
-    bottom: 32,
-    left: 0,
-    right: 0,
+    marginTop: 80,
+    marginBottom: 30,
     flex: 1,
     flexDirection: "column",
     alignSelf: 'stretch',

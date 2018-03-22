@@ -16,11 +16,11 @@ import {
   Button,
   InputItem,
   TextareaItem,
+  Toast
 } from 'antd-mobile';
 const Item = List.Item;
 const Brief = Item.Brief;
 
-import Toast, { DURATION } from 'react-native-easy-toast';
 import { dateFormat } from 'dateHelper';
 
 import { NavigationActions } from 'react-navigation';
@@ -83,9 +83,9 @@ class CircularDetailPage extends Component {
     }
   }
 
-  copyWX = () =>{
+  copyWX = () => {
     Clipboard.setString(this.props.circularDetail.wx);
-    this.copyToast.show('已复制');
+    Toast.info('已复制', 2);
   }
 
   share = () => {
@@ -106,30 +106,31 @@ class CircularDetailPage extends Component {
     const { state } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <List>
-          <Item multipleLine>
-            标题 <Brief>{this.props.circularDetail.title}</Brief>
-          </Item>
-          <Item extra={this.getTagNameById(this.props.circularDetail.tag_id)}>标签</Item>
-          <Item extra={this.props.circularDetail.price + '元'}>价格</Item>
-          <Item extra={this.props.circularDetail.create_user_nickname}>发布人</Item>
-          <Item extra={dateFormat(new Date(this.props.circularDetail.create_time), 'yyyy-MM-dd')}>发布时间</Item>
-          <Item extra={this.props.circularDetail.wx} onClick={this.copyWX}>微信</Item>
-          <Item wrap>详细信息<Brief>{this.props.circularDetail.content}</Brief></Item>
-        </List>
-        <View style={styles.buttonContainer}>
-          {
-            this.props.circularDetail.is_report || this.props.circularDetail.state == -1 ?
-              null :
-              <Button
-                type="primary"
-                onClick={this.navigateTo.bind(this, 'CircularAccusation')}>
-                举报
+        <ScrollView ref={scrollView => this.scrollView = scrollView}>
+          <List>
+            <Item multipleLine>
+              标题 <Brief>{this.props.circularDetail.title}</Brief>
+            </Item>
+            <Item extra={this.getTagNameById(this.props.circularDetail.tag_id)}>标签</Item>
+            <Item extra={this.props.circularDetail.price + '元'}>价格</Item>
+            <Item extra={this.props.circularDetail.create_user_nickname}>发布人</Item>
+            <Item extra={dateFormat(new Date(this.props.circularDetail.create_time), 'yyyy-MM-dd')}>发布时间</Item>
+            <Item extra={this.props.circularDetail.wx} onClick={this.copyWX}>微信</Item>
+            <Item wrap>详细信息<Brief>{this.props.circularDetail.content}</Brief></Item>
+          </List>
+          <View style={styles.buttonContainer}>
+            {
+              this.props.circularDetail.is_report || this.props.circularDetail.state == -1 ?
+                null :
+                <Button
+                  type="primary"
+                  onClick={this.navigateTo.bind(this, 'CircularAccusation')}>
+                  举报
               </Button>
-          }
-          <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.share}>分享</Button>
-        </View>
-        <Toast ref={copyToast => this.copyToast = copyToast} />
+            }
+            <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.share}>分享</Button>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -143,10 +144,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4f3fd',
   },
   buttonContainer: {
-    position: 'absolute',
-    bottom: 64,
-    left: 0,
-    right: 0,
+    marginTop: 50,
+    marginBottom: 30,
     flex: 1,
     flexDirection: "column",
     alignSelf: 'stretch',

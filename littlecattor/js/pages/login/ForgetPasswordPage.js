@@ -12,10 +12,9 @@ import {
 import {
   List,
   Button,
-  InputItem
+  InputItem,
+  Toast
 } from 'antd-mobile';
-
-import Toast, { DURATION } from 'react-native-easy-toast'
 
 import { NavigationActions } from 'react-navigation';
 import { Spacing } from 'AntDesignConfig';
@@ -56,9 +55,9 @@ export class ForgetPasswordPage extends Component {
         case requestState.FAIL:
           // 重置失败
           if (!nextProps.resetPwdErrorMsg) {
-            this.registerToast.show('重置失败');
+            Toast.info('重置失败',2);
           } else {
-            this.registerToast.show('重置失败，错误：' + nextProps.resetPwdErrorMsg);
+            Toast.info('重置失败，错误：' + nextProps.resetPwdErrorMsg,2);
           }
           nextProps.dispatch(Actions.resetResetPwdState());
           break;
@@ -150,7 +149,6 @@ export class ForgetPasswordPage extends Component {
           >提交
 					 </Button>
         </View>
-        <Toast ref={registerToast => this.registerToast = registerToast} />
       </View>
     );
   }

@@ -19,7 +19,6 @@ import {
 const Item = List.Item;
 const Brief = Item.Brief;
 
-import EToast, { DURATION } from 'react-native-easy-toast';
 import { dateFormat } from 'dateHelper';
 
 import { NavigationActions } from 'react-navigation';

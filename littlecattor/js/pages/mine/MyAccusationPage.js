@@ -16,7 +16,6 @@ import {
   Tag,
 } from 'antd-mobile';
 
-import Toast, { DURATION } from 'react-native-easy-toast';
 import { dateFormat } from 'dateHelper';
 
 import { NavigationActions } from 'react-navigation';
@@ -107,7 +106,7 @@ export class MyAccusationPage extends Component {
         <FlatList
           data={this.props.myAccusationList}
           keyExtractor={(item, index) => {
-            return index;
+            return index.toString();
           }}
           renderItem={({ item, index }) =>
             <TouchableOpacity

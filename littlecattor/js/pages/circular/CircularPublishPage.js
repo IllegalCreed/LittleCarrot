@@ -19,9 +19,8 @@ import {
   InputItem,
   Picker,
   TextareaItem,
+  Toast
 } from 'antd-mobile';
-
-import Toast, { DURATION } from 'react-native-easy-toast'
 
 import { NavigationActions } from 'react-navigation';
 import { Spacing } from 'AntDesignConfig';
@@ -70,9 +69,9 @@ class CircularPublishPage extends Component {
       switch (nextProps.publishCircularState) {
         case requestState.FAIL:
           if (!nextProps.publishCircularErrorMsg) {
-            this.publishToast.show('发布失败');
+            Toast.info('发布失败',2);
           } else {
-            this.publishToast.show('发布失败，错误：' + nextProps.publishCircularErrorMsg);
+            Toast.info('发布失败，错误：' + nextProps.publishCircularErrorMsg,2);
           }
           nextProps.dispatch(Actions.resetPublishCircularState());
           break;
@@ -196,7 +195,6 @@ class CircularPublishPage extends Component {
           <View style={styles.buttonContainer}>
             <Button type="primary" disabled={this.state.publishButtonDisabled} onClick={this.publish}>发布</Button>
           </View>
-          <Toast ref={publishToast => this.publishToast = publishToast} />
           <View style={{ height: this.state.keyboardAvoidingHeight }}>
           </View>
         </ScrollView>
