@@ -4,6 +4,8 @@
 
 import axios from 'axios';
 import API from 'APIConfig';
+import { NavigationActions } from 'react-navigation';
+import Actions from 'Actions';
 
 global.axiosClient = axios.create({
   baseURL: API.rootPath,
@@ -28,17 +30,16 @@ global.axiosClient = axios.create({
     // token问题
     if (data.res_code <= -900) {
       if (global.reduxStore) {
-        global.reduxStore.dispatch(ACTIONS.logout());
-      }
-      if (!this.isToastExist) {
-        this.currentToast = Toast.show('请先登录', {
-          duration: 2555,
-          position: Toast.positions.CENTER,
-          onHidden: () => {
-            this.isToastExist = false;
-          }
-        });
-        this.isToastExist = true;
+        global.reduxStore.dispatch(Actions.logout());
+        if (global.rootNavigator) {
+          const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: "Login" })
+            ]
+          })
+          global.rootNavigator.dispatch(resetAction);
+        }
       }
     }
     return data;

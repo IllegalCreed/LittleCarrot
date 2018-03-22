@@ -2,6 +2,7 @@
  * @providesModule LoginPage
  */
 
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -52,6 +53,9 @@ class LoginPage extends Component {
   componentDidMount() {
     if(this.props.isLogin){
       this.navigateTo('Home');
+    }
+    if(this.props.navigation){
+      global.rootNavigator = this.props.navigation;
     }
   }
 
@@ -179,11 +183,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   buttonContainer: {
+    marginTop: 100,
+    marginBottom: Spacing.large,
     flex: 1,
     flexDirection: "column",
-    justifyContent: 'flex-end',
+    alignSelf: 'stretch',
     paddingHorizontal: Spacing.middle,
-    marginBottom: Spacing.large,
   },
 });
 

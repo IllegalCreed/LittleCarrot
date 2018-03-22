@@ -2,12 +2,14 @@
  * @providesModule CircularDetailPage
  */
 
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  ScrollView
+  ScrollView,
+  Clipboard
 } from 'react-native';
 import {
   List,
@@ -81,6 +83,11 @@ class CircularDetailPage extends Component {
     }
   }
 
+  copyWX = () =>{
+    Clipboard.setString(this.props.circularDetail.wx);
+    this.copyToast.show('已复制');
+  }
+
   share = () => {
     wechat.isWXAppInstalled()
       .then((isInstalled) => {
@@ -107,7 +114,7 @@ class CircularDetailPage extends Component {
           <Item extra={this.props.circularDetail.price + '元'}>价格</Item>
           <Item extra={this.props.circularDetail.create_user_nickname}>发布人</Item>
           <Item extra={dateFormat(new Date(this.props.circularDetail.create_time), 'yyyy-MM-dd')}>发布时间</Item>
-          <Item extra={this.props.circularDetail.wx}>微信</Item>
+          <Item extra={this.props.circularDetail.wx} onClick={this.copyWX}>微信</Item>
           <Item wrap>详细信息<Brief>{this.props.circularDetail.content}</Brief></Item>
         </List>
         <View style={styles.buttonContainer}>
@@ -122,6 +129,7 @@ class CircularDetailPage extends Component {
           }
           <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.share}>分享</Button>
         </View>
+        <Toast ref={copyToast => this.copyToast = copyToast} />
       </View>
     );
   }

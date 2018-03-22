@@ -2,6 +2,7 @@
  * @providesModule ExposureCircularPage
  */
 
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -116,7 +117,7 @@ export class ExposureCircularPage extends Component {
         <FlatList
           data={this.props.circularList}
           keyExtractor={(item, index) => {
-            return index;
+            return index.toString();
           }}
           renderItem={({ item, index }) =>
             <TouchableOpacity

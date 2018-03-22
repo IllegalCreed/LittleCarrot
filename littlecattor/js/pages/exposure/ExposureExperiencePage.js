@@ -2,6 +2,7 @@
  * @providesModule ExposureExperiencePage
  */
 
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -107,7 +108,7 @@ export class ExposureExperiencePage extends Component {
         <FlatList
           data={this.props.exposureList}
           keyExtractor={(item, index) => {
-            return index;
+            return index.toString();
           }}
           renderItem={({ item, index }) =>
             <TouchableOpacity

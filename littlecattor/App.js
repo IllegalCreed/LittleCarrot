@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 
 import {
@@ -27,7 +21,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import AliyunOSS from 'react-native-aliyun-oss';
 import * as wechat from 'react-native-wechat';
 
-export default class App extends Component<{}> {
+export default class App extends Component {
   componentDidMount() {
     wechat.registerApp('1106786282')
     AliyunOSS.initWithPlainTextAccessKey("LTAIaEPbGDOUJ4dr", "0EfCU4cafQJQTQPWj6vdZQIxCiEqpF", "https://oss-cn-beijing.aliyuncs.com");
@@ -37,7 +31,7 @@ export default class App extends Component<{}> {
     return (
       <Provider store={global.reduxStore}>
         <PersistGate persistor={global.persistor}>
-          <RootNavigator />
+          <RootNavigator/>
         </PersistGate>
       </Provider>
     );

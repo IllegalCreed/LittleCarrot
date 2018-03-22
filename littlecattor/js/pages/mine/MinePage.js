@@ -2,6 +2,7 @@
  * @providesModule MinePage
  */
 
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -83,7 +84,7 @@ export class MinePage extends Component {
         <ScrollView ref={scrollView => this.scrollView = scrollView}>
           <View style={styles.headerContainer}>
             <View style={styles.userHeader}>
-              <Image source={{ url: this.props.userInfo.avatar_url ? this.props.userInfo.avatar_url + '?x-oss-process=style/400' : '' }} style={styles.avatar} />
+              <Image source={{ uri: this.props.userInfo.avatar_url ? this.props.userInfo.avatar_url + '?x-oss-process=style/400' : '' }} style={styles.avatar} />
             </View>
             <Text style={{ marginTop: Spacing.small, color: 'white', fontSize: 18, fontWeight: 'bold' }}>{this.props.userInfo.nickname}</Text>
           </View>

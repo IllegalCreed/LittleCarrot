@@ -4,8 +4,8 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.theweflex.react.WeChatPackage;
-import com.xgkj.aliyunoss.aliyunossPackage;
 import com.imagepicker.ImagePickerPackage;
+import com.xgkj.aliyunoss.aliyunossPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -27,8 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new WeChatPackage(),
-            new aliyunossPackage(),
-            new ImagePickerPackage()
+            new ImagePickerPackage(),
+            new aliyunossPackage()
       );
     }
 

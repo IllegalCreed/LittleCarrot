@@ -2,6 +2,7 @@
  * @providesModule UserInfoPage
  */
 
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -21,6 +22,7 @@ import {
   Picker,
   TextareaItem,
   Toast,
+  DatePicker
 } from 'antd-mobile';
 
 import EToast, { DURATION } from 'react-native-easy-toast';
@@ -77,6 +79,7 @@ export class UserInfoPage extends Component {
     this.state = {
       saveButtonDisabled: false,
       nickName: '',
+      birthday: new Date(),
       height: '',
       weight: '',
       shoeSize: '',
@@ -138,9 +141,10 @@ export class UserInfoPage extends Component {
             shoeSize: nextProps.userInfo.shoe_size.toString(),
             description: nextProps.userInfo.description,
             sex: [nextProps.userInfo.sex.toString()],
+            birthday: nextProps.userInfo.birthday,
             BWH: [nextProps.userInfo.bust.toString(), nextProps.userInfo.waist.toString(), nextProps.userInfo.hips.toString()],
             avatar_url: nextProps.userInfo.avatar_url,
-            avatarSource: { url: nextProps.userInfo.avatar_url ? nextProps.userInfo.avatar_url + '?x-oss-process=style/400' : '' },
+            avatarSource: { uri: nextProps.userInfo.avatar_url ? nextProps.userInfo.avatar_url + '?x-oss-process=style/400' : '' },
           })
           break;
         case requestState.IDLE:
@@ -223,6 +227,7 @@ export class UserInfoPage extends Component {
       this.state.avatar_url,
       this.state.nickName,
       this.state.sex[0],
+      this.state.birthday,
       this.state.height,
       this.state.weight,
       this.state.BWH[0],
@@ -267,7 +272,7 @@ export class UserInfoPage extends Component {
         AliyunOSS.asyncUpload('radish', fileName, path).then(() => {
           this.setState({
             avatar_url: 'https://radish.oss-cn-beijing.aliyuncs.com/' + fileName,
-            avatarSource: { url: 'https://radish.oss-cn-beijing.aliyuncs.com/' + fileName + '?x-oss-process=style/400' }
+            avatarSource: { uri: 'https://radish.oss-cn-beijing.aliyuncs.com/' + fileName + '?x-oss-process=style/400' }
           })
           Toast.hide();
           this.setState({
@@ -306,6 +311,17 @@ export class UserInfoPage extends Component {
               }}>
               <List.Item arrow='horizontal'>性别</List.Item>
             </Picker>
+            <DatePicker
+              mode="date"
+              title="选择生日"
+              extra="请选择"
+              value={this.state.birthday}
+              minDate={new Date("1970-01-01")}
+              maxDate={new Date("2020-01-01")}
+              onChange={date => this.setState({ birthday: date })}
+            >
+              <List.Item arrow="horizontal">生日</List.Item>
+            </DatePicker>
             <InputItem
               type='number'
               placeholder='请输入身高'

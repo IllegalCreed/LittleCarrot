@@ -2,6 +2,7 @@
  * @providesModule CircularPage
  */
 
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -156,7 +157,7 @@ class CircularPage extends Component {
           }
           data={this.props.circularList}
           keyExtractor={(item, index) => {
-            return index;
+            return index.toString();
           }}
           renderItem={({ item, index }) =>
             <TouchableOpacity
@@ -207,7 +208,7 @@ class CircularPage extends Component {
             </TouchableOpacity>
           }
           onEndReached={this.loadMoreDatas}
-          onEndReachedThreshold={0}
+          onEndReachedThreshold={10}
           onRefresh={this.refreshDatas}
           refreshing={this.state.refreshing}
         />

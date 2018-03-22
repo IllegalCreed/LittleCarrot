@@ -89,13 +89,13 @@ export function resetLoginState() {
     }
 }
 
-export function logout(){
+export function logout() {
     return {
         type: 'logoutAction',
     }
 }
 
-export function updateUserInfo(avatar_url, nickname, sex, height, weight, bust, waist, hips, shoe_size, description) {
+export function updateUserInfo(avatar_url, nickname, sex, birthday, height, weight, bust, waist, hips, shoe_size, description) {
     return {
         type: 'updateUserInfoAction',
         payload: {
@@ -103,15 +103,16 @@ export function updateUserInfo(avatar_url, nickname, sex, height, weight, bust, 
                 url: API.updateUserInfo,
                 method: 'post',
                 data: {
-                    avatar_url, 
-                    nickname, 
-                    sex, 
-                    height, 
-                    weight, 
-                    bust, 
-                    waist, 
-                    hips, 
-                    shoe_size, 
+                    avatar_url,
+                    nickname,
+                    sex,
+                    birthday,
+                    height,
+                    weight,
+                    bust,
+                    waist,
+                    hips,
+                    shoe_size,
                     description
                 }
             }

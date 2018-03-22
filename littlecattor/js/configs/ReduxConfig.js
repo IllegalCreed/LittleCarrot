@@ -16,9 +16,10 @@ import axiosMiddleware from 'redux-axios-middleware';
 import {
 	persistStore,
 	persistCombineReducers,
+	reduxPersist,
+	createTransform
 } from 'redux-persist';
 import createFilter from 'redux-persist-transform-filter';
-import createExpirationTransform from 'redux-persist-transform-expire';
 
 import Reducers from 'Reducers';
 import {
@@ -27,6 +28,30 @@ import {
 import {
 	InitialUserState
 } from 'UserReducer';
+
+function createExpirationTransform(expireDatas) {
+	expireDatas = expireDatas || {};
+	function dateToUnix(date) {
+		return +(date.getTime() / 1000).toFixed(0);
+	}
+	const inbound = (state, key) => {
+		if ((state || typeof state === 'object') && expireDatas.hasOwnProperty(key)) {
+			state.expireDate = new Date((new Date()).getTime() + expireDatas[key].expireSpan);
+		}
+		return state;
+	};
+	const outbound = (state, key) => {
+		if ((state || typeof state === 'object') && expireDatas.hasOwnProperty(key)) {
+			if (state.expireDate) {
+				if (dateToUnix(new Date(state.expireDate)) < dateToUnix(new Date())) {
+					state = expireDatas[key].default;
+				}
+			}
+		}
+		return state;
+	};
+	return createTransform(inbound, outbound);
+}
 
 const helloFilter = createFilter(
 	'hello', 

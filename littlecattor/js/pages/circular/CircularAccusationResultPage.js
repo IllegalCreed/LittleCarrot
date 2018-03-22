@@ -2,6 +2,7 @@
  * @providesModule CircularAccusationResultPage
  */
 
+
 import React, { Component } from 'react';
 import {
 	StyleSheet,

@@ -2,6 +2,7 @@
  * @providesModule ExposureSearchPage
  */
 
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -66,7 +67,7 @@ export class ExposureSearchPage extends Component {
         <FlatList
           data={this.props.wechatList}
           keyExtractor={(item, index) => {
-            return index;
+            return index.toString();
           }}
           renderItem={({ item, index }) =>
             <View style={styles.item}>
