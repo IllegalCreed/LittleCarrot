@@ -13,9 +13,10 @@ import {
   List,
   Button,
   InputItem,
+  Toast,
 } from 'antd-mobile';
 
-import Toast, { DURATION } from 'react-native-easy-toast'
+// import Toast, { DURATION } from 'react-native-easy-toast'
 
 import { NavigationActions } from 'react-navigation';
 import { Spacing, Colors } from 'AntDesignConfig';
@@ -65,9 +66,9 @@ class LoginPage extends Component {
         case requestState.FAIL:
           // 登录失败
           if (!nextProps.loginErrorMsg) {
-            this.loginToast.show('登录失败');
+            Toast.info('登录失败', 2);
           } else {
-            this.loginToast.show('登录失败，错误：' + nextProps.loginErrorMsg);
+            Toast.info('登录失败，错误：' + nextProps.loginErrorMsg, 2);
           }
           nextProps.dispatch(Actions.resetLoginState());
           break;
@@ -148,7 +149,7 @@ class LoginPage extends Component {
             <Button type="primary" disabled={this.state.loginButtonDisabled} onClick={this.login}>登录</Button>
             <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.navigateTo.bind(this, 'Register')}>注册</Button>
           </View>
-          <Toast ref={loginToast => this.loginToast = loginToast} />
+          {/* <Toast ref={loginToast => this.loginToast = loginToast} /> */}
         </View>
       </View>
     );
