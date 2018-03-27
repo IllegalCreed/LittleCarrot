@@ -3,7 +3,8 @@
  */
 import React, { Component } from 'react';
 import {
-	Image
+	Image,
+	Platform
 } from 'react-native';
 import { StackNavigator, TabNavigator, TabBarBottom, TabBarTop } from 'react-navigation';
 
@@ -49,7 +50,7 @@ export const ExposureNavigator = TabNavigator({
 		swipeEnabled: false,
 		animationEnabled: true,
 		tabBarOptions: {
-			style: { paddingTop: 20 }
+			style: { paddingTop: Platform.OS === 'ios' ? 20 : 0, backgroundColor: '#f5317f', }
 		}
 	})
 
@@ -80,7 +81,10 @@ export const HomeNavigator = TabNavigator({
 		animationEnabled: true,
 		tabBarOptions: {
 			activeTintColor: '#f5317f',
-			labelStyle: { fontSize: 12 }
+			labelStyle: { fontSize: 12 },
+			style: {
+				backgroundColor: '#fff',
+			},
 		}
 	})
 
@@ -109,7 +113,7 @@ export const RootNavigator = StackNavigator({
 	MyExposure: {
 		screen: MyExposurePage,
 	},
-	About:{
+	About: {
 		screen: AboutPage,
 	},
 	MyAccusation: {

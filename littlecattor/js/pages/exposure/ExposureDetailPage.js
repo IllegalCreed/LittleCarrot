@@ -210,7 +210,7 @@ const ExposureDetailPageSelector = createSelector(
       if (exposureDetail.img_url_arr.length > 0) {
         exposureDetail.img_url_arr = exposureDetail.img_url_arr.map(item => {
           return {
-            url: item + '?x-oss-process=style/400',
+            url: item,
             id: Math.floor(Math.random() * (10001)),
           }
         })

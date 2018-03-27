@@ -39,12 +39,19 @@ export class ExposureSearchPage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
     return {
-      title: '微信查询'
+      title: '微信查询',
     };
   };
 
-  componentDidMount() {
+  constructor(props) {
+    super(props)
+    this.state = {
+      wx: '',
+      showSearchButton: true,
+    }
+  }
 
+  componentDidMount() {
   }
 
   navigateTo = (routeName) => {
@@ -53,6 +60,13 @@ export class ExposureSearchPage extends Component {
 
   submit = (wx) => {
     this.props.dispatch(Actions.searchWechat(wx));
+    this.setState({
+      showSearchButton: false
+    })
+  }
+
+  search = () => {
+    this.submit(this.state.wx)
   }
 
   render() {
@@ -62,18 +76,34 @@ export class ExposureSearchPage extends Component {
         <SearchBar
           placeholder="输入微信号"
           maxLength={20}
-          onSubmit={this.submit} />
-        <FlatList
-          data={this.props.wechatList}
-          keyExtractor={(item, index) => {
-            return index.toString();
-          }}
-          renderItem={({ item, index }) =>
-            <View style={styles.item}>
-              <Text style={{ fontSize: 16 }}>{item.wx}</Text>
-            </View>
-          }
-        />
+          onSubmit={this.submit}
+          onChange={(wx) => this.setState({
+            showSearchButton: true,
+            wx
+          })}
+          onCancel={(wx) => this.setState({
+            showSearchButton: true,
+          })}
+          onClear={(wx) => this.setState({
+            showSearchButton: true,
+          })} />
+        {
+          this.state.showSearchButton
+            ? <Button type="primary" onClick={this.search} style={{ margin: 20 }}>搜索</Button>
+            : this.props.wechatList.length > 0
+              ? <FlatList
+                data={this.props.wechatList}
+                keyExtractor={(item, index) => {
+                  return index.toString();
+                }}
+                renderItem={({ item, index }) =>
+                  <View style={styles.item}>
+                    <Text style={{ fontSize: 16 }}>{item.wx}</Text>
+                  </View>
+                }
+              />
+              : <Text style={{ alignSelf: "center", fontSize: 18, marginTop: 50 }}>无结果</Text>
+        }
       </View>
     );
   }

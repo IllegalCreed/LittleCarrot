@@ -113,7 +113,7 @@ class CircularDetailPage extends Component {
             </Item>
             <Item extra={this.getTagNameById(this.props.circularDetail.tag_id)}>标签</Item>
             <Item extra={this.props.circularDetail.price + '元'}>价格</Item>
-            <Item extra={this.props.circularDetail.create_user_nickname}>发布人</Item>
+            <Item extra={this.props.circularDetail.nickname}>发布人</Item>
             <Item extra={dateFormat(new Date(this.props.circularDetail.create_time), 'yyyy-MM-dd')}>发布时间</Item>
             <Item extra={this.props.circularDetail.wx} onClick={this.copyWX}>微信</Item>
             <Item wrap>详细信息<Brief>{this.props.circularDetail.content}</Brief></Item>
