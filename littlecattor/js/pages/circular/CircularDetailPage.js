@@ -128,7 +128,7 @@ class CircularDetailPage extends Component {
                   举报
               </Button>
             }
-            <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.share}>分享</Button>
+            {/* <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.share}>分享</Button> */}
           </View>
         </ScrollView>
       </View>

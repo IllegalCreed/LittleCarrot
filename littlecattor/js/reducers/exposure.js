@@ -25,7 +25,7 @@ export const InitialExposureState = {
 
     exposureList: [],
     exposureDetail: {},
-    wechatList: [],
+    fakeWechat: {},
 };
 
 export function exposure(state = InitialExposureState, action) {
@@ -153,7 +153,7 @@ export function exposure(state = InitialExposureState, action) {
             if (response && response.res_code == 1) {
                 return Object.assign({}, state, {
                     searchWechatState: requestState.SUCCESS,
-                    wechatList: response.msg
+                    fakeWechat: response.msg
                 });
             } else {
                 return handleReducerError(action.type, state, response, {

@@ -40,7 +40,7 @@ export class ExposureExperiencePage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
     return {
-      title: '被骗经历'
+      title: '曝光墙'
     };
   };
 
@@ -100,6 +100,27 @@ export class ExposureExperiencePage extends Component {
     this.props.navigation.navigate(routeName, params)
   }
 
+  renderItem = ({ item, index }) => {
+    return (
+      <TouchableOpacity
+        style={styles.circularItem}
+        onPress={this.navigateTo.bind(this, 'ExposureDetail', { exposure_id: item.exposure_id })}>
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          flex: 1,
+          justifyContent: 'space-between'
+        }}>
+          <View style={styles.tag}>
+            <Text style={styles.tagText}>{item.tag}</Text>
+          </View>
+          <Text style={styles.date}>{dateFormat(new Date(item.create_time), 'yyyy-MM-dd')}</Text>
+        </View>
+        <Text style={styles.circularTitle}>{item.content}</Text>
+      </TouchableOpacity>
+    )
+  }
+
   render() {
     const { state } = this.props.navigation;
     return (
@@ -109,31 +130,32 @@ export class ExposureExperiencePage extends Component {
           keyExtractor={(item, index) => {
             return index.toString();
           }}
-          renderItem={({ item, index }) =>
-            <TouchableOpacity
-              style={styles.circularItem}
-              onPress={this.navigateTo.bind(this, 'ExposureDetail', { exposure_id: item.exposure_id })}>
-              <View style={{
-                paddingHorizontal: 15,
-                flexDirection: 'row',
-                flex: 1,
-                justifyContent: 'space-between'
-              }}>
-                <Text style={styles.circularTitle}>标题：{item.title}</Text>
-                <View style={styles.tag}>
-                  <Text style={styles.tagText}>{item.tag}</Text>
-                </View>
-              </View>
-              <View style={{
-                marginLeft: 15,
-                marginVertical: 10,
-                height: 1,
-                alignItems: 'stretch',
-                backgroundColor: '#e9e9e9',
-              }} />
-              <Text numberOfLines={3} style={{ paddingHorizontal: 15 }}>{item.content}</Text>
-            </TouchableOpacity>
-          }
+          renderItem={this.renderItem}
+          // renderItem={({ item, index }) =>
+          //   <TouchableOpacity
+          //     style={styles.circularItem}
+          //     onPress={this.navigateTo.bind(this, 'ExposureDetail', { exposure_id: item.exposure_id })}>
+          //     <View style={{
+          //       paddingHorizontal: 15,
+          //       flexDirection: 'row',
+          //       flex: 1,
+          //       justifyContent: 'space-between'
+          //     }}>
+          //       <Text style={styles.circularTitle}>标题：{item.title}</Text>
+          //       <View style={styles.tag}>
+          //         <Text style={styles.tagText}>{item.tag}</Text>
+          //       </View>
+          //     </View>
+          //     <View style={{
+          //       marginLeft: 15,
+          //       marginVertical: 10,
+          //       height: 1,
+          //       alignItems: 'stretch',
+          //       backgroundColor: '#e9e9e9',
+          //     }} />
+          //     <Text numberOfLines={3} style={{ paddingHorizontal: 15 }}>{item.content}</Text>
+          //   </TouchableOpacity>
+          // }
           onEndReached={this.loadMoreDatas}
           onEndReachedThreshold={0}
           onRefresh={this.refreshDatas}
@@ -149,18 +171,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: '#f4f3fd',
-  },
-  circularTitle: {
-    fontSize: 18,
+    backgroundColor: '#f5f5f5',
   },
   circularItem: {
-    borderColor: '#e9e9e9',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    borderRadius: 2,
+    paddingHorizontal: 15,
     paddingVertical: 15,
     backgroundColor: 'white',
-    marginTop: 10,
+    marginHorizontal: 5,
+    marginTop: 5,
   },
   publishCircular: {
     position: 'absolute',
@@ -170,18 +189,28 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0,
     opacity: 0.8,
   },
+  circularTitle: {
+    fontFamily: 'PingFang SC',
+    fontSize: 16,
+    marginTop: 10,
+  },
   tag: {
-    paddingHorizontal: 5,
-    borderWidth: 1,
-    borderColor: '#F5317F',
-    borderRadius: 2,
+    backgroundColor: '#f759ab',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+    alignSelf: 'flex-start',
+    borderRadius: 2,
   },
   tagText: {
+    fontSize: 14,
+    color: '#fff',
+  },
+  date: {
     fontSize: 12,
-    color: '#F5317F',
-  }
+    color: '#bfbfbf',
+  },
 });
 
 

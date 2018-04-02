@@ -9,6 +9,7 @@ import { user } from 'UserReducer';
 import { circular } from 'CircularReducer';
 import { accusation } from 'AccusationReducer';
 import { exposure } from 'ExposureReducer';
+import { system } from 'SystemReducer';
 
 export default {
   hello,
@@ -16,4 +17,5 @@ export default {
   circular,
   accusation,
   exposure,
+  system,
 };

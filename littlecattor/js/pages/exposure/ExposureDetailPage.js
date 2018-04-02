@@ -98,7 +98,7 @@ export class ExposureDetailPage extends Component {
   }
 
   support = (isSupport) => {
-    this.props.dispatch(Actions.supportExposure(this.data.exposureId, isSupport));
+    this.props.dispatch(Actions.supportExposure(this.data.exposureId, isSupport))
   }
 
   showImage = (index, fs) => {
@@ -127,25 +127,43 @@ export class ExposureDetailPage extends Component {
               selectable={false}
             />
           </View>
-          <View style={{ flexDirection: "row", marginTop: Spacing.middle, paddingHorizontal: Spacing.middle, }}>
-            <Button
-              size='small'
-              style={{ flex: 1, marginHorizontal: 40 }}
-              type={this.props.exposureDetail.my_attitude != 1 ? 'primary' : 'warning'}
-              disabled={this.props.exposureDetail.my_attitude != -1}
-              onClick={this.support.bind(this, 1)}
-            >支持</Button>
-            <Button
-              size='small'
-              style={{ flex: 1, marginHorizontal: 40 }}
-              type={this.props.exposureDetail.my_attitude != 0 ? 'ghost' : 'warning'}
-              disabled={this.props.exposureDetail.my_attitude != -1}
-              onClick={this.support.bind(this, 0)}
-            >反对</Button>
+          {/* <View style={{ flexDirection: "row", marginTop: Spacing.middle, height: 80 }}>
+            <View style={{ flexDirection: "row", flex: 1, backgroundColor: "#52c41a" }}>
+
+            </View>
+            <View style={{ flexDirection: "row", flex: 1, backgroundColor: "#f5222d" }}>
+            
+            </View>
+          </View> */}
+          <View style={{ flexDirection: "row", marginTop: 50, paddingHorizontal: Spacing.middle, }}>
+            <View style={{ flex: 1, marginHorizontal: 40, alignItems: "center" }}>
+              <Text style={{ color: "#52c41a" }}>{this.props.exposureDetail.support_count}</Text>
+              {this.props.exposureDetail.my_attitude == -1 ?
+                <Button
+                  size='small'
+                  style={{ width: 80, marginTop: 10 }}
+                  type={this.props.exposureDetail.my_attitude != 1 ? 'primary' : 'warning'}
+                  disabled={this.props.exposureDetail.my_attitude != -1}
+                  onClick={this.support.bind(this, 1)}
+                >支持</Button> : <Text style={{ color: "#52c41a", marginTop: 10 }}>支持</Text>
+              }
+            </View>
+            <View style={{ flex: 1, marginHorizontal: 40, alignItems: "center" }}>
+              <Text style={{ color: "#f5222d" }}>{this.props.exposureDetail.opposition_count}</Text>
+              {this.props.exposureDetail.my_attitude == -1 ?
+                <Button
+                  size='small'
+                  style={{ width: 80, marginTop: 10 }}
+                  type={this.props.exposureDetail.my_attitude != 0 ? 'ghost' : 'warning'}
+                  disabled={this.props.exposureDetail.my_attitude != -1}
+                  onClick={this.support.bind(this, 0)}
+                >反对</Button> : <Text style={{ color: "#f5222d", marginTop: 10 }}>反对</Text>
+              }
+            </View>
           </View>
-          <View style={styles.buttonContainer}>
+          {/* <View style={styles.buttonContainer}>
             <Button type="primary">告诉朋友</Button>
-          </View>
+          </View> */}
 
           <Modal
             animationType="fade"
@@ -205,6 +223,7 @@ const ExposureDetailPageSelector = createSelector(
     supportExposureState,
     supportExposureError
   ) => {
+    console.log(exposureDetail)
     if (exposureDetail.img_url_arr && typeof (exposureDetail.img_url_arr) == 'string') {
       exposureDetail.img_url_arr = JSON.parse(exposureDetail.img_url_arr)
       if (exposureDetail.img_url_arr.length > 0) {
@@ -216,7 +235,6 @@ const ExposureDetailPageSelector = createSelector(
         })
       }
     }
-
     return {
       exposureDetailState,
       exposureDetailErrorMsg: exposureDetailError ? exposureDetailError.msg : '',

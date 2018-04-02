@@ -42,6 +42,7 @@
 		3475601F20620C9500BABD39 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3475601E20620C9500BABD39 /* Security.framework */; };
 		3475602120620CA200BABD39 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3475602020620CA200BABD39 /* CoreTelephony.framework */; };
 		3475602320620CAF00BABD39 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3475602220620CAF00BABD39 /* CFNetwork.framework */; };
+		347A874C207245360074AB3F /* anticon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 347A874B207245360074AB3F /* anticon.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		7E53AD09BB654FB8B2CDC0F0 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 692E9EC615A04D0CB203E2A5 /* libRNImagePicker.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -387,6 +388,7 @@
 		3475601E20620C9500BABD39 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3475602020620CA200BABD39 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		3475602220620CAF00BABD39 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		347A874B207245360074AB3F /* anticon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = anticon.ttf; path = ../../android/app/src/main/assets/fonts/anticon.ttf; sourceTree = "<group>"; };
 		4B08A8717D16408A9B42F29A /* RCTWeChat.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTWeChat.xcodeproj; path = "../node_modules/react-native-wechat/ios/RCTWeChat.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		692E9EC615A04D0CB203E2A5 /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
@@ -550,6 +552,7 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				347A8721207244FD0074AB3F /* Resources */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -631,6 +634,14 @@
 				34755FFF20620B6000BABD39 /* RCTWeChatTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		347A8721207244FD0074AB3F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				347A874B207245360074AB3F /* anticon.ttf */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
@@ -1204,6 +1215,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				347A874C207245360074AB3F /* anticon.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);

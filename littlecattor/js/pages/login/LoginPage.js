@@ -7,7 +7,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  Image
 } from 'react-native';
 import {
   List,
@@ -44,16 +45,16 @@ class LoginPage extends Component {
     super(props)
     this.state = {
       loginButtonDisabled: false,
-      phone: '15810018878',
-      pwd: '000000',
+      phone: '',
+      pwd: '',
     }
   }
 
   componentDidMount() {
-    if(this.props.isLogin){
+    if (this.props.isLogin) {
       this.navigateTo('Home');
     }
-    if(this.props.navigation){
+    if (this.props.navigation) {
       global.rootNavigator = this.props.navigation;
     }
   }
@@ -116,7 +117,9 @@ class LoginPage extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.logoContainer}>
-          <Text style={styles.logo}>LOGO</Text>
+          {/* <Text style={styles.logo}>LOGO</Text> */}
+          <Image source={require('./img/logo.png')} style={styles.logo}></Image>
+          <Text style={styles.logoText}>小萝卜</Text>
         </View>
         <View style={styles.bottomContainer}>
           <List>
@@ -166,7 +169,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   logo: {
-    fontSize: 48,
+    width: 100,
+    height: 100
+  },
+  logoText: {
+    marginTop: 15,
+    fontSize: 28,
     fontWeight: 'bold',
     color: Colors.Magenta.t6,
   },

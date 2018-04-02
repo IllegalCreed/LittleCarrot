@@ -130,7 +130,7 @@ const CircularAccusationPageSelector = createSelector(
       if (accusationDetail.report_img_url_arr.length > 0) {
         accusationDetail.report_img_url_arr = accusationDetail.report_img_url_arr.map(item => {
           return {
-            url: item + '?x-oss-process=style/400',
+            url: item,
             id: Math.floor(Math.random() * (10001)),
           }
         })

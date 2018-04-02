@@ -83,7 +83,11 @@ export class MinePage extends Component {
         <ScrollView ref={scrollView => this.scrollView = scrollView}>
           <View style={styles.headerContainer}>
             <View style={styles.userHeader}>
-              <Image source={{ uri: this.props.userInfo.avatar_url ? this.props.userInfo.avatar_url + '?x-oss-process=style/400' : '' }} style={styles.avatar} />
+              {
+                this.props.userInfo.avatar_url
+                  ? <Image source={{ uri: this.props.userInfo.avatar_url ? this.props.userInfo.avatar_url + '?x-oss-process=style/400' : '' }} style={styles.avatar} />
+                  : null
+              }
             </View>
             <Text style={{ marginTop: Spacing.small, color: 'white', fontSize: 18, fontWeight: 'bold' }}>{this.props.userInfo.nickname}</Text>
           </View>
@@ -93,7 +97,7 @@ export class MinePage extends Component {
             <Item onClick={this.navigateTo.bind(this, 'MyCircular')} arrow='horizontal'>我发布的通告</Item>
             <Item onClick={this.navigateTo.bind(this, 'MyAccusation')} arrow='horizontal'>我的举报</Item>
             <Item onClick={this.navigateTo.bind(this, 'MyExposure')} arrow='horizontal'>我的曝光</Item>
-            <Item extra={'2333'}>我的萝卜</Item>
+            <Item extra={this.props.userInfo.asset ? this.props.userInfo.asset.point : '0'}>我的萝卜</Item>
             <Item onClick={this.navigateTo.bind(this, 'About')} arrow='horizontal'>关于平台</Item>
           </List>
 
@@ -152,6 +156,7 @@ const MinePageSelector = createSelector(
     getUserInfoError,
     userInfo,
   ) => {
+    console.log(userInfo)
     return {
       getUserInfoState,
       getUserInfoError: getUserInfoError ? getUserInfoError.msg : '',

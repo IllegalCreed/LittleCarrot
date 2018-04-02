@@ -26,7 +26,7 @@ import { createSelector } from 'reselect';
 import {
   getSearchWechatState,
   getSearchWechatErrorObj,
-  getWechatList,
+  getFakeWechat,
 } from 'Selectors';
 
 import Actions from 'Actions';
@@ -89,20 +89,21 @@ export class ExposureSearchPage extends Component {
           })} />
         {
           this.state.showSearchButton
-            ? <Button type="primary" onClick={this.search} style={{ margin: 20 }}>搜索</Button>
-            : this.props.wechatList.length > 0
-              ? <FlatList
-                data={this.props.wechatList}
-                keyExtractor={(item, index) => {
-                  return index.toString();
-                }}
-                renderItem={({ item, index }) =>
-                  <View style={styles.item}>
-                    <Text style={{ fontSize: 16 }}>{item.wx}</Text>
-                  </View>
-                }
-              />
-              : <Text style={{ alignSelf: "center", fontSize: 18, marginTop: 50 }}>无结果</Text>
+            ? <View>
+              <Text style={styles.tip}>{`未知领队、模特艺人等联系人信用指数时，可在搜索栏中输入其“微信号码”，即可获取相应的匹配信息。
+曝光墙筛选不正规、虚假的通告、领队、模特艺人等，为你的舞台亮起一盏明灯，维护你的安全。
+`}</Text>
+              <Button type="primary" onClick={this.search} style={{ margin: 20 }}>搜索</Button>
+            </View>
+            : this.props.fakeWechat.is_exist
+              ? <View>
+                <Text style={[styles.tip, { color: "#fa541c" }]}>该用户已被多次曝光举报，请谨慎处理！</Text>
+                <Text style={styles.tip}>如遇欺诈行为，请及时在曝光墙中曝光，让更多的小萝卜避免上当受骗！</Text>
+              </View>
+              : <View>
+                <Text style={[styles.tip, { color: "#7cb305" }]}>该用户尚未被举报！</Text>
+                <Text style={styles.tip}>如遇欺诈行为，请及时在曝光墙中曝光，让更多的小萝卜避免上当受骗！</Text>
+              </View>
         }
       </View>
     );
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: '#f4f3fd',
+    backgroundColor: '#f5f5f5',
   },
   item: {
     borderColor: '#e9e9e9',
@@ -122,6 +123,13 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: 'white',
     marginTop: 10,
+  },
+  tip: {
+    alignSelf: "center",
+    fontSize: 14,
+    marginTop: 40,
+    marginHorizontal: 20,
+    color: "#595959",
   }
 });
 
@@ -129,17 +137,16 @@ const ExposureSearchPageSelector = createSelector(
   [
     getSearchWechatState,
     getSearchWechatErrorObj,
-    getWechatList,
+    getFakeWechat,
   ], (
     searchWechatState,
     searchWechatError,
-    wechatList,
+    fakeWechat,
   ) => {
-    console.log(wechatList)
     return {
       searchWechatState,
       searchWechatErrorMsg: searchWechatError ? searchWechatError.msg : '',
-      wechatList,
+      fakeWechat,
     };
   });
 

@@ -157,16 +157,16 @@ export class UserInfoPage extends Component {
       switch (nextProps.updateUserInfoState) {
         case requestState.FAIL:
           if (!nextProps.getUserInfoErrorMsg) {
-            Toast.info('保存失败',2);
+            Toast.info('保存失败', 2);
           } else {
-            Toast.info('保存失败，错误：' + nextProps.getUserInfoErrorMsg,2);
+            Toast.info('保存失败，错误：' + nextProps.getUserInfoErrorMsg, 2);
           }
           nextProps.dispatch(Actions.resetUpdateUserInfoState());
           break;
         case requestState.LOADING:
           break;
         case requestState.SUCCESS:
-          Toast.show('保存成功',2);
+          Toast.show('保存成功', 2);
           nextProps.dispatch(Actions.resetUpdateUserInfoState());
           this.navigateTo();
           break;
@@ -221,7 +221,6 @@ export class UserInfoPage extends Component {
   }
 
   save = () => {
-    console.log(this.state)
     this.props.dispatch(Actions.updateUserInfo(
       this.state.avatar_url,
       this.state.nickName,
@@ -290,7 +289,11 @@ export class UserInfoPage extends Component {
           <List>
             <List.Item arrow='horizontal' onClick={this.selectHeader} extra={
               <View style={styles.userHeader}>
-                <Image source={this.state.avatarSource} style={styles.avatar} />
+                {
+                  this.state.avatarSource
+                    ? <Image source={this.state.avatarSource} style={styles.avatar} />
+                    : null
+                }
               </View>
             }>头像</List.Item>
             <InputItem
@@ -306,6 +309,9 @@ export class UserInfoPage extends Component {
               cols={1}
               value={this.state.sex}
               onOk={(value) => {
+                if(value == '-1'){
+                  value = '0';
+                }
                 this.setState({ sex: value })
               }}>
               <List.Item arrow='horizontal'>性别</List.Item>

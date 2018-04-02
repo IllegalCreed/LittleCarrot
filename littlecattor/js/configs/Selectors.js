@@ -78,7 +78,7 @@ export const getSupportExposureErrorObj = state => state.exposure.supportExposur
 
 export const getSearchWechatState = state => state.exposure.searchWechatState;
 export const getSearchWechatErrorObj = state => state.exposure.searchWechatErrorObj;
-export const getWechatList = state => state.exposure.wechatList;
+export const getFakeWechat = state => state.exposure.fakeWechat;
 
 export const getFakeCircularListState = state => state.circular.getFakeCircularListState;
 export const getFakeCircularListErrorObj = state => state.circular.getFakeCircularListErrorObj;

@@ -45,7 +45,7 @@ export default class ExposurePublishResultPage extends Component {
 					message="感谢您提供的信息！"
 				/>
 				<View style={styles.buttonContainer}>
-					<Button type="primary" >分享给朋友</Button>
+					{/* <Button type="primary" >分享给朋友</Button> */}
 					<Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.backTo}>返回首页</Button>
 				</View>
 			</View>

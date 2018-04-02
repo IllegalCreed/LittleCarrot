@@ -29,4 +29,6 @@ export default API = {
   publishExposure:'exposure/addExposure',
   supportExposure:'exposure/setMyAttitude',
   searchWechat:'exposure/dishonestySearch',
+
+  updatePVCount:"page_view/updatePVCount",
 }

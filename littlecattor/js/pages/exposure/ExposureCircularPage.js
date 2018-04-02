@@ -9,7 +9,8 @@ import {
   Text,
   View,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  Image,
 } from 'react-native';
 import {
   Button,
@@ -109,6 +110,47 @@ export class ExposureCircularPage extends Component {
     this.props.navigation.navigate(routeName, params)
   }
 
+  renderItem = ({ item, index }) => {
+    return (
+      <TouchableOpacity
+        style={styles.circularItem}
+        onPress={this.navigateTo.bind(this, 'CircularDetail', { circular_id: item.notice_id })}>
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          flex: 1,
+          justifyContent: 'space-between'
+        }}>
+          <View style={styles.tag}>
+            <Text style={styles.tagText}>{this.getTagNameById(item.tag_id)}</Text>
+          </View>
+          <Text style={styles.date}>{dateFormat(new Date(item.create_time), 'yyyy-MM-dd')}</Text>
+        </View>
+        <Text style={styles.circularTitle}>{item.title}</Text>
+        <View style={{
+          flexDirection: 'row',
+          marginTop: 30,
+          flex: 1,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+            <View style={styles.userHeader}>
+              <Image source={{ uri: item.avatar_url ? item.avatar_url + '?x-oss-process=style/400' : '' }} style={styles.avatar} />
+            </View>
+            <Text style={styles.publisher}>{item.nickname}</Text>
+          </View>
+          <View style={styles.fakeTag}>
+            <Text style={styles.fakeTagText}>{item.category_name_arr[0]}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
   render() {
     const { state } = this.props.navigation;
     return (
@@ -118,56 +160,57 @@ export class ExposureCircularPage extends Component {
           keyExtractor={(item, index) => {
             return index.toString();
           }}
-          renderItem={({ item, index }) =>
-            <TouchableOpacity
-              style={styles.circularItem}
-              onPress={this.navigateTo.bind(this, 'CircularDetail', { circular_id: item.notice_id })}>
-              <View style={{
-                paddingHorizontal: 15,
-                flexDirection: 'row',
-                flex: 1,
-                justifyContent: 'space-between'
-              }}>
-                <Text style={styles.circularTitle}>标题：{item.title}</Text>
-                <View style={styles.tag}>
-                  <Text style={styles.tagText}>{this.getTagNameById(item.tag_id)}</Text>
-                </View>
-              </View>
-              <View style={{
-                marginLeft: 15,
-                marginVertical: 10,
-                height: 1,
-                alignItems: 'stretch',
-                backgroundColor: '#e9e9e9',
-              }} />
-              <View style={{
-                paddingHorizontal: 15,
-                flexDirection: 'row',
-                flex: 1,
-                justifyContent: 'space-between'
-              }}>
-                <View style={styles.tag}>
-                  <Text style={styles.tagTextBig}>{item.category_name_arr[0]}</Text>
-                </View>
-                <Text>发布时间：{dateFormat(new Date(item.create_time), 'yyyy-MM-dd')}</Text>
-              </View>
-              <View style={{
-                marginLeft: 15,
-                marginVertical: 10,
-                height: 1,
-                alignItems: 'stretch',
-                backgroundColor: '#e9e9e9',
-              }} />
-              <View style={{
-                paddingHorizontal: 15,
-                flexDirection: 'row',
-                flex: 1,
-                justifyContent: 'flex-end'
-              }}>
-                <Text style={{ fontSize: 20, color: '#f04134' }}>{item.price}元</Text>
-              </View>
-            </TouchableOpacity>
-          }
+          renderItem={this.renderItem}
+          // renderItem={({ item, index }) =>
+          //   <TouchableOpacity
+          //     style={styles.circularItem}
+          //     onPress={this.navigateTo.bind(this, 'CircularDetail', { circular_id: item.notice_id })}>
+          //     <View style={{
+          //       paddingHorizontal: 15,
+          //       flexDirection: 'row',
+          //       flex: 1,
+          //       justifyContent: 'space-between'
+          //     }}>
+          //       <Text style={styles.circularTitle}>标题：{item.title}</Text>
+          //       <View style={styles.tag}>
+          //         <Text style={styles.tagText}>{this.getTagNameById(item.tag_id)}</Text>
+          //       </View>
+          //     </View>
+          //     <View style={{
+          //       marginLeft: 15,
+          //       marginVertical: 10,
+          //       height: 1,
+          //       alignItems: 'stretch',
+          //       backgroundColor: '#e9e9e9',
+          //     }} />
+          //     <View style={{
+          //       paddingHorizontal: 15,
+          //       flexDirection: 'row',
+          //       flex: 1,
+          //       justifyContent: 'space-between'
+          //     }}>
+          //       <View style={styles.tag}>
+          //         <Text style={styles.tagTextBig}>{item.category_name_arr[0]}</Text>
+          //       </View>
+          //       <Text>发布时间：{dateFormat(new Date(item.create_time), 'yyyy-MM-dd')}</Text>
+          //     </View>
+          //     <View style={{
+          //       marginLeft: 15,
+          //       marginVertical: 10,
+          //       height: 1,
+          //       alignItems: 'stretch',
+          //       backgroundColor: '#e9e9e9',
+          //     }} />
+          //     <View style={{
+          //       paddingHorizontal: 15,
+          //       flexDirection: 'row',
+          //       flex: 1,
+          //       justifyContent: 'flex-end'
+          //     }}>
+          //       <Text style={{ fontSize: 20, color: '#f04134' }}>{item.price}元</Text>
+          //     </View>
+          //   </TouchableOpacity>
+          // }
           onEndReached={this.loadMoreDatas}
           onEndReachedThreshold={0}
           onRefresh={this.refreshDatas}
@@ -182,7 +225,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: '#f4f3fd',
+    backgroundColor: '#f5f5f5',
   },
   publishCircular: {
     position: 'absolute',
@@ -193,31 +236,70 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   circularItem: {
-    borderColor: '#e9e9e9',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    paddingVertical: 15,
+    borderRadius: 2,
+    paddingHorizontal: 15,
+    paddingTop: 15,
+    paddingBottom: 10,
     backgroundColor: 'white',
-    marginTop: 10,
+    marginHorizontal: 5,
+    marginTop: 5,
   },
   circularTitle: {
-    fontSize: 18,
+    fontFamily: 'PingFang SC',
+    fontSize: 16,
+    marginTop: 10,
   },
   tag: {
-    paddingHorizontal: 5,
-    borderWidth: 1,
-    borderColor: '#F5317F',
-    borderRadius: 2,
+    backgroundColor: '#f759ab',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+    alignSelf: 'flex-start',
+    borderRadius: 2,
   },
   tagText: {
-    fontSize: 12,
-    color: '#F5317F',
+    fontSize: 14,
+    color: '#fff',
   },
-  tagTextBig: {
-    fontSize: 18,
-    color: '#F5317F',
+  fakeTag: {
+    borderColor: "#f759ab",
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+    alignSelf: 'flex-start',
+    borderRadius: 2,
+  },
+  fakeTagText: {
+    fontSize: 14,
+    color: '#f759ab',
+  },
+  date: {
+    fontSize: 12,
+    color: '#bfbfbf',
+  },
+  publisher: {
+    marginLeft: 5,
+    fontSize: 12,
+    color: '#bfbfbf',
+  },
+  price: {
+    fontSize: 16,
+    color: '#f04134'
+  },
+  userHeader: {
+    overflow: 'hidden',
+    borderWidth: 2,
+    borderColor: 'white',
+    borderRadius: 40,
+    width: 20,
+    height: 20,
+  },
+  avatar: {
+    width: 20,
+    height: 20
   }
 });
 

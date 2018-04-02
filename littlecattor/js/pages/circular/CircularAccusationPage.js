@@ -232,6 +232,7 @@ const CircularAccusationPageSelector = createSelector(
     addAccusationError,
     accusationTypes
   ) => {
+    console.log(accusationTypes)
     return {
       addAccusationState,
       addAccusationErrorMsg: addAccusationError ? addAccusationError.msg : '',
