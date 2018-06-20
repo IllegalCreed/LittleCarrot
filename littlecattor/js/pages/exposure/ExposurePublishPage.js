@@ -209,7 +209,7 @@ export class ExposurePublishPage extends Component {
           <List>
             <InputItem
               placeholder='请输入标题'
-              value={this.state.title}
+              // value={this.state.title}
               onChange={(val) => {
                 this.setState({
                   title: val
@@ -226,7 +226,7 @@ export class ExposurePublishPage extends Component {
           </Picker> */}
             <InputItem
               placeholder='请输入标签'
-              value={this.state.tag}
+              // value={this.state.tag}
               onChange={(val) => {
                 this.setState({
                   tag: val
@@ -234,7 +234,7 @@ export class ExposurePublishPage extends Component {
               }}>标签</InputItem>
             <InputItem
               placeholder='请输入微信'
-              value={this.state.wechat}
+              // value={this.state.wechat}
               onChange={(val) => {
                 this.setState({
                   wechat: val
@@ -245,7 +245,7 @@ export class ExposurePublishPage extends Component {
               rows={5}
               placeholder='请输入详情'
               count={160}
-              value={this.state.detail}
+              // value={this.state.detail}
               onChange={(val) => {
                 this.setState({
                   detail: val
@@ -264,7 +264,7 @@ export class ExposurePublishPage extends Component {
             />
           </View>
           <View style={styles.buttonContainer}>
-            <Button type="primary" disabled={this.state.publishButtonDisabled} onClick={this.submit}>曝光</Button>
+            <Button type="primary" disabled={this.state.publishButtonDisabled} onClick={this.submit}>我承诺曝光属实并提交</Button>
           </View>
           <View style={{ height: this.state.keyboardAvoidingHeight }}>
           </View>

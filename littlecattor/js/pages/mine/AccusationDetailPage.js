@@ -124,7 +124,7 @@ const CircularAccusationPageSelector = createSelector(
     accusationDetailError,
     accusationDetail
   ) => {
-    console.log(accusationDetail)
+    // console.log(accusationDetail)
     if (accusationDetail.report_img_url_arr && typeof (accusationDetail.report_img_url_arr) == 'string') {
       accusationDetail.report_img_url_arr = JSON.parse(accusationDetail.report_img_url_arr)
       if (accusationDetail.report_img_url_arr.length > 0) {

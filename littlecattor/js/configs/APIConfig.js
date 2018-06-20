@@ -31,4 +31,5 @@ export default API = {
   searchWechat:'exposure/dishonestySearch',
 
   updatePVCount:"page_view/updatePVCount",
+  getBanner:"banner/getList",
 }

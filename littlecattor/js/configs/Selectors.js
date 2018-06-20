@@ -83,3 +83,6 @@ export const getFakeWechat = state => state.exposure.fakeWechat;
 export const getFakeCircularListState = state => state.circular.getFakeCircularListState;
 export const getFakeCircularListErrorObj = state => state.circular.getFakeCircularListErrorObj;
 export const getFakeCircularList = state => state.circular.fakeCircularList;
+
+/** 系统相关 */
+export const getBannerList = state => state.system.banners;

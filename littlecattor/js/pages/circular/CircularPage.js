@@ -33,6 +33,7 @@ import {
   getCircularTagListState,
   getCircularTagListErrorObj,
   getTagList,
+  getBannerList
 } from 'Selectors';
 
 import Actions from 'Actions';
@@ -57,7 +58,7 @@ class CircularPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      carouselData: ['AiyWuByWklrrUDlFignR', 'TekJlZRVCjLFexlOCuWn', 'IJOtIlfsYdTyaDTRVrLI'],
+      // carouselData: ['AiyWuByWklrrUDlFignR', 'TekJlZRVCjLFexlOCuWn', 'IJOtIlfsYdTyaDTRVrLI'],
       refreshing: false,
     }
 
@@ -68,6 +69,7 @@ class CircularPage extends Component {
     }
 
     this.props.dispatch(Actions.getCircularTagList());
+    this.props.dispatch(Actions.getBanner());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -185,10 +187,10 @@ class CircularPage extends Component {
               infinite
               selectedIndex={1}
             >
-              {this.state.carouselData.map(data => (
-                <Image key={data}
+              {this.props.bannerList.map(data => (
+                <Image key={data.img_url}
                   style={{ height: ScreenConfig.window.width * 9 / 16, width: ScreenConfig.window.width }}
-                  source={{ uri: `https://zos.alipayobjects.com/rmsportal/${data}.png` }}
+                  source={{ uri: "https://radish.oss-cn-beijing.aliyuncs.com/"+data.img_url }}
                 />
               ))}
             </Carousel>
@@ -285,6 +287,7 @@ const CircularPageSelector = createSelector(
     getCircularTagListState,
     getCircularTagListErrorObj,
     getTagList,
+    getBannerList,
   ], (
     circularListState,
     circularListError,
@@ -292,6 +295,7 @@ const CircularPageSelector = createSelector(
     circularTagListState,
     circularTagListError,
     tagList,
+    bannerList
   ) => {
     // console.log(circularList)
     return {
@@ -306,6 +310,7 @@ const CircularPageSelector = createSelector(
           id: tag.tag_id,
         }
       }),
+      bannerList,
     };
   });
 

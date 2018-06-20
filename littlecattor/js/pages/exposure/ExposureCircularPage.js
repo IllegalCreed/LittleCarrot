@@ -143,9 +143,11 @@ export class ExposureCircularPage extends Component {
             </View>
             <Text style={styles.publisher}>{item.nickname}</Text>
           </View>
-          <View style={styles.fakeTag}>
-            <Text style={styles.fakeTagText}>{item.category_name_arr[0]}</Text>
-          </View>
+          {item.category_name_arr ?
+            <View style={styles.fakeTag}>
+              <Text style={styles.fakeTagText}>{item.category_name_arr[0]}</Text>
+            </View> : null
+          }
         </View>
       </TouchableOpacity>
     )
@@ -161,56 +163,6 @@ export class ExposureCircularPage extends Component {
             return index.toString();
           }}
           renderItem={this.renderItem}
-          // renderItem={({ item, index }) =>
-          //   <TouchableOpacity
-          //     style={styles.circularItem}
-          //     onPress={this.navigateTo.bind(this, 'CircularDetail', { circular_id: item.notice_id })}>
-          //     <View style={{
-          //       paddingHorizontal: 15,
-          //       flexDirection: 'row',
-          //       flex: 1,
-          //       justifyContent: 'space-between'
-          //     }}>
-          //       <Text style={styles.circularTitle}>标题：{item.title}</Text>
-          //       <View style={styles.tag}>
-          //         <Text style={styles.tagText}>{this.getTagNameById(item.tag_id)}</Text>
-          //       </View>
-          //     </View>
-          //     <View style={{
-          //       marginLeft: 15,
-          //       marginVertical: 10,
-          //       height: 1,
-          //       alignItems: 'stretch',
-          //       backgroundColor: '#e9e9e9',
-          //     }} />
-          //     <View style={{
-          //       paddingHorizontal: 15,
-          //       flexDirection: 'row',
-          //       flex: 1,
-          //       justifyContent: 'space-between'
-          //     }}>
-          //       <View style={styles.tag}>
-          //         <Text style={styles.tagTextBig}>{item.category_name_arr[0]}</Text>
-          //       </View>
-          //       <Text>发布时间：{dateFormat(new Date(item.create_time), 'yyyy-MM-dd')}</Text>
-          //     </View>
-          //     <View style={{
-          //       marginLeft: 15,
-          //       marginVertical: 10,
-          //       height: 1,
-          //       alignItems: 'stretch',
-          //       backgroundColor: '#e9e9e9',
-          //     }} />
-          //     <View style={{
-          //       paddingHorizontal: 15,
-          //       flexDirection: 'row',
-          //       flex: 1,
-          //       justifyContent: 'flex-end'
-          //     }}>
-          //       <Text style={{ fontSize: 20, color: '#f04134' }}>{item.price}元</Text>
-          //     </View>
-          //   </TouchableOpacity>
-          // }
           onEndReached={this.loadMoreDatas}
           onEndReachedThreshold={0}
           onRefresh={this.refreshDatas}
@@ -320,6 +272,7 @@ const ExposureCircularPageSelector = createSelector(
     circularTagListError,
     tagList,
   ) => {
+    // console.log(circularList)
     return {
       circularListState,
       circularListErrorMsg: circularListError ? circularListError.msg : '',

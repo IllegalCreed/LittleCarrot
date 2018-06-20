@@ -7,7 +7,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native';
 import {
   List,
@@ -50,7 +51,9 @@ export class RegisterPage extends Component {
       phone: '',
       sms: '',
       pwd: '',
+      smsExtra: '获取验证码',
     }
+    this.timerCount = 60;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -59,9 +62,9 @@ export class RegisterPage extends Component {
         case requestState.FAIL:
           // 注册失败
           if (!nextProps.registerErrorMsg) {
-            Toast.show('注册失败',2);
+            Toast.show('注册失败', 2);
           } else {
-            Toast.show('注册失败，错误：' + nextProps.registerErrorMsg,2);
+            Toast.show('注册失败，错误：' + nextProps.registerErrorMsg, 2);
           }
           nextProps.dispatch(Actions.resetRegisterState());
           break;
@@ -96,8 +99,25 @@ export class RegisterPage extends Component {
   }
 
   getCode = () => {
-    let phone = this.state.phone.replace(/\s+/g, "");
-    this.props.dispatch(Actions.sendSMS(phone));
+    if (this.timerCount == 60) {
+      this.smsTimer = setInterval(() => {
+        this.setState({
+          smsExtra: "已发送(" + this.timerCount + ")"
+        })
+        this.timerCount--;
+        if (this.timerCount <= 0) {
+          clearInterval(this.smsTimer);
+          this.timerCount = 60;
+          this.setState({
+            smsExtra: '获取验证码'
+          })
+        }
+      }, 1000)
+      let phone = this.state.phone.replace(/\s+/g, "");
+      this.props.dispatch(Actions.sendSMS(phone));
+    } else {
+      return;
+    }
   }
 
   navigateTo = (routeName, params) => {
@@ -108,11 +128,11 @@ export class RegisterPage extends Component {
     const { state } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <List style={{ alignSelf: 'stretch', marginTop: 64 }}>
+        <List style={{ alignSelf: 'stretch', marginTop: 32 }}>
           <InputItem
             type="phone"
             placeholder='请输入手机号'
-            value={this.state.phone}
+            // value={this.state.phone}
             onChange={(val) => {
               this.setState({
                 phone: val
@@ -123,9 +143,9 @@ export class RegisterPage extends Component {
             type='number'
             placeholder='请输入验证码'
             clear
-            extra='获取验证码'
+            extra={this.state.smsExtra}
             onExtraClick={this.getCode}
-            value={this.state.sms}
+            // value={this.state.sms}
             onChange={(val) => {
               this.setState({
                 sms: val
@@ -135,7 +155,7 @@ export class RegisterPage extends Component {
 					</InputItem>
           <InputItem
             placeholder='请输入密码'
-            value={this.state.pwd}
+            // value={this.state.pwd}
             onChange={(val) => {
               this.setState({
                 pwd: val
@@ -149,8 +169,11 @@ export class RegisterPage extends Component {
               isAgree: checked,
             });
           }}>
-            同意<Text style={styles.link}>《XXXX用户协议》</Text>
-          </AgreeItem>
+            同意
+            </AgreeItem>
+          <TouchableOpacity style={styles.agreeContainer} onPress={() => { this.navigateTo('UserAgreement') }}>
+            <Text style={styles.link}>《用户协议》</Text>
+          </TouchableOpacity>
           <Button
             disabled={!this.state.isAgree || this.state.registerButtonDisabled}
             type="primary"
@@ -167,7 +190,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    paddingTop: 64,
+    paddingTop: 0,
     backgroundColor: '#f4f3fd',
   },
   buttonContainer: {
@@ -179,6 +202,12 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignSelf: 'stretch',
     paddingHorizontal: Spacing.middle,
+  },
+  agreeContainer: {
+    position: 'absolute',
+    left: 100,
+    top: -13,
+    flex: 1,
   },
   link: {
     color: '#108ee9',

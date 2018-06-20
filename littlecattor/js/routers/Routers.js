@@ -11,6 +11,7 @@ import { StackNavigator, TabNavigator, TabBarBottom, TabBarTop } from 'react-nav
 import LoginPage from 'LoginPage';
 import RegisterPage from 'RegisterPage';
 import ForgetPasswordPage from 'ForgetPasswordPage';
+import UserAgreement from 'UserAgreement';
 
 import MinePage from 'MinePage';
 import UserInfoPage from 'UserInfoPage';
@@ -97,6 +98,9 @@ export const RootNavigator = StackNavigator({
 	},
 	ForgetPassword: {
 		screen: ForgetPasswordPage,
+	},
+	UserAgreement: {
+		screen: UserAgreement,
 	},
 	Home: {
 		screen: HomeNavigator,

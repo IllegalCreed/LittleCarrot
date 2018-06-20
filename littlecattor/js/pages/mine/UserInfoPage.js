@@ -298,7 +298,8 @@ export class UserInfoPage extends Component {
             }>头像</List.Item>
             <InputItem
               placeholder='请输入昵称'
-              value={this.state.nickName}
+              // value={this.state.nickName}
+              defaultValue = {this.state.nickName}
               onChange={(val) => {
                 this.setState({
                   nickName: val
@@ -330,7 +331,8 @@ export class UserInfoPage extends Component {
             <InputItem
               type='number'
               placeholder='请输入身高'
-              value={this.state.height}
+              // value={this.state.height}
+              defaultValue = {this.state.height}
               onChange={(val) => {
                 this.setState({
                   height: val
@@ -339,7 +341,8 @@ export class UserInfoPage extends Component {
             <InputItem
               type='number'
               placeholder='请输入体重'
-              value={this.state.weight}
+              // value={this.state.weight}
+              defaultValue = {this.state.weight}
               onChange={(val) => {
                 this.setState({
                   weight: val
@@ -357,7 +360,8 @@ export class UserInfoPage extends Component {
             <InputItem
               type='number'
               placeholder='请输入鞋码'
-              value={this.state.shoeSize}
+              // value={this.state.shoeSize}
+              defaultValue = {this.state.shoeSize}
               onChange={(val) => {
                 this.setState({
                   shoeSize: val
@@ -373,7 +377,8 @@ export class UserInfoPage extends Component {
                   setTimeout(() => { this.scrollView.scrollToEnd({ animated: true }) }, 800)
                 }
               }}
-              value={this.state.description}
+              // value={this.state.description}
+              defaultValue = {this.state.description}
               onChange={(val) => {
                 this.setState({
                   description: val

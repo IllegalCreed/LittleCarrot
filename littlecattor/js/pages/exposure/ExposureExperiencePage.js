@@ -131,31 +131,6 @@ export class ExposureExperiencePage extends Component {
             return index.toString();
           }}
           renderItem={this.renderItem}
-          // renderItem={({ item, index }) =>
-          //   <TouchableOpacity
-          //     style={styles.circularItem}
-          //     onPress={this.navigateTo.bind(this, 'ExposureDetail', { exposure_id: item.exposure_id })}>
-          //     <View style={{
-          //       paddingHorizontal: 15,
-          //       flexDirection: 'row',
-          //       flex: 1,
-          //       justifyContent: 'space-between'
-          //     }}>
-          //       <Text style={styles.circularTitle}>标题：{item.title}</Text>
-          //       <View style={styles.tag}>
-          //         <Text style={styles.tagText}>{item.tag}</Text>
-          //       </View>
-          //     </View>
-          //     <View style={{
-          //       marginLeft: 15,
-          //       marginVertical: 10,
-          //       height: 1,
-          //       alignItems: 'stretch',
-          //       backgroundColor: '#e9e9e9',
-          //     }} />
-          //     <Text numberOfLines={3} style={{ paddingHorizontal: 15 }}>{item.content}</Text>
-          //   </TouchableOpacity>
-          // }
           onEndReached={this.loadMoreDatas}
           onEndReachedThreshold={0}
           onRefresh={this.refreshDatas}
@@ -224,6 +199,7 @@ const ExposureExperiencePageSelector = createSelector(
     exposureListError,
     exposureList,
   ) => {
+    // console.log(exposureList)
     return {
       exposureListState,
       exposureListErrorMsg: exposureListError ? exposureListError.msg : '',

@@ -122,30 +122,31 @@ class LoginPage extends Component {
           <Text style={styles.logoText}>小萝卜</Text>
         </View>
         <View style={styles.bottomContainer}>
-          <List>
-            <InputItem
-              type="phone"
-              placeholder='请输入手机号'
-              value={this.state.phone}
-              onChange={(val) => {
-                this.setState({
-                  phone: val
-                })
-              }}
-              clear>手机号</InputItem>
-            <InputItem
-              type='password'
-              placeholder='请输入密码'
-              value={this.state.pwd}
-              onChange={(val) => {
-                this.setState({
-                  pwd: val
-                })
-              }}
-              clear>密码</InputItem>
-          </List>
-          <Text onPress={this.navigateTo.bind(this, 'ForgetPassword')} style={styles.link}>忘记密码</Text>
-
+          <View>
+            <List>
+              <InputItem
+                type="phone"
+                placeholder='请输入手机号'
+                // value={this.state.phone}
+                onChange={(val) => {
+                  this.setState({
+                    phone: val
+                  })
+                }}
+                clear>手机号</InputItem>
+              <InputItem
+                type='password'
+                placeholder='请输入密码'
+                // value={this.state.pwd}
+                onChange={(val) => {
+                  this.setState({
+                    pwd: val
+                  })
+                }}
+                clear>密码</InputItem>
+            </List>
+            <Text onPress={this.navigateTo.bind(this, 'ForgetPassword')} style={styles.link}>忘记密码</Text>
+          </View>
           <View style={styles.buttonContainer}>
             <Button type="primary" disabled={this.state.loginButtonDisabled} onClick={this.login}>登录</Button>
             <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.navigateTo.bind(this, 'Register')}>注册</Button>
@@ -163,6 +164,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.Grey.t3,
   },
   logoContainer: {
+    marginTop: 10,
+    marginBottom: 10,
     flex: 2,
     flexDirection: "column",
     alignItems: "center",
@@ -181,6 +184,7 @@ const styles = StyleSheet.create({
   bottomContainer: {
     flex: 3,
     flexDirection: "column",
+    justifyContent: "space-between"
   },
   link: {
     color: Colors.Magenta.t6,
@@ -189,11 +193,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   buttonContainer: {
-    marginTop: 100,
-    marginBottom: Spacing.large,
-    flex: 1,
+    marginBottom: 50,
+    // flex: 1,
+    display: "flex",
     flexDirection: "column",
     alignSelf: 'stretch',
+    justifyContent: "flex-end",
     paddingHorizontal: Spacing.middle,
   },
 });

@@ -156,7 +156,7 @@ class CircularPublishPage extends Component {
             <InputItem
               type='number'
               placeholder='请输入价格'
-              value={this.state.price}
+              // value={this.state.price}
               onChange={(val) => {
                 this.setState({
                   price: val
@@ -164,7 +164,7 @@ class CircularPublishPage extends Component {
               }}>价格</InputItem>
             <InputItem
               placeholder='请输入微信'
-              value={this.state.wechat}
+              // value={this.state.wechat}
               onChange={(val) => {
                 this.setState({
                   wechat: val
@@ -184,7 +184,7 @@ class CircularPublishPage extends Component {
               rows={12}
               placeholder='请输入详情'
               count={300}
-              value={this.state.detail}
+              // value={this.state.detail}
               onChange={(val) => {
                 this.setState({
                   detail: val
@@ -194,6 +194,7 @@ class CircularPublishPage extends Component {
           </List>
           <View style={styles.buttonContainer}>
             <Button type="primary" disabled={this.state.publishButtonDisabled} onClick={this.publish}>发布</Button>
+            <Text style={styles.waringText}>我承诺发布信息均为真实合法信息</Text>
           </View>
           <View style={{ height: this.state.keyboardAvoidingHeight }}>
           </View>
@@ -218,6 +219,10 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     paddingHorizontal: Spacing.middle,
   },
+  waringText:{
+    alignSelf:'center',
+    marginTop:10
+  }
 });
 
 const CircularPublishPageSelector = createSelector(

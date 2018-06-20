@@ -16,7 +16,8 @@ import {
   Button,
   InputItem,
   TextareaItem,
-  Toast
+  Toast,
+  NoticeBar,
 } from 'antd-mobile';
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -107,7 +108,10 @@ class CircularDetailPage extends Component {
     return (
       <View style={styles.container}>
         <ScrollView ref={scrollView => this.scrollView = scrollView}>
-          <List>
+          <NoticeBar marqueeProps={{loop: true, leading: 500, trailing: 800,}}>
+          承接活动前注意事项：正规活动不会收费，正规活动价格不会高的离谱，正规活动不会有潜规则！更有甚者谎称绿色饭局，商务伴游，贴身保姆等卖淫嫖娼的违法行为拉大家下水！一旦发现直接举报，严惩不贷！
+          </NoticeBar>
+          <List style={{marginTop:12}}>
             <Item multipleLine>
               标题 <Brief>{this.props.circularDetail.title}</Brief>
             </Item>
@@ -140,7 +144,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    paddingTop: 12,
     backgroundColor: '#f4f3fd',
   },
   buttonContainer: {

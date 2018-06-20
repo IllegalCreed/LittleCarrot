@@ -156,7 +156,7 @@ const MinePageSelector = createSelector(
     getUserInfoError,
     userInfo,
   ) => {
-    console.log(userInfo)
+    // console.log(userInfo)
     return {
       getUserInfoState,
       getUserInfoError: getUserInfoError ? getUserInfoError.msg : '',

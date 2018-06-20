@@ -46,7 +46,9 @@ export class ForgetPasswordPage extends Component {
       phone: '',
       sms: '',
       pwd: '',
+      smsExtra: '获取验证码',
     }
+    this.timerCount = 60;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -55,9 +57,9 @@ export class ForgetPasswordPage extends Component {
         case requestState.FAIL:
           // 重置失败
           if (!nextProps.resetPwdErrorMsg) {
-            Toast.info('重置失败',2);
+            Toast.info('重置失败', 2);
           } else {
-            Toast.info('重置失败，错误：' + nextProps.resetPwdErrorMsg,2);
+            Toast.info('重置失败，错误：' + nextProps.resetPwdErrorMsg, 2);
           }
           nextProps.dispatch(Actions.resetResetPwdState());
           break;
@@ -101,19 +103,36 @@ export class ForgetPasswordPage extends Component {
   }
 
   getCode = () => {
-    let phone = this.state.phone.replace(/\s+/g, "");
-    this.props.dispatch(Actions.sendSMS(phone));
+    if (this.timerCount == 60) {
+      this.smsTimer = setInterval(() => {
+        this.setState({
+          smsExtra: "已发送(" + this.timerCount + ")"
+        })
+        this.timerCount--;
+        if (this.timerCount <= 0) {
+          clearInterval(this.smsTimer);
+          this.timerCount = 60;
+          this.setState({
+            smsExtra: '获取验证码'
+          })
+        }
+      }, 1000)
+      let phone = this.state.phone.replace(/\s+/g, "");
+      this.props.dispatch(Actions.sendSMS(phone));
+    } else {
+      return;
+    }
   }
 
   render() {
     const { state } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <List style={{ alignSelf: 'stretch', marginTop: 64 }}>
+        <List style={{ alignSelf: 'stretch', marginTop: 32 }}>
           <InputItem
             type="phone"
             placeholder='请输入手机号'
-            value={this.state.phone}
+            // value={this.state.phone}
             onChange={(val) => {
               this.setState({
                 phone: val
@@ -123,9 +142,9 @@ export class ForgetPasswordPage extends Component {
           <InputItem
             type='number'
             placeholder='请输入验证码'
-            clear extra='获取验证码'
+            clear extra={this.state.smsExtra}
             onExtraClick={this.getCode}
-            value={this.state.sms}
+            // value={this.state.sms}
             onChange={(val) => {
               this.setState({
                 sms: val
@@ -133,7 +152,7 @@ export class ForgetPasswordPage extends Component {
             }}>验证码</InputItem>
           <InputItem
             placeholder='请输入新密码'
-            value={this.state.pwd}
+            // value={this.state.pwd}
             onChange={(val) => {
               this.setState({
                 pwd: val
@@ -158,7 +177,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    paddingTop: 64,
+    paddingTop: 0,
     backgroundColor: '#f4f3fd',
   },
   buttonContainer: {

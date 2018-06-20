@@ -14,3 +14,17 @@ export function updatePVCount(page_name) {
         }
     }
 }
+
+export function getBanner(page_name) {
+    return {
+        type: 'getBannerAction',
+        payload: {
+            request: {
+                url: API.getBanner,
+                method: 'post',
+                data: {
+                }
+            }
+        }
+    }
+}
