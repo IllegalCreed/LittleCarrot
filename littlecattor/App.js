@@ -25,7 +25,7 @@ import Actions from 'Actions';
 
 export default class App extends Component {
   componentDidMount() {
-    wechat.registerApp('1106786282')
+    wechat.registerApp('wx10c6a48c740dea0e')
     AliyunOSS.initWithPlainTextAccessKey("LTAIaEPbGDOUJ4dr", "0EfCU4cafQJQTQPWj6vdZQIxCiEqpF", "https://oss-cn-beijing.aliyuncs.com");
   }
 

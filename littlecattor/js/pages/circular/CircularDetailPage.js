@@ -94,8 +94,10 @@ class CircularDetailPage extends Component {
       .then((isInstalled) => {
         if (isInstalled) {
           wechat.shareToSession({
-            type: 'text',
-            description: '我再小萝卜APP上找到了一个不错的通告，大家一起来看看吧！'
+            title: '小萝卜',
+            type: 'news',
+            description: '我再小萝卜APP上找到了一个不错的通告，大家一起来看看吧！',
+            webpageUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.littlecattor'
           });
         } else {
           toastShort('没有安装微信软件，请您安装微信之后再试');
@@ -132,7 +134,7 @@ class CircularDetailPage extends Component {
                   举报
               </Button>
             }
-            {/* <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.share}>分享</Button> */}
+            <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.share}>分享</Button>
           </View>
         </ScrollView>
       </View>
