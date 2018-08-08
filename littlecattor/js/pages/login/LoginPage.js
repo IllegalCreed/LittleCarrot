@@ -8,7 +8,9 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  Keyboard,
+  TouchableWithoutFeedback
 } from 'react-native';
 import {
   List,
@@ -115,44 +117,48 @@ class LoginPage extends Component {
   render() {
     const { state } = this.props.navigation;
     return (
-      <View style={styles.container}>
-        <View style={styles.logoContainer}>
-          {/* <Text style={styles.logo}>LOGO</Text> */}
-          <Image source={require('./img/logo.png')} style={styles.logo}></Image>
-          <Text style={styles.logoText}>小萝卜</Text>
-        </View>
-        <View style={styles.bottomContainer}>
-          <View>
-            <List>
-              <InputItem
-                type="phone"
-                placeholder='请输入手机号'
-                // value={this.state.phone}
-                onChange={(val) => {
-                  this.setState({
-                    phone: val
-                  })
-                }}
-                clear>手机号</InputItem>
-              <InputItem
-                type='password'
-                placeholder='请输入密码'
-                // value={this.state.pwd}
-                onChange={(val) => {
-                  this.setState({
-                    pwd: val
-                  })
-                }}
-                clear>密码</InputItem>
-            </List>
-            <Text onPress={this.navigateTo.bind(this, 'ForgetPassword')} style={styles.link}>忘记密码</Text>
+      <TouchableWithoutFeedback onPress={()=>{
+        Keyboard.dismiss();
+      }}>
+        <View style={styles.container}>
+          <View style={styles.logoContainer}>
+            {/* <Text style={styles.logo}>LOGO</Text> */}
+            <Image source={require('./img/logo.png')} style={styles.logo}></Image>
+            <Text style={styles.logoText}>小萝卜</Text>
           </View>
-          <View style={styles.buttonContainer}>
-            <Button type="primary" disabled={this.state.loginButtonDisabled} onClick={this.login}>登录</Button>
-            <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.navigateTo.bind(this, 'Register')}>注册</Button>
+          <View style={styles.bottomContainer}>
+            <View>
+              <List>
+                <InputItem
+                  type="phone"
+                  placeholder='请输入手机号'
+                  // value={this.state.phone}
+                  onChange={(val) => {
+                    this.setState({
+                      phone: val
+                    })
+                  }}
+                  clear>手机号</InputItem>
+                <InputItem
+                  type='password'
+                  placeholder='请输入密码'
+                  // value={this.state.pwd}
+                  onChange={(val) => {
+                    this.setState({
+                      pwd: val
+                    })
+                  }}
+                  clear>密码</InputItem>
+              </List>
+              <Text onPress={this.navigateTo.bind(this, 'ForgetPassword')} style={styles.link}>忘记密码</Text>
+            </View>
+            <View style={styles.buttonContainer}>
+              <Button type="primary" disabled={this.state.loginButtonDisabled} onClick={this.login}>登录</Button>
+              <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.navigateTo.bind(this, 'Register')}>注册</Button>
+            </View>
           </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }

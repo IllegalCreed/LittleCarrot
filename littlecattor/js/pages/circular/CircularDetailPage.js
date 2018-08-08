@@ -96,11 +96,11 @@ class CircularDetailPage extends Component {
           wechat.shareToSession({
             title: '小萝卜',
             type: 'news',
-            description: '我再小萝卜APP上找到了一个不错的通告，大家一起来看看吧！',
+            description: '我在小萝卜APP上找到了一个不错的通告，大家一起来看看吧！',
             webpageUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.littlecattor'
           });
         } else {
-          toastShort('没有安装微信软件，请您安装微信之后再试');
+          Toast.info('没有安装微信软件，请您安装微信之后再试', 2);
         }
       });
   }

@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import {
   List,
+  Toast,
   Button,
   InputItem,
   TextareaItem,
@@ -45,6 +46,8 @@ import Actions from 'Actions';
 import {
   requestState
 } from 'ReducerCommon';
+
+import * as wechat from 'react-native-wechat';
 
 export class ExposureDetailPage extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -108,6 +111,22 @@ export class ExposureDetailPage extends Component {
     })
   }
 
+  share = () => {
+    wechat.isWXAppInstalled()
+      .then((isInstalled) => {
+        if (isInstalled) {
+          wechat.shareToSession({
+            title: '小萝卜',
+            type: 'news',
+            description: '我在小萝卜APP上曝光了一个骗子，大家一起来看看吧！',
+            webpageUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.littlecattor'
+          });
+        } else {
+          Toast.info('没有安装微信软件，请您安装微信之后再试', 2);
+        }
+      });
+  }
+
   render() {
     const { state } = this.props.navigation;
     return (
@@ -161,9 +180,9 @@ export class ExposureDetailPage extends Component {
               }
             </View>
           </View>
-          {/* <View style={styles.buttonContainer}>
-            <Button type="primary">告诉朋友</Button>
-          </View> */}
+          <View style={styles.buttonContainer}>
+            <Button type="primary" onClick={this.share}>告诉朋友</Button>
+          </View>
 
           <Modal
             animationType="fade"
