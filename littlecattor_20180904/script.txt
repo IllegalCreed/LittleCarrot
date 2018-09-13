@@ -1,0 +1,3 @@
+签名apk，需要将apk和密码库放在一个文件夹下
+
+jarsigner -verbose -keystore illegal.keystore -signedjar sign.apk app-release_legu.apk illegal
