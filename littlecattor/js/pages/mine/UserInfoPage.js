@@ -1,8 +1,3 @@
-/**
- * @providesModule UserInfoPage
- */
-
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -23,13 +18,13 @@ import {
   TextareaItem,
   Toast,
   DatePicker
-} from 'antd-mobile';
+} from 'antd-mobile-rn';
 
-import { dateFormat } from 'dateHelper';
+import { dateFormat } from '../../common/dateHelper';
 
 import { NavigationActions } from 'react-navigation';
-import { Spacing } from 'AntDesignConfig';
-import ScreenConfig from 'ScreenConfig';
+import { Spacing } from '../../configs/AntDesignConfig';
+import ScreenConfig from '../../configs/ScreenConfig';
 
 import AliyunOSS from 'react-native-aliyun-oss';
 import ImagePicker from 'react-native-image-picker';
@@ -42,12 +37,12 @@ import {
   getUserInfo,
   getUpdateUserInfoState,
   getUpdateUserInfoErrorObj,
-} from 'Selectors';
+} from '../../configs/Selectors';
 
-import Actions from 'Actions';
+import Actions from '../../actions/index';
 import {
   requestState
-} from 'ReducerCommon';
+} from '../../reducers/common';
 
 const options = {
   title: '选择头像',
@@ -69,7 +64,14 @@ export class UserInfoPage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
     return {
-      title: '修改信息'
+      title: '修改信息',
+      headerStyle: {
+        backgroundColor: '#fff',
+      },
+      headerTintColor: '#ff4077',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     };
   };
 

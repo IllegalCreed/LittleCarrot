@@ -19,12 +19,13 @@ import {
   InputItem,
   Picker,
   TextareaItem,
-  Toast
-} from 'antd-mobile';
+  Toast,
+  DatePicker
+} from 'antd-mobile-rn';
 
 import { NavigationActions } from 'react-navigation';
-import { Spacing } from 'AntDesignConfig';
-import ScreenConfig from 'ScreenConfig';
+import { Spacing } from '../../configs/AntDesignConfig';
+import ScreenConfig from '../../configs/ScreenConfig';
 
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -34,18 +35,25 @@ import {
   getTagList,
   getPublishCircularState,
   getPublishCircularErrorObj,
-} from 'Selectors';
+} from '../../configs/Selectors';
 
-import Actions from 'Actions';
+import Actions from '../../actions/index';
 import {
   requestState
-} from 'ReducerCommon';
+} from '../../reducers/common';
 
 class CircularPublishPage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
     return {
-      title: '通告发布'
+      title: '通告发布',
+      headerStyle: {
+        backgroundColor: '#fff',
+      },
+      headerTintColor: '#ff4077',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     };
   };
 
@@ -56,6 +64,8 @@ class CircularPublishPage extends Component {
       tag: ['1'],
       title: '',
       price: '',
+      start_time:new Date(),
+      end_time:new Date(),
       wechat: '',
       detail: '',
       keyboardAvoidingHeight: 0,
@@ -136,7 +146,7 @@ class CircularPublishPage extends Component {
     this.setState({
       publishButtonDisabled: true
     })
-    this.props.dispatch(Actions.publishCircular(this.state.price, this.state.detail, this.state.tag[0], this.state.wechat));
+    this.props.dispatch(Actions.publishCircular(this.state.price, this.state.detail, this.state.tag[0], this.state.wechat,this.state.start_time,this.state.end_time));
   }
 
   render() {
@@ -179,9 +189,27 @@ class CircularPublishPage extends Component {
               }}>
               <List.Item arrow='horizontal'>标签</List.Item>
             </Picker>
+            <DatePicker
+              mode="date"
+              title="开始日期"
+              extra="请选择"
+              value={this.state.start_time}
+              onChange={date => this.setState({ start_time: date })}
+            >
+              <List.Item arrow="horizontal">开始日期</List.Item>
+            </DatePicker>
+            <DatePicker
+              mode="date"
+              title="结束日期"
+              extra="请选择"
+              value={this.state.end_time}
+              onChange={date => this.setState({ end_time: date })}
+            >
+              <List.Item arrow="horizontal">结束日期</List.Item>
+            </DatePicker>
             <TextareaItem
               title='详情'
-              rows={12}
+              rows={8}
               placeholder='请输入详情'
               count={300}
               // value={this.state.detail}

@@ -12,16 +12,16 @@ import {
 
 import {
   RootNavigator
-} from 'Router';
+} from './js/routers/Routers';
 
-import axiosConfig from 'AxiosConfig';
-import reduxConfig from 'ReduxConfig';
+import axiosConfig from './js/configs/AxiosConfig';
+import reduxConfig from './js/configs/ReduxConfig';
 
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import AliyunOSS from 'react-native-aliyun-oss';
 import * as wechat from 'react-native-wechat';
 
-import Actions from 'Actions';
+import Actions from './js/actions/index';
 
 export default class App extends Component {
   componentDidMount() {
@@ -57,3 +57,4 @@ export default class App extends Component {
     );
   }
 }
+

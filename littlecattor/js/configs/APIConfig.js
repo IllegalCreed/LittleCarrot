@@ -1,7 +1,3 @@
-/**
- * @providesModule APIConfig
- */
-
 export default API = {
   rootPath: 'http://47.93.223.173:6183/api/',
 

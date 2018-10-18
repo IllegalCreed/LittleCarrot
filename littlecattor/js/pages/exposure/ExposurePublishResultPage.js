@@ -13,16 +13,23 @@ import {
 	Button,
 	Result,
 	Icon
-} from 'antd-mobile';
+} from 'antd-mobile-rn';
 
 import { NavigationActions } from 'react-navigation';
-import { Spacing } from 'AntDesignConfig';
+import { Spacing } from '../../configs/AntDesignConfig';
 
 export default class ExposurePublishResultPage extends Component {
 	static navigationOptions = ({ navigation }) => {
 		const { state, setParams } = navigation;
 		return {
-			title: '曝光成功'
+			title: '曝光成功',
+			headerStyle: {
+			  backgroundColor: '#fff',
+			},
+			headerTintColor: '#ff4077',
+			headerTitleStyle: {
+			  fontWeight: 'bold',
+			},
 		};
 	};
 

@@ -1,40 +1,39 @@
-/**
- * @providesModule Router
- */
 import React, { Component } from 'react';
+
 import {
 	Image,
 	Platform
 } from 'react-native';
-import { StackNavigator, TabNavigator, TabBarBottom, TabBarTop } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator,createMaterialTopTabNavigator} from 'react-navigation';
 
-import LoginPage from 'LoginPage';
-import RegisterPage from 'RegisterPage';
-import ForgetPasswordPage from 'ForgetPasswordPage';
-import UserAgreement from 'UserAgreement';
+import IndexPage from '../pages/login/IndexPage';
+import LoginPage from '../pages/login/LoginPage';
+import RegisterPage from '../pages/login/RegisterPage';
+import ForgetPasswordPage from '../pages/login/ForgetPasswordPage';
+import UserAgreement from '../pages/login/UserAgreement';
 
-import MinePage from 'MinePage';
-import UserInfoPage from 'UserInfoPage';
-import MyCircularPage from 'MyCircularPage';
-import MyExposurePage from 'MyExposurePage';
-import MyAccusationPage from 'MyAccusationPage';
-import AccusationDetailPage from 'AccusationDetailPage';
-import AboutPage from 'AboutPage';
+import MinePage from '../pages/mine/MinePage';
+import UserInfoPage from '../pages/mine/UserInfoPage';
+import MyCircularPage from '../pages/mine/MyCircularPage';
+import MyExposurePage from '../pages/mine/MyExposurePage';
+import MyAccusationPage from '../pages/mine/MyAccusationPage';
+import AccusationDetailPage from '../pages/mine/AccusationDetailPage';
+import AboutPage from '../pages/mine/AboutPage';
 
-import ExposurePublishPage from 'ExposurePublishPage';
-import ExposurePublishResultPage from 'ExposurePublishResultPage';
-import ExposureSearchPage from 'ExposureSearchPage';
-import ExposureCircularPage from 'ExposureCircularPage';
-import ExposureDetailPage from 'ExposureDetailPage';
-import ExposureExperiencePage from 'ExposureExperiencePage';
+import ExposurePublishPage from '../pages/exposure/ExposurePublishPage';
+import ExposurePublishResultPage from '../pages/exposure/ExposurePublishResultPage';
+import ExposureSearchPage from '../pages/exposure/ExposureSearchPage';
+import ExposureCircularPage from '../pages/exposure/ExposureCircularPage';
+import ExposureDetailPage from '../pages/exposure/ExposureDetailPage';
+import ExposureExperiencePage from '../pages/exposure/ExposureExperiencePage';
 
-import CircularPage from 'CircularPage';
-import CircularDetailPage from 'CircularDetailPage';
-import CircularPublishPage from 'CircularPublishPage';
-import CircularAccusationPage from 'CircularAccusationPage';
-import CircularAccusationResultPage from 'CircularAccusationResultPage';
+import CircularPage from '../pages/circular/CircularPage';
+import CircularDetailPage from '../pages/circular/CircularDetailPage';
+import CircularPublishPage from '../pages/circular/CircularPublishPage';
+import CircularAccusationPage from '../pages/circular/CircularAccusationPage';
+import CircularAccusationResultPage from '../pages/circular/CircularAccusationResultPage';
 
-export const ExposureNavigator = TabNavigator({
+export const ExposureNavigator = createMaterialTopTabNavigator({
 	ExposureSearch: {
 		screen: ExposureSearchPage,
 	},
@@ -46,8 +45,6 @@ export const ExposureNavigator = TabNavigator({
 	}
 }, {
 		initialRouteName: 'ExposureExperience',
-		tabBarComponent: TabBarTop,
-		tabBarPosition: 'top',
 		swipeEnabled: false,
 		animationEnabled: true,
 		tabBarOptions: {
@@ -55,7 +52,7 @@ export const ExposureNavigator = TabNavigator({
 		}
 	})
 
-export const HomeNavigator = TabNavigator({
+export const HomeNavigator = createBottomTabNavigator({
 	Circular: {
 		screen: CircularPage,
 	},
@@ -66,7 +63,7 @@ export const HomeNavigator = TabNavigator({
 			tabBarIcon: ({ tintColor }) => (
 				<Image
 					source={require('./img/browse.png')}
-					style={{ tintColor: tintColor, width: 30, height: 30 }}
+					style={{ tintColor: tintColor, width: 20, height: 25 }}
 				/>
 			),
 		})
@@ -76,20 +73,19 @@ export const HomeNavigator = TabNavigator({
 	}
 }, {
 		initialRouteName: 'Circular',
-		tabBarComponent: TabBarBottom,
-		tabBarPosition: 'bottom',
-		swipeEnabled: false,
-		animationEnabled: true,
 		tabBarOptions: {
 			activeTintColor: '#f5317f',
-			labelStyle: { fontSize: 12 },
+			labelStyle: { fontSize: 14 },
 			style: {
 				backgroundColor: '#fff',
 			},
 		}
 	})
 
-export const RootNavigator = StackNavigator({
+export const RootNavigator = createStackNavigator({
+	Index: {
+		screen: IndexPage,
+	},
 	Login: {
 		screen: LoginPage,
 	},
@@ -148,6 +144,8 @@ export const RootNavigator = StackNavigator({
 		screen: CircularDetailPage,
 	},
 }, {
-		initialRouteName: 'Login',
+		initialRouteName: 'Index',
 	});
 
+
+	

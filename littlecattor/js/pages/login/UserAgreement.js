@@ -10,7 +10,7 @@ import {
   ScrollView
 } from 'react-native';
 import {
-} from 'antd-mobile';
+} from 'antd-mobile-rn';
 
 export default class LoginPage extends Component {
     render() {

@@ -1,11 +1,7 @@
-/**
- * @providesModule AxiosConfig
- */
-
 import axios from 'axios';
-import API from 'APIConfig';
-import { NavigationActions } from 'react-navigation';
-import Actions from 'Actions';
+import API from './APIConfig';
+import { NavigationActions,StackActions } from 'react-navigation';
+import Actions from '../actions/index';
 
 global.axiosClient = axios.create({
   baseURL: API.rootPath,
@@ -32,7 +28,7 @@ global.axiosClient = axios.create({
       if (global.reduxStore) {
         global.reduxStore.dispatch(Actions.logout());
         if (global.rootNavigator) {
-          const resetAction = NavigationActions.reset({
+          const resetAction = StackActions.reset({
             index: 0,
             actions: [
               NavigationActions.navigate({ routeName: "Login" })

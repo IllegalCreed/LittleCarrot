@@ -16,11 +16,11 @@ import {
   TextareaItem,
   ImagePicker,
   Toast,
-} from 'antd-mobile';
+} from 'antd-mobile-rn';
 
 import { NavigationActions } from 'react-navigation';
-import { Spacing } from 'AntDesignConfig';
-import ScreenConfig from 'ScreenConfig';
+import { Spacing } from '../../configs/AntDesignConfig';
+import ScreenConfig from '../../configs/ScreenConfig';
 
 import AliyunOSS from 'react-native-aliyun-oss';
 import ImagePicker2 from 'react-native-image-picker';
@@ -28,15 +28,15 @@ import ImagePicker2 from 'react-native-image-picker';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import Actions from 'Actions';
+import Actions from '../../actions/index';
 import {
   getAddAccusationState,
   getAddAccusationErrorObj,
   getAccusationTypes
-} from 'Selectors';
+} from '../../configs/Selectors';
 import {
   requestState
-} from 'ReducerCommon';
+} from '../../reducers/common';
 
 var options = {
   title: '选择照片',
@@ -58,7 +58,14 @@ export class CircularAccusationPage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
     return {
-      title: '举报通告'
+      title: '举报通告',
+      headerStyle: {
+        backgroundColor: '#fff',
+      },
+      headerTintColor: '#ff4077',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     };
   };
 

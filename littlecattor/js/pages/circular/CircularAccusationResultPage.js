@@ -13,10 +13,10 @@ import {
 	Button,
 	Result,
 	Icon
-} from 'antd-mobile';
+} from 'antd-mobile-rn';
 
 import { NavigationActions } from 'react-navigation';
-import { Spacing } from 'AntDesignConfig';
+import { Spacing } from '../../configs/AntDesignConfig';
 
 export default class CircularAccusationResultPage extends Component {
 	static navigationOptions = ({ navigation }) => {

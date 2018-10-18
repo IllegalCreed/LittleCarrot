@@ -9,7 +9,9 @@ import {
   Text,
   View,
   Image,
+  TextInput,
   Keyboard,
+  TouchableOpacity,
   TouchableWithoutFeedback
 } from 'react-native';
 import {
@@ -17,10 +19,10 @@ import {
   Button,
   InputItem,
   Toast,
-} from 'antd-mobile';
+} from 'antd-mobile-rn';
 
-import { NavigationActions } from 'react-navigation';
-import { Spacing, Colors } from 'AntDesignConfig';
+import { NavigationActions,StackActions } from 'react-navigation';
+import { Spacing, Colors } from '../../configs/AntDesignConfig';
 
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -28,18 +30,28 @@ import {
   getIsLogin,
   getLoginState,
   getLoginErrorMsg
-} from 'Selectors';
+} from '../../configs/Selectors';
 
-import Actions from 'Actions';
+import Actions from '../../actions/index';
 import {
   requestState
-} from 'ReducerCommon';
+} from '../../reducers/common';
 
 class LoginPage extends Component {
   static navigationOptions = ({ navigation }) => {
-    const { state, setParams } = navigation;
+    const { state, setParams, navigate } = navigation;
     return {
-      header: null
+      title: '登录',
+      headerStyle: {
+        backgroundColor: '#fe4176',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerRight: (
+        <Text onPress={() => navigate('ForgetPassword')} style={styles.headerRightText}>忘记密码</Text>
+      ),
     };
   };
 
@@ -94,7 +106,7 @@ class LoginPage extends Component {
 
   navigateTo = (routeName) => {
     if (routeName == 'Home') {
-      const resetAction = NavigationActions.reset({
+      const resetAction = StackActions.reset({
         index: 0,
         actions: [
           NavigationActions.navigate({ routeName })
@@ -117,45 +129,34 @@ class LoginPage extends Component {
   render() {
     const { state } = this.props.navigation;
     return (
-      <TouchableWithoutFeedback onPress={()=>{
+      <TouchableWithoutFeedback onPress={() => {
         Keyboard.dismiss();
       }}>
         <View style={styles.container}>
           <View style={styles.logoContainer}>
-            {/* <Text style={styles.logo}>LOGO</Text> */}
-            <Image source={require('./img/logo.png')} style={styles.logo}></Image>
-            <Text style={styles.logoText}>小萝卜</Text>
+            <Image source={require('./img/logoNew.png')} style={styles.logo}></Image>
           </View>
           <View style={styles.bottomContainer}>
-            <View>
-              <List>
-                <InputItem
-                  type="phone"
-                  placeholder='请输入手机号'
-                  // value={this.state.phone}
-                  onChange={(val) => {
-                    this.setState({
-                      phone: val
-                    })
-                  }}
-                  clear>手机号</InputItem>
-                <InputItem
-                  type='password'
-                  placeholder='请输入密码'
-                  // value={this.state.pwd}
-                  onChange={(val) => {
-                    this.setState({
-                      pwd: val
-                    })
-                  }}
-                  clear>密码</InputItem>
-              </List>
-              <Text onPress={this.navigateTo.bind(this, 'ForgetPassword')} style={styles.link}>忘记密码</Text>
+            <View style={styles.loginContainer}>
+              <TextInput
+                style={{ height: 40, padding: 0, }}
+                placeholder='手机号'
+                underlineColorAndroid="transparent"
+                onChangeText={(text) => this.setState({ phone: text })}
+                value={this.state.phone}
+              />
+              <View style={styles.line}></View>
+              <TextInput
+                style={{ height: 40, padding: 0 }}
+                underlineColorAndroid="transparent"
+                placeholder='密码'
+                onChangeText={(text) => this.setState({ pwd: text })}
+                value={this.state.pwd}
+              />
             </View>
-            <View style={styles.buttonContainer}>
-              <Button type="primary" disabled={this.state.loginButtonDisabled} onClick={this.login}>登录</Button>
-              <Button style={{ marginTop: Spacing.small }} type="ghost" onClick={this.navigateTo.bind(this, 'Register')}>注册</Button>
-            </View>
+            <TouchableOpacity onPress={this.login}>
+              <Image source={require('./img/ok.png')} style={styles.ok}></Image>
+            </TouchableOpacity>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -167,45 +168,47 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: Colors.Grey.t3,
+    backgroundColor: "white",
+  },
+  headerRightText: {
+    color: "#fff",
+    marginRight: 20,
   },
   logoContainer: {
     marginTop: 10,
     marginBottom: 10,
-    flex: 2,
+    height: 150,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
   },
   logo: {
-    width: 100,
-    height: 100
-  },
-  logoText: {
-    marginTop: 15,
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: Colors.Magenta.t6,
+    width: 26,
+    height: 53
   },
   bottomContainer: {
-    flex: 3,
+    flex: 1,
     flexDirection: "column",
+    alignItems: "center",
     justifyContent: "space-between"
   },
-  link: {
-    color: Colors.Magenta.t6,
-    marginTop: Spacing.middle,
-    marginRight: Spacing.middle,
-    alignSelf: 'flex-end',
-  },
-  buttonContainer: {
-    marginBottom: 50,
-    // flex: 1,
-    display: "flex",
+  loginContainer: {
     flexDirection: "column",
-    alignSelf: 'stretch',
-    justifyContent: "flex-end",
-    paddingHorizontal: Spacing.middle,
+    alignItems: "center",
+  },
+  line: {
+    marginTop: 5,
+    marginBottom: 5,
+    width: 300,
+    height: 1,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: "#fe4176",
+    borderStyle: "solid"
+  },
+  ok: {
+    width: 41,
+    height: 41,
+    marginBottom: 50
   },
 });
 

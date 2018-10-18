@@ -16,13 +16,13 @@ import {
   Button,
   Carousel,
   Tag,
-} from 'antd-mobile';
+} from 'antd-mobile-rn';
 
-import { dateFormat } from 'dateHelper';
+import { dateFormat } from '../../common/dateHelper';
 
 import { NavigationActions } from 'react-navigation';
-import { Spacing } from 'AntDesignConfig';
-import ScreenConfig from 'ScreenConfig';
+import { Spacing } from '../../configs/AntDesignConfig';
+import ScreenConfig from '../../configs/ScreenConfig';
 
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -33,12 +33,12 @@ import {
   getCircularTagListState,
   getCircularTagListErrorObj,
   getTagList,
-} from 'Selectors';
+} from '../../configs/Selectors';
 
-import Actions from 'Actions';
+import Actions from '../../actions/index';
 import {
   requestState
-} from 'ReducerCommon';
+} from '../../reducers/common';
 
 export class ExposureCircularPage extends Component {
   static navigationOptions = ({ navigation }) => {

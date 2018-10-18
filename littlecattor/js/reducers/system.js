@@ -1,11 +1,7 @@
-/** 
- * @providesModule SystemReducer
- */
-
 import {
     handleReducerError,
     requestState
-} from 'ReducerCommon';
+} from './common';
 
 export const InitialSystemState = {
     updatePVCountState: requestState.IDLE,

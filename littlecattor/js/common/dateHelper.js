@@ -1,7 +1,3 @@
-/**
- * @providesModule dateHelper
- */
-
 export function dateFormat(date, fmt) {
 	var o = {
 		"M+": date.getMonth() + 1,                 //月份   

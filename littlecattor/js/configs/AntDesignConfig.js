@@ -1,7 +1,3 @@
-/**
- * @providesModule AntDesignConfig
- */
-
 export const Spacing = {
     small: 8,
     middle: 16,

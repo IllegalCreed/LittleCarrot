@@ -1,11 +1,7 @@
-/** 
- * @providesModule CircularReducer
- */
-
 import {
     handleReducerError,
     requestState
-} from 'ReducerCommon';
+} from './common';
 
 export const InitialCircularState = {
     getCircularListState: requestState.IDLE,

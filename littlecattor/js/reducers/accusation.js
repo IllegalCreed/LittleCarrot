@@ -1,11 +1,7 @@
-/** 
- * @providesModule AccusationReducer
- */
-
 import {
     handleReducerError,
     requestState
-} from 'ReducerCommon';
+} from './common';
 
 export const InitialAccusationState = {
     getAccusationTypeListState: requestState.IDLE,

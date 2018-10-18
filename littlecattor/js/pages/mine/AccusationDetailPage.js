@@ -1,8 +1,3 @@
-/**
- * @providesModule AccusationDetailPage
- */
-
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -15,36 +10,43 @@ import {
   InputItem,
   TextareaItem,
   ImagePicker,
-} from 'antd-mobile';
+} from 'antd-mobile-rn';
 const Item = List.Item;
 const Brief = Item.Brief;
 
-import { dateFormat } from 'dateHelper';
+import { dateFormat } from '../../common/dateHelper';
 
 import { NavigationActions } from 'react-navigation';
-import { Spacing } from 'AntDesignConfig';
-import ScreenConfig from 'ScreenConfig';
+import { Spacing } from '../../configs/AntDesignConfig';
+import ScreenConfig from '../../configs/ScreenConfig';
 
 import AliyunOSS from 'react-native-aliyun-oss';
 
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import Actions from 'Actions';
+import Actions from '../../actions/index';
 import {
   getAccusationDetailState,
   getAccusationDetailErrorObj,
   getAccusationDetail
-} from 'Selectors';
+} from '../../configs/Selectors';
 import {
   requestState
-} from 'ReducerCommon';
+} from '../../reducers/common';
 
 export class AccusationDetailPage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
     return {
-      title: '举报详情'
+      title: '举报详情',
+      headerStyle: {
+        backgroundColor: '#fff',
+      },
+      headerTintColor: '#ff4077',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     };
   };
 

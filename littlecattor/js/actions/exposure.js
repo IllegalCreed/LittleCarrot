@@ -1,4 +1,4 @@
-import API from 'APIConfig';
+import API from '../configs/APIConfig';
 
 // 获取曝光列表
 export function getExposureList(page_index, page_size) {

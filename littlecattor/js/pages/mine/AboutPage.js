@@ -1,8 +1,3 @@
-/**
- * @providesModule AboutPage
- */
-
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -15,29 +10,36 @@ import {
   InputItem,
   TextareaItem,
   ImagePicker,
-} from 'antd-mobile';
+} from 'antd-mobile-rn';
 const Item = List.Item;
 const Brief = Item.Brief;
 
-import { dateFormat } from 'dateHelper';
+import { dateFormat } from '../../common/dateHelper';
 
-import { NavigationActions } from 'react-navigation';
-import { Spacing } from 'AntDesignConfig';
-import ScreenConfig from 'ScreenConfig';
+import { NavigationActions,StackActions } from 'react-navigation';
+import { Spacing } from '../../configs/AntDesignConfig';
+import ScreenConfig from '../../configs/ScreenConfig';
 
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import Actions from 'Actions';
+import Actions from '../../actions/index';
 import {
   requestState
-} from 'ReducerCommon';
+} from '../../reducers/common';
 
 export class AboutPage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
     return {
-      title: '关于平台'
+      title: '关于平台',
+      headerStyle: {
+        backgroundColor: '#fff',
+      },
+      headerTintColor: '#ff4077',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     };
   };
 
@@ -53,7 +55,18 @@ export class AboutPage extends Component {
   }
 
   navigateTo = (routeName) => {
-    this.props.navigation.navigate(routeName)
+    if (routeName == 'Login') {
+      this.props.dispatch(Actions.logout());
+      const resetAction = StackActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName })
+        ]
+      })
+      this.props.navigation.dispatch(resetAction);
+    } else {
+      this.props.navigation.navigate(routeName, params)
+    }
   }
 
   render() {
@@ -62,6 +75,7 @@ export class AboutPage extends Component {
       <View style={styles.container}>
         <List>
           <Item extra="1.0.0">版本号</Item>
+          <Item onClick={this.navigateTo.bind(this, 'Login')}>退出登录</Item>
         </List>
       </View>
     );

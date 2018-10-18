@@ -1,11 +1,7 @@
-/** 
- * @providesModule ExposureReducer
- */
-
 import {
     handleReducerError,
     requestState
-} from 'ReducerCommon';
+} from './common';
 
 export const InitialExposureState = {
     getExposureListState: requestState.IDLE,

@@ -9,19 +9,20 @@ import {
   Text,
   View,
   FlatList,
+  Image,
   TouchableOpacity
 } from 'react-native';
 import {
   Button,
   Carousel,
   Tag,
-} from 'antd-mobile';
+} from 'antd-mobile-rn';
 
-import { dateFormat } from 'dateHelper';
+import { dateFormat } from '../../common/dateHelper';
 
 import { NavigationActions } from 'react-navigation';
-import { Spacing } from 'AntDesignConfig';
-import ScreenConfig from 'ScreenConfig';
+import { Spacing } from '../../configs/AntDesignConfig';
+import ScreenConfig from '../../configs/ScreenConfig';
 
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -29,12 +30,12 @@ import {
   getExposureListState,
   getExposureListErrorObj,
   getExposureList,
-} from 'Selectors';
+} from '../../configs/Selectors';
 
-import Actions from 'Actions';
+import Actions from '../../actions/index';
 import {
   requestState
-} from 'ReducerCommon';
+} from '../../reducers/common';
 
 export class ExposureExperiencePage extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -116,7 +117,8 @@ export class ExposureExperiencePage extends Component {
           </View>
           <Text style={styles.date}>{dateFormat(new Date(item.create_time), 'yyyy-MM-dd')}</Text>
         </View>
-        <Text style={styles.circularTitle}>{item.content}</Text>
+        <Text style={styles.circularTitle}>{item.title}</Text>
+        <Text style={styles.circularContent}>{item.content}</Text>
       </TouchableOpacity>
     )
   }
@@ -136,7 +138,10 @@ export class ExposureExperiencePage extends Component {
           onRefresh={this.refreshDatas}
           refreshing={this.state.refreshing}
         />
-        <Button style={styles.publishCircular} type="primary" onClick={this.navigateTo.bind(this, 'ExposurePublish')}>我要曝光</Button>
+        <TouchableOpacity style={styles.publishCircular} onPress={this.navigateTo.bind(this, 'ExposurePublish')}>
+          <Image source={require('./img/add.png')} style={styles.addicon}></Image>
+        </TouchableOpacity>
+        {/* <Button style={styles.publishCircular} type="primary" onClick={this.navigateTo.bind(this, 'ExposurePublish')}>我要曝光</Button> */}
       </View>
     );
   }
@@ -158,15 +163,22 @@ const styles = StyleSheet.create({
   },
   publishCircular: {
     position: 'absolute',
-    bottom: 30,
-    right: 0,
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
-    opacity: 0.8,
+    bottom: 20,
+    right: 10,
+    shadowColor: '#fe86f5',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
   circularTitle: {
     fontFamily: 'PingFang SC',
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  circularContent: {
+    fontFamily: 'PingFang SC',
+    fontSize: 14,
     marginTop: 10,
   },
   tag: {
@@ -185,6 +197,10 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 12,
     color: '#bfbfbf',
+  },
+  addicon: {
+    width: 60,
+    height: 75,
   },
 });
 

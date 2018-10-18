@@ -1,8 +1,3 @@
-/**
- * @providesModule MinePage
- */
-
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -14,15 +9,16 @@ import {
 import {
   List,
   Button,
-} from 'antd-mobile';
+} from 'antd-mobile-rn';
 const Item = List.Item;
 const Brief = Item.Brief;
 
-import { dateFormat } from 'dateHelper';
+import { dateFormat } from '../../common/dateHelper';
+import LinearGradient from 'react-native-linear-gradient';
 
-import { NavigationActions } from 'react-navigation';
-import { Spacing } from 'AntDesignConfig';
-import ScreenConfig from 'ScreenConfig';
+import { NavigationActions,StackActions } from 'react-navigation';
+import { Spacing } from '../../configs/AntDesignConfig';
+import ScreenConfig from '../../configs/ScreenConfig';
 
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -30,12 +26,12 @@ import {
   getUserInfoState,
   getUserInfoErrorObj,
   getUserInfo,
-} from 'Selectors';
+} from '../../configs/Selectors';
 
-import Actions from 'Actions';
+import Actions from '../../actions/index';
 import {
   requestState
-} from 'ReducerCommon';
+} from '../../reducers/common';
 
 export class MinePage extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -45,7 +41,7 @@ export class MinePage extends Component {
       tabBarIcon: ({ tintColor }) => (
         <Image
           source={require('../../routers/img/account.png')}
-          style={{ tintColor: tintColor, width: 26, height: 26 }}
+          style={{ tintColor: tintColor, width: 22, height: 25 }}
         />
       ),
     };
@@ -65,7 +61,7 @@ export class MinePage extends Component {
   navigateTo = (routeName, params) => {
     if (routeName == 'Login') {
       this.props.dispatch(Actions.logout());
-      const resetAction = NavigationActions.reset({
+      const resetAction = StackActions.reset({
         index: 0,
         actions: [
           NavigationActions.navigate({ routeName })
@@ -82,6 +78,9 @@ export class MinePage extends Component {
       <View style={styles.container}>
         <ScrollView ref={scrollView => this.scrollView = scrollView}>
           <View style={styles.headerContainer}>
+            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#ef8c68', '#ea419a']} style={styles.headerBackground}>
+              <Text style={styles.description}>{this.props.userInfo.description}</Text>
+            </LinearGradient>
             <View style={styles.userHeader}>
               {
                 this.props.userInfo.avatar_url
@@ -89,7 +88,7 @@ export class MinePage extends Component {
                   : null
               }
             </View>
-            <Text style={{ marginTop: Spacing.small, color: 'white', fontSize: 18, fontWeight: 'bold' }}>{this.props.userInfo.nickname}</Text>
+            <Text style={{ marginTop: 60, color: 'black', fontSize: 16,}}>{this.props.userInfo.nickname}</Text>
           </View>
 
           <List>
@@ -101,9 +100,9 @@ export class MinePage extends Component {
             <Item onClick={this.navigateTo.bind(this, 'About')} arrow='horizontal'>关于平台</Item>
           </List>
 
-          <View style={styles.buttonContainer}>
+          {/* <View style={styles.buttonContainer}>
             <Button type="ghost" onClick={this.navigateTo.bind(this, 'Login')}>退出登录</Button>
-          </View>
+          </View> */}
         </ScrollView>
       </View>
     );
@@ -124,24 +123,38 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     paddingHorizontal: Spacing.middle,
   },
+  description: {
+    fontSize: 18,
+    color: '#fff',
+  },
   headerContainer: {
-    backgroundColor: '#f5317f',
-    height: 200,
+    position: 'relative',
+    backgroundColor: '#fff',
+    height: 300,
     flexDirection: "column",
     alignItems: 'center',
-    paddingTop: 60,
+  },
+  headerBackground: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 200,
+    alignSelf: 'stretch'
   },
   userHeader: {
+    position: 'absolute',
+    top: 150,
     overflow: 'hidden',
     borderWidth: 2,
-    borderColor: 'white',
-    borderRadius: 40,
-    width: 80,
-    height: 80,
+    borderColor: '#ff4076',
+    borderRadius: 50,
+    width: 100,
+    height: 100,
   },
   avatar: {
-    width: 80,
-    height: 80
+    width: 100,
+    height: 100
   }
 });
 

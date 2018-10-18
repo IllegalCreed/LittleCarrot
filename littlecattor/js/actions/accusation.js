@@ -1,4 +1,4 @@
-import API from 'APIConfig';
+import API from '../configs/APIConfig';
 
 // 获取举报类型列表
 export function getAccusationTypeList() {

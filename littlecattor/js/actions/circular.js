@@ -1,4 +1,4 @@
-import API from 'APIConfig';
+import API from '../configs/APIConfig';
 
 // 获取通告列表
 export function getCircularList(page_index, page_size) {
@@ -47,7 +47,7 @@ export function resetGetCircularTagListState() {
 }
 
 // 发布通告
-export function publishCircular(price, content, tag_id, wx) {
+export function publishCircular(price, content, tag_id, wx, start_time, end_time) {
     return {
         type: 'publishCircularAction',
         payload: {
@@ -58,7 +58,9 @@ export function publishCircular(price, content, tag_id, wx) {
                     price,
                     content,
                     tag_id,
-                    wx
+                    wx,
+                    start_time, 
+                    end_time
                 }
             }
         }

@@ -1,11 +1,7 @@
-/** 
- * @providesModule UserReducer
- */
-
 import {
     handleReducerError,
     requestState
-} from 'ReducerCommon';
+} from './common';
 
 export const InitialUserState = {
     loginState: requestState.IDLE,

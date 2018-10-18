@@ -1,6 +1,3 @@
-/**
- * @providesModule ReduxConfig
- */
 import {
 	AsyncStorage,
 } from 'react-native';
@@ -21,13 +18,13 @@ import {
 } from 'redux-persist';
 import createFilter from 'redux-persist-transform-filter';
 
-import Reducers from 'Reducers';
+import Reducers from '../reducers/index';
 import {
 	InitialHelloState
-} from 'HelloReducer';
+} from '../reducers/hello';
 import {
 	InitialUserState
-} from 'UserReducer';
+} from '../reducers/user';
 
 function createExpirationTransform(expireDatas) {
 	expireDatas = expireDatas || {};

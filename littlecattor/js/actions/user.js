@@ -1,4 +1,4 @@
-import API from 'APIConfig';
+import API from '../configs/APIConfig';
 
 export function sendSMS(phone) {
     return {

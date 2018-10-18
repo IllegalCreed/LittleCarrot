@@ -16,22 +16,22 @@ import {
   InputItem,
   Checkbox,
   Toast,
-} from 'antd-mobile';
+} from 'antd-mobile-rn';
 
 import { NavigationActions } from 'react-navigation';
-import { Spacing } from 'AntDesignConfig';
+import { Spacing } from '../../configs/AntDesignConfig';
 
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import Actions from 'Actions';
+import Actions from '../../actions/index';
 import {
   getRegisterState,
   getRegisterErrorObj,
-} from 'Selectors';
+} from '../../configs/Selectors';
 import {
   requestState
-} from 'ReducerCommon';
+} from '../../reducers/common';
 
 const AgreeItem = Checkbox.AgreeItem;
 
@@ -39,7 +39,14 @@ export class RegisterPage extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
     return {
-      title: '注册'
+      title: '注册',
+      headerStyle: {
+        backgroundColor: '#fe4176',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     };
   };
 

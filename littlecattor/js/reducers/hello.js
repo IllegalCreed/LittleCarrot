@@ -1,7 +1,3 @@
-/** 
- * @providesModule HelloReducer
- */
-
 export const InitialHelloState = {
 	hello: null
 };
