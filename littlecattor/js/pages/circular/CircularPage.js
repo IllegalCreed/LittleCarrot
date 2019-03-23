@@ -183,7 +183,9 @@ class CircularPage extends Component {
             alignItems: 'center',
           }}>
             <View style={styles.userHeader}>
-              <Image source={{ uri: item.avatar_url ? item.avatar_url + '?x-oss-process=style/400' : '' }} style={styles.avatar} />
+              {item.avatar_url ?
+                <Image source={{ uri: item.avatar_url ? item.avatar_url + '?x-oss-process=style/400' : '' }} style={styles.avatar} /> : null
+              }
             </View>
             <Text style={styles.publisher}>{item.nickname}</Text>
           </View>

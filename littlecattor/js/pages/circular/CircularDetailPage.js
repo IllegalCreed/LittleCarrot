@@ -168,7 +168,9 @@ class CircularDetailPage extends Component {
                 alignItems: 'center',
               }}>
                 <View style={styles.userHeader}>
-                  <Image source={{ uri: this.props.circularDetail.avatar_url ? this.props.circularDetail.avatar_url + '?x-oss-process=style/400' : '' }} style={styles.avatar} />
+                  {this.props.circularDetail.avatar_url ?
+                    <Image source={{ uri: this.props.circularDetail.avatar_url ? this.props.circularDetail.avatar_url + '?x-oss-process=style/400' : '' }} style={styles.avatar} />
+                    : null}
                 </View>
                 <Text style={styles.publisher}>{this.props.circularDetail.nickname}</Text>
               </View>
