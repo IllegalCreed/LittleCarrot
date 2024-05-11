@@ -26,7 +26,7 @@ import Actions from './js/actions/index';
 export default class App extends Component {
   componentDidMount() {
     wechat.registerApp('wx10c6a48c740dea0e')
-    AliyunOSS.initWithPlainTextAccessKey("请去阿里云自己查", "0EfCU4cafQJQTQPWj6vdZQIxCiEqpF", "https://oss-cn-beijing.aliyuncs.com");
+    AliyunOSS.initWithPlainTextAccessKey("请去阿里云自己查", "请去阿里云自己查", "https://oss-cn-beijing.aliyuncs.com");
   }
 
   getCurrentRouteName = (navigationState) => {
