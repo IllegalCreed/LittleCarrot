@@ -2426,8 +2426,8 @@ iconv-lite@~0.4.13:
     safer-buffer ">= 2.1.2 < 3"
 
 image-size@^1.0.2:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/image-size/-/image-size-1.1.1.tgz#ddd67d4dc340e52ac29ce5f546a09f4e29e840ac"
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/image-size/-/image-size-1.2.1.tgz#ee118aedfe666db1a6ee12bed5821cde3740276d"
   dependencies:
     queue "6.0.2"
 
