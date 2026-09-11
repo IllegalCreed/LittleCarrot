@@ -36,5 +36,8 @@
   },
   "jest": {
     "preset": "@react-native/jest-preset"
+  },
+  "resolutions": {
+    "image-size": "2.0.2"
   }
 }
